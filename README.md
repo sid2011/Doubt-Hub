@@ -1,215 +1,173 @@
-E-Commerce Website
+# 🛒 E-Commerce Website
 
-A full-stack e-commerce web application built using Node.js, Express.js, MongoDB, and Handlebars. The project includes user authentication, session management, product management, shopping cart functionality, and an admin panel.
+A full-stack e-commerce web application built using Node.js, Express.js, MongoDB, and Handlebars.
 
-Features
+## ✨ Features
 
-User Features
+### 👤 User Features
 
-User registration and login
+* Sign up & Login
+* Secure password hashing with bcrypt
+* Session-based authentication
+* View products
+* Add products to cart
+* View cart
+* Remove products from cart
+* Cart item count display
 
-Secure password hashing using bcrypt
+### 🛠️ Admin Features
 
-Session-based authentication
+* Add products
+* Edit products
+* Delete products
+* Upload product images
+* Manage inventory
 
-View products
+## 🚀 Tech Stack
 
-Add products to cart
+### Backend
 
-View cart items
+* Node.js
+* Express.js
 
-Remove products from cart
+### Database
 
-Cart item count display
+* MongoDB
 
-Admin Features
+### Authentication
 
-Admin dashboard
+* bcrypt
+* express-session
 
-Add products
+### Frontend
 
-Edit products
+* Handlebars (HBS)
+* HTML
+* CSS
+* Bootstrap
+* JavaScript
+* jQuery (AJAX)
 
-Delete products
+### Other Packages
 
-Upload product images
+* express-fileupload
+* morgan
+* cookie-parser
 
-Manage product inventory
+## 📂 Project Structure
 
-Technology Stack
+```text
+config/      -> Database connection & collections
+helpers/     -> Business logic
+routes/      -> User & Admin routes
+views/       -> Handlebars templates
+public/      -> CSS, JS, Images
+bin/         -> Server startup files
+```
 
-Backend
+## ⚙️ Installation
 
-Node.js
+Clone the repository:
 
-Express.js
-
-Database
-
-MongoDB
-
-Authentication & Security
-
-bcrypt
-
-express-session
-
-Template Engine
-
-Handlebars (hbs)
-
-File Handling
-
-express-fileupload
-
-Utilities
-
-Morgan (request logging)
-
-Cookie Parser
-
-Project Structure
-
-project-root/
-│
-├── bin/
-│   └── www
-│
-├── config/
-│   ├── connection.js
-│   └── collections.js
-│
-├── helpers/
-│   ├── product-helpers.js
-│   └── user-helper.js
-│
-├── public/
-│   ├── images/
-│   ├── product-images/
-│   ├── stylesheets/
-│   └── javascripts/
-│
-├── routes/
-│   ├── user.js
-│   └── admin.js
-│
-├── views/
-│   ├── admin/
-│   ├── user/
-│   ├── user-auth/
-│   └── layout/
-│
-├── app.js
-├── package.json
-└── README.md
-
-Installation
-
-Clone Repository
-
+```bash
 git clone <repository-url>
 cd e-commerce-website
+```
 
-Install Dependencies
+Install dependencies:
 
+```bash
 npm install
+```
 
-Configure Environment
+Create a `.env` file:
 
-Create a .env file in the root directory.
-
+```env
 MONGODB_URI=your_mongodb_connection_string
+```
 
-Start Development Server
+Run in development:
 
+```bash
 npm run dev
+```
 
-Start Production Server
+Run in production:
 
+```bash
 npm start
+```
 
-Database Collections
+## 🗄️ Database Collections
 
-Users
+### Users
 
-Stores user account information.
+Stores user information and authentication data.
 
-Products
+### Products
 
-Stores product details including:
+Stores:
 
-Name
+* Product name
+* Category
+* Price
+* Description
+* Image
 
-Category
+### Cart
 
-Price
+Stores user cart items and quantities.
 
-Description
+## ✅ Completed Features
 
-Image
+* User Authentication
+* Session Management
+* Product CRUD Operations
+* Product Image Upload
+* Shopping Cart System
+* Admin Product Management
+* AJAX-based Add to Cart
 
-Cart
+## 🔨 Features In Progress
 
-Stores cart items associated with users.
+* Order Placement
+* Order Amount Calculation
+* Payment Integration
+* Admin Authentication
+* Order Management
 
-Current Functionalities
+## 🤝 Contributing
 
-Product Management (CRUD)
+1. Fork the repository
+2. Create a new branch
 
-User Authentication
-
-Session Handling
-
-Shopping Cart
-
-Product Image Upload
-
-Admin Product Management
-
-Planned Features
-
-Order Placement
-
-Order History
-
-Payment Integration
-
-Admin Login System
-
-Order Management Dashboard
-
-Contribution Guidelines
-
-Fork the repository.
-
-Create a new branch.
-
+```bash
 git checkout -b feature-name
+```
 
-Commit your changes.
+3. Commit your changes
 
+```bash
 git commit -m "Add feature"
+```
 
-Push your branch.
+4. Push to GitHub
 
+```bash
 git push origin feature-name
+```
 
-Open a Pull Request.
+5. Create a Pull Request
 
-Notes for Contributors
+## 📝 Notes
 
-Follow the existing project structure.
+* Keep database operations inside helper files.
+* Follow the existing project structure.
+* Test changes before pushing.
+* Never commit `.env` files or credentials.
 
-Keep database operations inside helper modules.
+## 👨‍💻 Author
 
-Keep route handlers clean and focused.
+**Sidharth**
 
-Test features locally before submitting changes.
-
-Do not commit .env files or sensitive credentials.
-
-Author
-
-Sidharth
-
-This project was created as a learning-focused full-stack e-commerce application to strengthen backend development, database management, authentication, and problem-solving skills.
+Built to learn full-stack development, database management, authentication, debugging, and problem-solving skills.
