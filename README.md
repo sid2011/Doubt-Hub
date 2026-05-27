@@ -1,6 +1,6 @@
 # 🚀 DoubtHub
 
-> A modern student-powered learning platform where doubts become discussions, collaboration becomes growth, and helping others becomes rewarding.
+ A modern student-powered learning platform where doubts become discussions, collaboration becomes growth, and helping others becomes rewarding.
 
 ---
 
