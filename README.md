@@ -1,173 +1,288 @@
-# 🛒 E-Commerce Website
+# 🚀 DoubtHub
 
-A full-stack e-commerce web application built using Node.js, Express.js, MongoDB, and Handlebars.
+> A modern student-powered learning platform where doubts become discussions, collaboration becomes growth, and helping others becomes rewarding.
 
-## ✨ Features
+---
 
-### 👤 User Features
+# 🌟 What is DoubtHub?
 
-* Sign up & Login
-* Secure password hashing with bcrypt
-* Session-based authentication
-* View products
-* Add products to cart
-* View cart
-* Remove products from cart
-* Cart item count display
+DoubtHub is a collaborative educational platform designed to help students ask questions freely, receive answers from peers and teachers, and build a strong learning community inside schools.
 
-### 🛠️ Admin Features
+Instead of students silently struggling with doubts, DoubtHub creates a space where learning becomes interactive, engaging, and rewarding.
 
-* Add products
-* Edit products
-* Delete products
-* Upload product images
-* Manage inventory
+---
 
-## 🚀 Tech Stack
+# 🎯 The Problem
 
-### Backend
+In many classrooms:
+
+* Students hesitate to ask doubts publicly
+* Teachers cannot answer every student individually
+* The same questions are repeatedly asked
+* Helpful students receive no recognition
+* Learning support disappears after school hours
+
+DoubtHub aims to solve these real-world learning problems through technology, collaboration, and gamification.
+
+---
+
+# 💡 Core Idea
+
+```text id="jlwm6f"
+Ask Questions
+↓
+Get Answers
+↓
+Help Others
+↓
+Earn Points
+↓
+Get Recognized
+↓
+Build a Learning Community
+```
+
+---
+
+# ✨ Planned Features
+
+## 👨‍🎓 Student Features
+
+* Student Authentication
+* Ask doubts/questions
+* Answer other students’ questions
+* Question categories & tags
+* Search questions
+* Upvote useful answers
+* User profiles
+* Contribution history
+* Leaderboard system
+* Point-based rewards
+* Responsive modern UI
+
+---
+
+## 👨‍🏫 Teacher Features
+
+* Teacher accounts
+* Teacher-verified answers
+* Doubt moderation
+* Student engagement tracking
+* Important answer highlighting
+* Classroom participation support
+
+---
+
+## 🏆 Gamification System
+
+DoubtHub encourages participation through:
+
+* Points system
+* Student rankings
+* Contribution badges
+* Top helper recognition
+* School leaderboard
+* Monthly achievement system
+
+---
+
+# 🤖 AI Integration (Planned)
+
+Future AI-powered features may include:
+
+* AI-generated hints
+* Smart explanations
+* Related question suggestions
+* AI-assisted moderation
+* Learning recommendations
+* Instant concept simplification
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+* React.js
+* Tailwind CSS
+* shadcn/ui
+* JavaScript
+
+---
+
+## Backend
 
 * Node.js
 * Express.js
 
-### Database
+---
+
+## Database
 
 * MongoDB
 
-### Authentication
+---
 
+## Authentication & Security
+
+* JWT / Session Authentication
 * bcrypt
-* express-session
+* Environment Variables
 
-### Frontend
+---
 
-* Handlebars (HBS)
-* HTML
-* CSS
-* Bootstrap
-* JavaScript
-* jQuery (AJAX)
+## Future Mobile App
 
-### Other Packages
+* Capacitor
+* Android App Conversion
 
-* express-fileupload
-* morgan
-* cookie-parser
+---
 
-## 📂 Project Structure
+# 📂 Planned Project Structure
 
-```text
-config/      -> Database connection & collections
-helpers/     -> Business logic
-routes/      -> User & Admin routes
-views/       -> Handlebars templates
-public/      -> CSS, JS, Images
-bin/         -> Server startup files
+```text id="jlwm2h"
+client/          -> React Frontend
+server/          -> Express Backend
+routes/          -> API Routes
+controllers/     -> Route Controllers
+models/          -> MongoDB Models
+middlewares/     -> Authentication & Validation
+utils/           -> Utility Functions
+public/          -> Static Assets
 ```
 
-## ⚙️ Installation
+---
 
-Clone the repository:
+# 🚀 Development Roadmap
 
-```bash
-git clone <repository-url>
-cd e-commerce-website
+## Version 1 — Foundation
+
+```text id="jlwm0d"
+✅ Authentication
+✅ Ask Questions
+✅ Answer Questions
+✅ Points System
+✅ Leaderboard
 ```
 
-Install dependencies:
+---
 
-```bash
-npm install
+## Version 2 — Community Features
+
+```text id="jlwm5n"
+✅ Teacher Accounts
+✅ Best Answer System
+✅ Notifications
+✅ Student Profiles
+✅ Contribution Tracking
 ```
 
-Create a `.env` file:
+---
 
-```env
-MONGODB_URI=your_mongodb_connection_string
+## Version 3 — AI & Expansion
+
+```text id="jlwm8n"
+✅ AI Assistance
+✅ Smart Recommendations
+✅ Android App
+✅ Advanced Analytics
+✅ School Integration
 ```
 
-Run in development:
+---
 
-```bash
-npm run dev
+# 🌍 Vision
+
+DoubtHub is not just a question-answer platform.
+
+The goal is to create a school learning ecosystem where:
+
+* Students feel comfortable asking doubts
+* Peer learning becomes normal
+* Helpful students get recognition
+* Teachers can engage beyond classrooms
+* Learning becomes collaborative
+
+---
+
+# 🎯 Main Goals
+
+```text id="jlwm3y"
+Encourage Curiosity
+Promote Collaboration
+Reward Helpful Students
+Make Learning Interactive
+Use Technology to Solve Real Educational Problems
 ```
 
-Run in production:
+---
 
-```bash
-npm start
+# 👨‍💻 Team
+
+## Sidharth
+
+### Responsibilities
+
+* Full-stack development
+* Backend architecture
+* Database design
+* Frontend implementation
+* API development
+* Debugging & deployment
+
+---
+
+## Nandan
+
+### Responsibilities
+
+* UI/UX ideas
+* Product planning
+* Marketing & promotion
+* Feature suggestions
+* User engagement strategies
+
+---
+
+# 📈 Learning Goals Behind the Project
+
+This project is also being built to improve skills in:
+
+* Full-stack web development
+* React.js
+* Backend engineering
+* Database architecture
+* Authentication systems
+* Scalable application design
+* Real-world problem solving
+* Team collaboration
+* AI integration
+
+---
+
+# 🔮 Future Scope
+
+* Android App
+* Real-time chat system
+* AI learning assistant
+* School-wide deployment
+* Teacher dashboards
+* Student analytics
+* Smart learning recommendations
+* Achievement certificates
+
+---
+
+# 📌 Current Status
+
+```text id="jlwm7q"
+🚧 Planning & React Learning Phase
 ```
 
-## 🗄️ Database Collections
+---
 
-### Users
+# 👨‍💻 Author
 
-Stores user information and authentication data.
+## Sidharth
 
-### Products
-
-Stores:
-
-* Product name
-* Category
-* Price
-* Description
-* Image
-
-### Cart
-
-Stores user cart items and quantities.
-
-## ✅ Completed Features
-
-* User Authentication
-* Session Management
-* Product CRUD Operations
-* Product Image Upload
-* Shopping Cart System
-* Admin Product Management
-* AJAX-based Add to Cart
-
-## 🔨 Features In Progress
-
-* Order Placement
-* Order Amount Calculation
-* Payment Integration
-* Admin Authentication
-* Order Management
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a new branch
-
-```bash
-git checkout -b feature-name
-```
-
-3. Commit your changes
-
-```bash
-git commit -m "Add feature"
-```
-
-4. Push to GitHub
-
-```bash
-git push origin feature-name
-```
-
-5. Create a Pull Request
-
-## 📝 Notes
-
-* Keep database operations inside helper files.
-* Follow the existing project structure.
-* Test changes before pushing.
-* Never commit `.env` files or credentials.
-
-## 👨‍💻 Author
-
-**Sidharth**
-
-Built to learn full-stack development, database management, authentication, debugging, and problem-solving skills.
+Built with the vision of transforming student doubt-solving into a collaborative and engaging learning experience.
