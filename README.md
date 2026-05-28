@@ -229,13 +229,6 @@ Use Technology to Solve Real Educational Problems
 * Frontend implementation
 * API development
 * Debugging & deployment
-
----
-
-## Nandan
-
-### Responsibilities
-
 * UI/UX ideas
 * Product planning
 * Marketing & promotion
