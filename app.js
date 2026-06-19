@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const { engine } = require('express-handlebars')
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -16,8 +17,17 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.engine('hbs',engine({extname:'.hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/layout/partials/', helpers: {
+    inc: function(value) {
+      return parseInt(value) + 1;
+    }
+  }}))
+app.set('view engine', 'hbs');
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

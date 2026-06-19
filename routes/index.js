@@ -11,4 +11,8 @@ router.get('/signup',(req,res)=>{
 router.get('/login',(req,res)=>{
   res.render('login_page')
 })
+router.get('/doubt',(req,res)=>{
+  res.render('partials/navbar')
+})
+
 module.exports = router;
