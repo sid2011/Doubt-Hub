@@ -1,10 +1,54 @@
-<div class="login-box">
-   <div class="signup-page">
-    <form action="/login" method="post">
-    <h2 class="title">Signup</h2>
-    <input class="input-box" type="email" placeholder="Email address"><br>
-    <input class="input-box" type="password" placeholder="Password"><br>
-    <button class="signup-btn">Register</button><br>
+<div class="signup-container">
+
+    <div class="brand">
+        <h2>DoubtHub</h2>
+        <p>Create your account to start learning.</p>
     </div>
+
+    <a href="/auth/google" class="google-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/250px-Google_Favicon_2025.svg.png" alt="Google Logo">
+    <span>Continue with Google</span>
+</a>
+
+    <div class="divider">
+        <span></span>
+        <p>OR</p>
+        <span></span>
+    </div>
+
+    <form action="/signup" method="POST">
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            required>
+
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required>
+
+        <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            required>
+
+        <button>Create Account</button>
+
     </form>
+
+    <p class="login-text">
+        Already have an account?
+        <a href="/login">Log in</a>
+    </p>
+
 </div>

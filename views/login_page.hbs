@@ -1,11 +1,156 @@
-<div class="login-box">
-   <div class="login-page">
-    <form action="/login" method="post">
-     <h2 class="title">Login</h2>
-         <input class="input-box" type="email" placeholder="Email address"><br>
-    <input class="input-box" type="password" placeholder="Password"><br>
-    <a href="/">Forgot Password</a><br>
-    <button class="login-btn">Login</button><br>
-    </form>
-    </div>
-</div>
+
+  {{! ── Ambient background glow blobs ───────────────────────── }}
+  <div class="dh-blob dh-blob--1" aria-hidden="true"></div>
+  <div class="dh-blob dh-blob--2" aria-hidden="true"></div>
+
+  <main class="dh-page" role="main">
+
+    {{! ── Auth card ───────────────────────────────────────────── }}
+    <div class="dh-card">
+
+      {{! ── Brand header ─────────────────────────────────────── }}
+      <div class="dh-brand">
+        {{! SVG logomark — a spark/lightning bolt inside a rounded square }}
+        <div class="dh-brand__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 2L5 12.5H11L9.5 20L17 9.5H11L12.5 2Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="dh-brand__name">DoubtHub</span>
+      </div>
+
+      {{! ── Tab switcher ─────────────────────────────────────── }}
+      <div class="dh-tabs" role="tablist" aria-label="Login or Sign up">
+        <button
+          class="dh-tab dh-tab--active"
+          id="tab-login"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-login"
+          onclick="switchTab('login')"
+          type="button"
+        >Log in</button>
+        <button
+          class="dh-tab"
+          id="tab-signup"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-signup"
+          onclick="switchTab('signup')"
+          type="button"
+        >Sign up</button>
+        {{! Animated underline pill — moves via JS }}
+        <div class="dh-tab__indicator" id="tab-indicator" aria-hidden="true"></div>
+      </div>
+
+      {{! ══════════════════════════════════════════════════════ }}
+      {{! LOGIN PANEL                                            }}
+      {{! ══════════════════════════════════════════════════════ }}
+      <div
+        class="dh-panel dh-panel--active"
+        id="panel-login"
+        role="tabpanel"
+        aria-labelledby="tab-login"
+      >
+        <p class="dh-panel__sub">Welcome back. Pick up where you left off.</p>
+
+        <form action="/login" method="post" novalidate>
+
+          <div class="dh-field">
+            <label class="dh-label" for="login-email">Email address</label>
+            <input
+              class="dh-input"
+              type="email"
+              id="login-email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="dh-field">
+            <div class="dh-label-row">
+              <label class="dh-label" for="login-password">Password</label>
+              <a class="dh-link" href="/">Forgot password?</a>
+            </div>
+            <input
+              class="dh-input"
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <button class="dh-btn dh-btn--primary" type="submit">
+            Log in
+            <svg class="dh-btn__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+        </form>
+      </div>
+
+      {{! ══════════════════════════════════════════════════════ }}
+      {{! SIGNUP PANEL                                           }}
+      {{! ══════════════════════════════════════════════════════ }}
+      <div
+        class="dh-panel"
+        id="panel-signup"
+        role="tabpanel"
+        aria-labelledby="tab-signup"
+        hidden
+      >
+        <p class="dh-panel__sub">Join thousands of students clearing their doubts daily.</p>
+
+        <form action="/login" method="post" novalidate>
+
+          <div class="dh-field">
+            <label class="dh-label" for="signup-email">Email address</label>
+            <input
+              class="dh-input"
+              type="email"
+              id="signup-email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="dh-field">
+            <label class="dh-label" for="signup-password">Password</label>
+            <input
+              class="dh-input"
+              type="password"
+              id="signup-password"
+              name="password"
+              placeholder="Create a strong password"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <button class="dh-btn dh-btn--primary" type="submit">
+            Create account
+            <svg class="dh-btn__arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+        </form>
+      </div>
+
+      {{! ── Footer note ──────────────────────────────────────── }}
+      <p class="dh-card__footer">
+        By continuing, you agree to DoubtHub's
+        <a class="dh-link" href="#">Terms</a> and
+        <a class="dh-link" href="#">Privacy Policy</a>.
+      </p>
+
+    </div>{{! /.dh-card }}
+  </main>

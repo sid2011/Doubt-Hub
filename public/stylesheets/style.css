@@ -27,51 +27,459 @@ background-color:#fdfce9;
     justify-content: center; /* vertical center */
     align-items: center;     /* horizontal center */
 }
-.login-box{
-    align-items: center;
-    width:420px;
-    background-color: purple;
-    color: white;
-}.login-box .input-box{
-margin:0px;
-width:100%;
-height:50px;
-border-radius: 40px;
-background-color:transparent;
 
-}.login-page{
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical center */
-    align-items: center; 
-}.title{
-    font-weight: 700;
-    line-height: 1.1;
-}a{
-    color: rgb(255 255 255);
-    text-decoration: none;
-}::placeholder {
-  color:white; /* Replace with your desired color */
-  opacity: 1; /* Ensures Firefox displays the color properly */
-}.login-btn{
-    margin:0px;
-width:100%;
-height:50px;
-border-radius: 40px;
-background-color:white;
-color:black;
-font-weight: bold;
-}.signup-btn{
-    margin:0px;
-width:100%;
-height:50px;
-border-radius: 40px;
-background-color:white;
-color:black;
-font-weight: bold;
-}.signup-page{
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* vertical center */
-    align-items: center; 
+/* =========================================================
+   DoubtHub — Login / Signup Page
+   Mobile-first: card fills the screen, text is large enough
+   to read without zooming on any Android phone.
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --dh-bg:           #F5F5F7;
+  --dh-surface:      #FFFFFF;
+  --dh-border:       #E5E7EB;
+  --dh-border-focus: #4F46E5;
+  --dh-ink:          #111827;
+  --dh-muted:        #6B7280;
+  --dh-placeholder:  #9CA3AF;
+  --dh-primary:      #4F46E5;
+  --dh-primary-h:    #4338CA;
+  --dh-link:         #4F46E5;
+  --dh-blob-a:       rgba(99, 102, 241, 0.18);
+  --dh-blob-b:       rgba(167, 139, 250, 0.13);
+  --dh-radius-sm:    10px;
+  --dh-radius-md:    16px;
+  --dh-radius-lg:    22px;
+  --dh-shadow-card:
+    0 0 0 1px rgba(0,0,0,0.05),
+    0 4px 6px -1px rgba(0,0,0,0.05),
+    0 10px 24px -4px rgba(0,0,0,0.08);
+  --dh-shadow-focus: 0 0 0 3px rgba(79, 70, 229, 0.18);
+  --dh-ease:         0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  background-color: var(--dh-bg);
+  color: var(--dh-ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------------------------------------------------------
+   PAGE — fills the full viewport, card centred inside
+   --------------------------------------------------------- */
+
+.dh-page {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh; /* dynamic viewport — accounts for Android browser chrome */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Tight padding so card can be wide on mobile */
+  padding: 1.5rem 1rem;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   BLOBS
+   --------------------------------------------------------- */
+
+.dh-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: dh-pulse 8s ease-in-out infinite alternate;
+  z-index: 0;
+}
+.dh-blob--1 { width: 480px; height: 480px; background: var(--dh-blob-a); top: -120px; left: -120px; }
+.dh-blob--2 { width: 360px; height: 360px; background: var(--dh-blob-b); bottom: -80px; right: -80px; animation-delay: -4s; }
+
+@keyframes dh-pulse {
+  0%   { transform: scale(1)   translate(0, 0); }
+  100% { transform: scale(1.1) translate(20px, -20px); }
+}
+@media (prefers-reduced-motion: reduce) { .dh-blob { animation: none; } }
+
+/* ---------------------------------------------------------
+   CARD — stretches to fill mobile screen width
+   --------------------------------------------------------- */
+
+.dh-card {
+  position: relative;
+  z-index: 1;
+  /* Fill available width with just 1rem gap each side */
+  width: 100%;
+  max-width: 480px;
+  background: var(--dh-surface);
+  border-radius: var(--dh-radius-lg);
+  box-shadow: var(--dh-shadow-card);
+  /* Generous padding so nothing feels cramped */
+  padding: 2.25rem 1.75rem 2rem;
+  animation: dh-card-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes dh-card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .dh-card { animation: none; } }
+
+.dh-card__footer {
+  margin: 1.5rem 0 0;
+  font-size: 0.9375rem;  /* 15px */
+  color: var(--dh-muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------
+   BRAND
+   --------------------------------------------------------- */
+
+.dh-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.dh-brand__icon {
+  width: 44px; height: 44px;
+  border-radius: var(--dh-radius-sm);
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+}
+
+.dh-brand__name {
+  font-size: 1.375rem;   /* 22px — large and clear */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--dh-ink);
+}
+
+/* ---------------------------------------------------------
+   TABS
+   --------------------------------------------------------- */
+
+.dh-tabs {
+  position: relative;
+  display: flex;
+  background: #F3F4F6;
+  border-radius: var(--dh-radius-md);
+  padding: 4px;
+  gap: 2px;
+  margin-bottom: 1.75rem;
+}
+
+.dh-tab {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  min-height: 48px;      /* Android minimum tap target */
+  padding: 0.65rem 1rem;
+  border-radius: calc(var(--dh-radius-md) - 4px);
+  font-family: inherit;
+  font-size: 1.0625rem;  /* 17px */
+  font-weight: 500;
+  color: var(--dh-muted);
+  cursor: pointer;
+  transition: color var(--dh-ease);
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dh-tab:focus-visible { outline: 2px solid var(--dh-primary); outline-offset: -2px; }
+.dh-tab--active { color: var(--dh-ink); }
+
+.dh-tab__indicator {
+  position: absolute;
+  top: 4px;
+  height: calc(100% - 8px);
+  background: var(--dh-surface);
+  border-radius: calc(var(--dh-radius-md) - 4px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.10);
+  transition: left 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------------------------------------------------------
+   PANELS
+   --------------------------------------------------------- */
+
+.dh-panel { display: none; }
+
+.dh-panel--active {
+  display: block;
+  animation: dh-panel-in 0.22s ease both;
+}
+
+@keyframes dh-panel-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .dh-panel--active { animation: none; } }
+
+.dh-panel__sub {
+  margin: 0 0 1.5rem;
+  font-size: 1.0625rem;  /* 17px */
+  color: var(--dh-muted);
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------
+   FORM FIELDS
+   --------------------------------------------------------- */
+
+.dh-field { margin-bottom: 1.25rem; }
+
+.dh-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.dh-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.0625rem;  /* 17px */
+  font-weight: 500;
+  color: var(--dh-ink);
+}
+
+.dh-label-row .dh-label { margin-bottom: 0; }
+
+/* Force 16px on inputs — defeats Bootstrap AND Android auto-zoom */
+.dh-input {
+  display: block !important;
+  width: 100% !important;
+  height: 56px !important;     /* tall enough to tap easily */
+  padding: 0 1rem !important;
+  background: #FAFAFA !important;
+  border: 1.5px solid var(--dh-border) !important;
+  border-radius: var(--dh-radius-sm) !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-size: 16px !important;  /* hard px — not rem, not em, not % */
+  color: var(--dh-ink) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--dh-ease), box-shadow var(--dh-ease), background var(--dh-ease);
+}
+
+.dh-input::placeholder { color: var(--dh-placeholder) !important; opacity: 1; }
+.dh-input:hover        { border-color: #C4C4C4 !important; }
+.dh-input:focus {
+  background: var(--dh-surface) !important;
+  border-color: var(--dh-border-focus) !important;
+  box-shadow: var(--dh-shadow-focus) !important;
+}
+
+/* ---------------------------------------------------------
+   LINKS
+   --------------------------------------------------------- */
+
+.dh-link {
+  color: var(--dh-link);
+  text-decoration: none;
+  font-size: 1rem;       /* 16px */
+  font-weight: 500;
+  padding: 0.25rem 0;
+  transition: opacity var(--dh-ease);
+}
+.dh-link:hover { opacity: 0.75; text-decoration: underline; }
+.dh-link:focus-visible { outline: 2px solid var(--dh-primary); outline-offset: 2px; border-radius: 2px; }
+
+/* ---------------------------------------------------------
+   BUTTON
+   --------------------------------------------------------- */
+
+.dh-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 56px;          /* matches input height */
+  margin-top: 0.5rem;
+  padding: 0 1.25rem;
+  border: none;
+  border-radius: var(--dh-radius-sm);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 1.125rem;   /* 18px — large and readable */
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background var(--dh-ease), transform var(--dh-ease), box-shadow var(--dh-ease);
+}
+
+.dh-btn--primary {
+  background: var(--dh-primary);
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(79, 70, 229, 0.3);
+}
+.dh-btn--primary:hover  { background: var(--dh-primary-h); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35); transform: translateY(-1px); }
+.dh-btn--primary:active { transform: translateY(0); box-shadow: 0 1px 3px rgba(79, 70, 229, 0.2); }
+.dh-btn:focus-visible   { outline: 2px solid var(--dh-primary); outline-offset: 2px; }
+
+.dh-btn__arrow { transition: transform var(--dh-ease); flex-shrink: 0; }
+.dh-btn:hover .dh-btn__arrow { transform: translateX(3px); }
+
+@media (prefers-reduced-motion: reduce) { .dh-btn, .dh-btn__arrow { transition: none; } }
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   On desktop, shrink heights back — 56px is too tall on a monitor
+   --------------------------------------------------------- */
+
+@media (min-width: 640px) {
+  .dh-page  { padding: 2.5rem 2rem; }
+  .dh-card  { padding: 2.75rem 2.5rem 2.25rem; }
+  .dh-input { height: 48px !important; }
+  .dh-btn   { height: 48px; font-size: 1rem; }
+}
+.signup-container{
+    max-width:450px;
+    width:100%;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.brand{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.brand h2{
+    margin-bottom:8px;
+}
+
+.google-btn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    height:52px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    text-decoration:none;
+    color:#222;
+    font-weight:600;
+    margin-bottom:22px;
+    transition:.25s;
+}
+
+.google-btn:hover{
+    background:#f7f7f7;
+}
+
+.google-btn img{
+    width:22px;
+}
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.divider span{
+    flex:1;
+    height:1px;
+    background:#ddd;
+}
+
+.divider p{
+    color:#888;
+    font-size:14px;
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input{
+    height:52px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:0 16px;
+    font-size:16px;
+}
+
+button{
+    height:52px;
+    border:none;
+    border-radius:12px;
+    background:#4f46e5;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#4338ca;
+}
+
+.login-text{
+    text-align:center;
+    margin-top:20px;
+}
+
+.login-text a{
+    text-decoration:none;
+    color:#4f46e5;
+    font-weight:600;
+}.google-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    width:100%;
+    height:52px;
+
+    background:#fff;
+    border:1px solid #dadce0;
+    border-radius:10px;
+
+    text-decoration:none;
+    color:#3c4043;
+    font-size:16px;
+    font-weight:500;
+
+    transition:0.2s;
+}
+
+.google-btn:hover{
+    background:#f8f9fa;
+    box-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+
+.google-btn img{
+    width:20px;
+    height:20px;
 }
