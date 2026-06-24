@@ -6,12 +6,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 router.get('/signup',(req,res)=>{
-  res.render('signup_page')
+  res.render('signup_page', {
+    css: "signup.css"
+})
 })
 router.get('/login',(req,res)=>{
-  res.render('login_page')
+  res.render('login_page',{
+    css: "login.css"
 })
-router.get('/doubt',(req,res)=>{
+})
+router.get('/doubts',(req,res)=>{
   res.render('partials/navbar')
 })
 
