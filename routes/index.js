@@ -16,7 +16,7 @@ router.get('/login',(req,res)=>{
 })
 })
 router.get('/doubts',(req,res)=>{
-  res.render('partials/navbar')
+res.render('user/doubt-section');
 })
 
 module.exports = router;

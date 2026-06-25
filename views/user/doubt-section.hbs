@@ -1,0 +1,25 @@
+<section class="dh-hero rounded-4 p-4 p-md-5 mb-4">
+  <div class="row align-items-center g-3">
+    <div class="col-md-8">
+      <h1 class="fw-bold mb-2">Stuck on a doubt? Ask the community.</h1>
+      <p class="text-secondary mb-3 mb-md-0">Get quick help from peers and top contributors. Earn XP every time you ask, answer, or help others.</p>
+    </div>
+    <div class="col-md-4 text-md-end">
+      <button class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#askDoubtModal">
+        <i class="bi bi-plus-lg me-1"></i> Ask a doubt
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="row g-4">
+  <div class="col-lg-8">
+    {{> filter-bar}}
+    {{#each doubts}}
+      {{> doubt-card this}}
+    {{/each}}
+  </div>
+  <div class="col-lg-4">
+    {{> sidebar}}
+  </div>
+</div>

@@ -1558,3 +1558,152 @@ body {
     animation: none;
   }
 }
+:root {
+  --db-primary: #2563eb;
+  --db-primary-soft: #eff5ff;
+  --db-bg: #f7f9fc;
+  --db-border: #eef1f6;
+  --db-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px rgba(15, 23, 42, .05);
+  --db-shadow-hover: 0 4px 12px rgba(15, 23, 42, .06), 0 16px 40px rgba(15, 23, 42, .08);
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--db-bg);
+  color: #0f172a;
+}
+
+.btn-primary, .bg-primary { background-color: var(--db-primary) !important; border-color: var(--db-primary) !important; }
+.btn-outline-primary { color: var(--db-primary); border-color: var(--db-primary); }
+.btn-outline-primary:hover { background: var(--db-primary); color: #fff; }
+.text-primary { color: var(--db-primary) !important; }
+
+/* Navbar */
+.dh-navbar {
+  background: #fff;
+  border-bottom: 1px solid var(--db-border);
+  padding: .6rem 0;
+}
+.dh-logo {
+  width: 34px; height: 34px;
+  background: var(--db-primary);
+  color: #fff;
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.dh-search { max-width: 520px; }
+.dh-search .input-group-text, .dh-search .form-control {
+  background: var(--db-bg);
+  border-color: var(--db-bg);
+}
+.dh-search .form-control:focus { box-shadow: none; background: #fff; border-color: var(--db-primary); }
+.dh-search .input-group:focus-within .input-group-text { background: #fff; border-color: var(--db-primary); }
+@media (max-width: 991.98px) {
+  .dh-search { display: none; order: 5; flex-basis: 100%; margin-top: .5rem; }
+  .dh-search.show { display: block; }
+}
+.dh-icon-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; }
+.dh-xp {
+  background: linear-gradient(135deg, #fff7ed, #ffedd5);
+  color: #b45309;
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.dh-avatar-btn img { box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--db-primary); }
+.dh-profile-menu { min-width: 260px; border-radius: 16px; }
+.dh-stat { background: var(--db-bg); border-radius: 12px; padding: .5rem .25rem; }
+
+/* Cards */
+.dh-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--db-shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.dh-doubt-card:hover { transform: translateY(-2px); box-shadow: var(--db-shadow-hover); }
+.stretched-link-soft:hover { color: var(--db-primary) !important; }
+.min-w-0 { min-width: 0; }
+
+/* Votes */
+.dh-votes { min-width: 44px; }
+.dh-vote-btn {
+  width: 36px; height: 32px;
+  border-radius: 10px;
+  background: var(--db-bg);
+  color: #64748b;
+  border: 0;
+}
+.dh-vote-btn:hover { background: var(--db-primary-soft); color: var(--db-primary); }
+.dh-vote-btn.active { background: var(--db-primary); color: #fff; }
+
+/* Tags / subjects */
+.dh-tag {
+  background: var(--db-primary-soft);
+  color: var(--db-primary);
+  font-weight: 500;
+  padding: .4em .7em;
+  border-radius: 999px;
+}
+.dh-subject { padding: .4em .7em; border-radius: 999px; font-weight: 600; }
+.dh-subject-Maths       { background: #ecfeff; color: #0e7490; }
+.dh-subject-Physics     { background: #eef2ff; color: #4338ca; }
+.dh-subject-Chemistry   { background: #fef3c7; color: #b45309; }
+.dh-subject-Biology     { background: #dcfce7; color: #15803d; }
+.dh-subject-English     { background: #fce7f3; color: #be185d; }
+.dh-subject-Computer    { background: #f1f5f9; color: #334155; }
+.dh-subject-Computer.Science, [class*="dh-subject-Computer"] { background: #f1f5f9; color: #334155; }
+
+/* Filter bar */
+.dh-pills .nav-link { color: #475569; border-radius: 999px; padding: .4rem .9rem; }
+.dh-pills .nav-link.active { background: var(--db-primary); color: #fff; }
+.dh-subject-pill {
+  background: #fff;
+  color: #475569;
+  border: 1px solid var(--db-border);
+  padding: .45em .8em;
+  border-radius: 999px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.dh-subject-pill.active, .dh-subject-pill:hover {
+  background: var(--db-primary); color: #fff; border-color: var(--db-primary);
+}
+
+/* Hero */
+.dh-hero {
+  background: linear-gradient(135deg, #eff6ff 0%, #ffffff 60%, #fef3c7 100%);
+  border: 1px solid var(--db-border);
+}
+
+/* Sidebar */
+.dh-sidebar { position: sticky; top: 80px; }
+@media (max-width: 991.98px) { .dh-sidebar { position: static; } }
+.dh-rank { width: 28px; font-weight: 700; color: #94a3b8; font-size: .85rem; }
+.dh-progress { height: 8px; border-radius: 999px; background: var(--db-bg); }
+
+/* Tiers */
+.tier-bronze  { background: #fde68a; color: #92400e; }
+.tier-silver  { background: #e5e7eb; color: #374151; }
+.tier-gold    { background: #fcd34d; color: #92400e; }
+.tier-diamond { background: linear-gradient(135deg, #a5f3fc, #c4b5fd); color: #1e3a8a; }
+
+/* FAB */
+.dh-fab {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, .35);
+  z-index: 1030;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* Accepted answer */
+.dh-accepted { border: 1px solid #bbf7d0 !important; background: #f0fdf4; }
+
+/* Modal */
+.modal-content.dh-card { border-radius: 20px; }
