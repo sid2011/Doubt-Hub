@@ -1,25 +1,372 @@
-<section class="dh-hero rounded-4 p-4 p-md-5 mb-4">
-  <div class="row align-items-center g-3">
-    <div class="col-md-8">
-      <h1 class="fw-bold mb-2">Stuck on a doubt? Ask the community.</h1>
-      <p class="text-secondary mb-3 mb-md-0">Get quick help from peers and top contributors. Earn XP every time you ask, answer, or help others.</p>
-    </div>
-    <div class="col-md-4 text-md-end">
-      <button class="btn btn-primary btn-lg rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#askDoubtModal">
-        <i class="bi bi-plus-lg me-1"></i> Ask a doubt
+<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+<nav class="navbar navbar-expand-lg dh-navbar sticky-top">
+  <div class="container-fluid px-3 px-lg-4">
+
+    <!-- Logo -->
+    <a class="navbar-brand dh-logo d-flex align-items-center gap-2" href="/">
+      <div class="logo-icon">
+        <i class="bi bi-patch-question-fill"></i>
+      </div>
+      <span class="logo-text">Doubt<span class="logo-accent">Hub</span></span>
+    </a>
+
+    <!-- Mobile controls -->
+    <div class="d-flex align-items-center gap-2 d-lg-none">
+      <button class="btn btn-icon mobile-search-btn" id="mobileSearchToggle">
+        <i class="bi bi-search"></i>
+      </button>
+      <div class="notif-wrap position-relative">
+        <button class="btn btn-icon" id="notifBtnMobile">
+          <i class="bi bi-bell"></i>
+          {{#if unreadCount}}
+            <span class="notif-badge">{{unreadCount}}</span>
+          {{/if}}
+        </button>
+      </div>
+      <button class="navbar-toggler btn btn-icon" data-bs-toggle="collapse" data-bs-target="#navMain">
+        <i class="bi bi-list"></i>
       </button>
     </div>
-  </div>
-</section>
 
-<div class="row g-4">
-  <div class="col-lg-8">
-    {{> filter-bar}}
-    {{#each doubts}}
-      {{> doubt-card this}}
-    {{/each}}
+    <!-- Collapsible -->
+    <div class="collapse navbar-collapse" id="navMain">
+      <!-- Search bar (desktop center) -->
+      <div class="dh-search-wrap mx-auto">
+        <form action="/" method="GET" id="searchForm" autocomplete="off">
+          <div class="search-input-wrap">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" name="search" id="searchInput" class="form-control dh-search"
+              placeholder="Search doubts, subjects, tags…"
+              value="{{search}}" />
+            <div class="search-suggestions" id="searchSuggestions"></div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right items -->
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <!-- XP Display -->
+        <div class="xp-pill">
+          <i class="bi bi-star-fill xp-star"></i>
+          <span class="xp-val">{{formatNumber currentUser.xp}} XP</span>
+        </div>
+
+        <!-- Notifications (desktop) -->
+        <div class="notif-wrap position-relative d-none d-lg-block">
+          <button class="btn btn-icon" id="notifBtn">
+            <i class="bi bi-bell-fill"></i>
+            {{#if unreadCount}}
+              <span class="notif-badge">{{unreadCount}}</span>
+            {{/if}}
+          </button>
+
+          <!-- Notification dropdown -->
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+              <span>Notifications</span>
+              <button class="btn-link" id="markAllRead">Mark all read</button>
+            </div>
+            <div class="notif-list">
+              {{#each notifications}}
+                <div class="notif-item {{#if this.read}}read{{else}}unread{{/if}}">
+                  <span class="notif-icon">{{this.icon}}</span>
+                  <div class="notif-body">
+                    <p>{{this.message}}</p>
+                    <small>{{this.time}}</small>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile dropdown -->
+        <div class="dropdown">
+          <button class="btn profile-btn dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="user-avatar-sm">{{currentUser.avatar}}</span>
+            <span class="d-none d-md-inline username-text">{{currentUser.username}}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end dh-dropdown" aria-labelledby="profileDropdown">
+            <!-- Mini Profile Card -->
+            <li class="profile-card-mini">
+              <div class="profile-avatar-lg">{{currentUser.avatar}}</div>
+              <div class="profile-info">
+                <strong>{{currentUser.username}}</strong>
+                <div class="profile-stats">
+                  <span><i class="bi bi-star-fill text-warning"></i> {{formatNumber currentUser.xp}} XP</span>
+                  <span>Rank #{{currentUser.rank}}</span>
+                </div>
+                <div class="profile-stats">
+                  <span><i class="bi bi-question-circle"></i> {{currentUser.totalDoubts}} doubts</span>
+                  <span><i class="bi bi-chat-dots"></i> {{currentUser.totalAnswers}} answers</span>
+                </div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider my-1"/></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> View Profile</a></li>
+            <li><a class="dropdown-item" href="/?filter=my"><i class="bi bi-question-circle"></i> My Doubts</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark"></i> Saved Doubts</a></li>
+            <li><a class="dropdown-item" href="#leaderboard"><i class="bi bi-trophy"></i> Leaderboard</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
+            <li><hr class="dropdown-divider my-1"/></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-4">
-    {{> sidebar}}
+
+  <!-- Mobile search bar (collapsible) -->
+  <div class="mobile-search-bar" id="mobileSearchBar">
+    <form action="/" method="GET" class="px-3 py-2">
+      <div class="search-input-wrap">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" name="search" class="form-control dh-search" placeholder="Search doubts…" value="{{search}}"/>
+      </div>
+    </form>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ XP TOAST ═══════════════════════ -->
+<div class="xp-toast" id="xpToast" aria-live="polite">
+  <span class="xp-toast-icon">⭐</span>
+  <span id="xpToastMsg">+5 XP earned!</span>
+</div>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<div class="container-xxl py-4">
+  <div class="row g-4">
+
+    <!-- LEFT: Filters + Feed -->
+    <div class="col-lg-8">
+
+      <!-- Page Header -->
+      <div class="feed-header d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <h1 class="feed-title">Community Doubts</h1>
+          <p class="feed-subtitle text-muted mb-0">{{doubts.length}} doubts found</p>
+        </div>
+        <button class="btn btn-primary dh-btn-primary d-none d-lg-flex" id="askDoubtDesktop">
+          <i class="bi bi-plus-lg me-1"></i> Ask Doubt
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-row mb-4">
+        <div class="filter-pills d-flex flex-wrap gap-2">
+          {{#each filterOptions}}
+            <a href="/?filter={{this.key}}{{#if ../subject}}&subject={{../subject}}{{/if}}"
+               class="filter-pill {{#if (eq ../filter this.key)}}active{{/if}}">
+              <i class="bi {{this.icon}} me-1"></i>{{this.label}}
+            </a>
+          {{/each}}
+        </div>
+
+        <!-- Subject filter -->
+        <div class="subject-filter-row mt-3 d-flex flex-wrap gap-2">
+          <a href="/?filter={{filter}}" class="subject-pill {{#unless subject}}active{{/unless}}">All</a>
+          {{#each subjects}}
+            <a href="/?filter={{../filter}}&subject={{this}}"
+               class="subject-pill subject-{{lowercase this}} {{#if (eq ../subject this)}}active{{/if}}">
+               {{this}}
+            </a>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- Doubts Feed -->
+      <div id="doubtsFeed">
+        {{#unless doubts}}
+          <div class="empty-state text-center py-5">
+            <div class="empty-icon">🤔</div>
+            <h3>No doubts found</h3>
+            <p class="text-muted">Be the first to ask a doubt in this category!</p>
+            <button class="btn btn-primary dh-btn-primary" id="askFromEmpty">
+              <i class="bi bi-plus-lg me-1"></i> Ask the First Doubt
+            </button>
+          </div>
+        {{/unless}}
+
+        {{#each doubts}}
+          <div class="doubt-card" id="card-{{this.id}}">
+            <!-- Card Header -->
+            <div class="dc-header">
+              <div class="user-avatar">{{this.avatar}}</div>
+              <div class="dc-user-info">
+                <span class="dc-username">{{this.username}}</span>
+                <span class="xp-badge-sm">⭐ {{formatNumber this.xp}} XP</span>
+              </div>
+              <div class="dc-meta ms-auto d-flex align-items-center gap-2">
+                {{#if this.solved}}
+                  <span class="solved-badge"><i class="bi bi-check-circle-fill me-1"></i>Solved</span>
+                {{/if}}
+                <span class="dc-time text-muted" title="{{this.timestamp}}">{{timeAgo this.timestamp}}</span>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="dc-body">
+              <a href="#" class="dc-title">{{this.title}}</a>
+              <p class="dc-desc text-muted">{{truncate this.description 160}}</p>
+
+              <div class="dc-tags mt-2 d-flex flex-wrap gap-1">
+                <span class="subject-tag subject-{{lowercase this.subject}}">#{{this.subject}}</span>
+                {{#each this.tags}}
+                  <span class="tag-pill">#{{this}}</span>
+                {{/each}}
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="dc-footer">
+              <button class="action-btn vote-btn" data-id="{{this.id}}" data-type="up">
+                <i class="bi bi-hand-thumbs-up"></i>
+                <span class="vote-count" id="up-{{this.id}}">{{this.upvotes}}</span>
+              </button>
+              <button class="action-btn vote-btn" data-id="{{this.id}}" data-type="down">
+                <i class="bi bi-hand-thumbs-down"></i>
+                <span class="vote-count" id="down-{{this.id}}">{{this.downvotes}}</span>
+              </button>
+              <button class="action-btn answers-btn">
+                <i class="bi bi-chat-dots"></i>
+                <span>{{this.answers}} Answers</span>
+              </button>
+              <button class="action-btn save-btn ms-auto {{#if this.saved}}saved{{/if}}" data-id="{{this.id}}">
+                <i class="bi bi-bookmark{{#if this.saved}}-fill{{/if}}"></i>
+                <span>{{#if this.saved}}Saved{{else}}Save{{/if}}</span>
+              </button>
+              <button class="action-btn report-btn">
+                <i class="bi bi-flag"></i>
+              </button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- RIGHT: Sidebar -->
+    <div class="col-lg-4" id="leaderboard">
+      <!-- Leaderboard Widget -->
+      <div class="sidebar-widget">
+        <div class="widget-header">
+          <span><i class="bi bi-trophy-fill me-2 text-warning"></i>Top Contributors</span>
+        </div>
+        <div class="leaderboard-list">
+          {{#each leaderboard}}
+            <div class="lb-item {{#if (eq this.rank 1)}}lb-gold{{else if (eq this.rank 2)}}lb-silver{{else if (eq this.rank 3)}}lb-bronze{{/if}}">
+              <span class="lb-badge">{{this.badge}}</span>
+              <span class="lb-avatar">{{this.avatar}}</span>
+              <div class="lb-info">
+                <span class="lb-name">{{this.username}}</span>
+                <span class="lb-xp">⭐ {{formatNumber this.xp}} XP</span>
+              </div>
+              <span class="lb-rank">#{{this.rank}}</span>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- XP Rules Widget -->
+      <div class="sidebar-widget mt-4">
+        <div class="widget-header">
+          <span><i class="bi bi-star-fill me-2 text-warning"></i>Earn XP</span>
+        </div>
+        <div class="xp-rules">
+          <div class="xp-rule"><span class="xp-action">Ask a doubt</span><span class="xp-pts xp-pos">+5 XP</span></div>
+          <div class="xp-rule"><span class="xp-action">Answer a doubt</span><span class="xp-pts xp-pos">+10 XP</span></div>
+          <div class="xp-rule"><span class="xp-action">Answer accepted</span><span class="xp-pts xp-pos">+25 XP</span></div>
+          <div class="xp-rule"><span class="xp-action">Upvote received</span><span class="xp-pts xp-pos">+2 XP</span></div>
+          <div class="xp-rule"><span class="xp-action">Daily login</span><span class="xp-pts xp-pos">+3 XP</span></div>
+        </div>
+      </div>
+
+      <!-- Popular Tags Widget -->
+      <div class="sidebar-widget mt-4">
+        <div class="widget-header">
+          <span><i class="bi bi-tags-fill me-2 text-primary"></i>Popular Tags</span>
+        </div>
+        <div class="popular-tags d-flex flex-wrap gap-2 p-3">
+          {{#each popularTags}}
+            <a href="/?search={{this}}" class="tag-pill">#{{this}}</a>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ FAB ═══════════════════════ -->
+<button class="fab-btn d-lg-none" id="fabAsk" title="Ask a doubt">
+  <i class="bi bi-plus-lg"></i>
+</button>
+
+<!-- ═══════════════════════ ASK DOUBT MODAL ═══════════════════════ -->
+<div class="modal fade" id="askDoubtModal" tabindex="-1" aria-labelledby="askDoubtLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content dh-modal">
+      <div class="modal-header border-0 pb-0">
+        <div>
+          <h5 class="modal-title fw-bold" id="askDoubtLabel">
+            <i class="bi bi-patch-question-fill text-primary me-2"></i>Ask a Doubt
+          </h5>
+          <p class="text-muted small mb-0">Get help from the community. Be specific!</p>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Doubt Title <span class="text-danger">*</span></label>
+          <input type="text" id="doubtTitle" class="form-control dh-input"
+            placeholder="E.g. How do I find the derivative of sin(x)?"/>
+          <div class="form-text">Be specific and clear. Imagine you're asking a teacher.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Detailed Description <span class="text-danger">*</span></label>
+          <textarea id="doubtDesc" class="form-control dh-input" rows="4"
+            placeholder="Explain what you tried, where you're stuck, and any relevant context…"></textarea>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Subject <span class="text-danger">*</span></label>
+            <select id="doubtSubject" class="form-select dh-input">
+              <option value="">Select subject…</option>
+              <option>Maths</option>
+              <option>Physics</option>
+              <option>Chemistry</option>
+              <option>Programming</option>
+              <option>English</option>
+              <option>Biology</option>
+              <option>History</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Tags</label>
+            <input type="text" id="doubtTags" class="form-control dh-input"
+              placeholder="algebra, equations, calculus"/>
+            <div class="form-text">Comma-separated</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Image (Optional)</label>
+          <div class="img-upload-area" id="imgUploadArea">
+            <i class="bi bi-cloud-upload fs-2 text-muted"></i>
+            <p class="mb-1 text-muted">Drag & drop or click to upload</p>
+            <small class="text-muted">PNG, JPG up to 5MB</small>
+            <input type="file" id="imgUpload" class="d-none" accept="image/*"/>
+          </div>
+        </div>
+        <div class="xp-hint">
+          <i class="bi bi-star-fill text-warning me-1"></i>
+          You'll earn <strong>+5 XP</strong> for posting this doubt!
+        </div>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button class="btn btn-light dh-btn-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary dh-btn-primary" id="postDoubtBtn">
+          <i class="bi bi-send me-1"></i> Post Doubt
+        </button>
+      </div>
+    </div>
   </div>
 </div>
