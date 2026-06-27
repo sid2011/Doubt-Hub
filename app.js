@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars')
 var logger = require('morgan');
+const db = require('./config/connections');
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,6 +17,11 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+db.connect().then(() => {
+    app.listen(3000, () => {
+        console.log("Server Started");
+    });
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

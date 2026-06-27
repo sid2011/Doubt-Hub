@@ -6,8 +6,8 @@ const state = {
 
 module.exports.connect = async function () {
 
-    const url = 'mongodb://127.0.0.1:28017'
-    const dbname = 'doubthub'
+    const url = 'mongodb://127.0.0.1:27017'
+    const dbname = 'Doubthub'
 
     const client = await MongoClient.connect(url)
 

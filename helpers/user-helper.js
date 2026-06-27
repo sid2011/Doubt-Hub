@@ -1,4 +1,4 @@
-const db=require('../config/connection')
+const db=require('../config/connections')
 const collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { ObjectId } = require('mongodb')
