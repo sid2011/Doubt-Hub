@@ -7,12 +7,14 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.22.2",
     "express-handlebars": "^9.0.1",
     "hbs": "^4.2.1",
     "http-errors": "~1.6.3",
+    "mongodb": "^7.4.0",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.14"
   }
