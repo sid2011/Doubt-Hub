@@ -7,6 +7,19 @@ module.exports={
 doSignup:async(userData)=>{
 userData.password=await bcrypt.hash(userData.password,10)
 let response=await db.get().collection(collection.STUDENT_COLLECTION).insertOne(userData)
+},doLogIn:async(userData)=>{
+    let response={}
+let user=await db.get().collection(collection.STUDENT_COLLECTION).findOne({email:userData.email})
+if(!user){
+    return {status:false};
+}let status=await bcrypt.compare(userData.password,user.password)
+if(status){
+response.user=user
+response.status=true
+ return response
+}else {
+        return { status: false }
+    }
 }
 
 

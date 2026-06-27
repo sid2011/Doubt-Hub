@@ -1,0 +1,494 @@
+
+<!-- Google Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#f8fafc;
+    color:#1e293b;
+    overflow-x:hidden;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+    padding:80px 20px;
+    text-align:center;
+}
+
+.hero-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:3rem;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:1.1rem;
+    opacity:.95;
+}
+
+.last-updated{
+    margin-top:15px;
+    font-size:.95rem;
+    opacity:.9;
+}
+
+.home-btn{
+    margin-top:30px;
+    border-radius:50px;
+    padding:12px 28px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.home-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* CONTENT */
+
+.main-content{
+    margin-top:-45px;
+    margin-bottom:60px;
+}
+
+.terms-card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+/* SECTION */
+
+.section{
+    margin-bottom:28px;
+    padding:25px;
+    border-left:5px solid #2563eb;
+    border-radius:12px;
+    background:#ffffff;
+    transition:.3s;
+}
+
+.section:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.section h2{
+    font-size:1.35rem;
+    color:#2563eb;
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+.section p{
+    color:#475569;
+    line-height:1.8;
+}
+
+.section ul{
+    margin-top:12px;
+    padding-left:20px;
+}
+
+.section li{
+    margin-bottom:10px;
+    color:#475569;
+    line-height:1.7;
+}
+
+/* CONTACT */
+
+.contact-card{
+    background:#eff6ff;
+    border:1px solid #bfdbfe;
+    border-radius:15px;
+    padding:25px;
+    margin-top:20px;
+}
+
+.team-member{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    height:100%;
+    border:1px solid #e2e8f0;
+    transition:.3s;
+}
+
+.team-member:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+}
+
+.team-member h4{
+    color:#2563eb;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.team-member p{
+    margin-bottom:6px;
+    color:#475569;
+}
+
+.team-member a{
+    color:#2563eb;
+    text-decoration:none;
+}
+
+.team-member a:hover{
+    text-decoration:underline;
+}
+
+/* FOOTER */
+
+.footer{
+    background:#0f172a;
+    color:#cbd5e1;
+    text-align:center;
+    padding:40px 20px;
+}
+
+.footer h5{
+    color:white;
+    margin-bottom:10px;
+}
+
+.footer p{
+    margin-bottom:5px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+.hero{
+    padding:70px 20px;
+}
+
+.hero h1{
+    font-size:2.4rem;
+}
+
+}
+
+@media(max-width:768px){
+
+.hero{
+    padding:60px 15px;
+}
+
+.hero-icon{
+    font-size:48px;
+}
+
+.hero h1{
+    font-size:2rem;
+}
+
+.hero p{
+    font-size:15px;
+}
+
+.main-content{
+    margin-top:-30px;
+}
+
+.terms-card{
+    padding:20px;
+}
+
+.section{
+    padding:18px;
+}
+
+.section h2{
+    font-size:1.2rem;
+}
+
+.section p,
+.section li{
+    font-size:15px;
+}
+
+.home-btn{
+    width:100%;
+    max-width:260px;
+}
+
+.contact-card{
+    padding:18px;
+}
+
+.team-member{
+    margin-bottom:20px;
+}
+
+.footer{
+    padding:30px 15px;
+}
+
+}
+
+@media(max-width:576px){
+
+.hero{
+    padding:50px 15px;
+}
+
+.hero h1{
+    font-size:1.8rem;
+}
+
+.hero-icon{
+    font-size:42px;
+}
+
+.terms-card{
+    padding:15px;
+}
+
+.section{
+    padding:15px;
+}
+
+.section h2{
+    font-size:1.1rem;
+}
+
+}
+
+
+</style>
+
+</head>
+<body>
+
+<!-- Hero -->
+
+<section class="hero">
+
+<div class="logo">🎓</div>
+
+<h1>DoubtHub Terms of Service</h1>
+
+<p>Learn • Ask • Grow Together</p>
+
+<div class="updated">
+Last Updated: <strong>June 2026</strong>
+</div>
+
+<a href="/" class="home-btn">← Back to Home</a>
+
+</section>
+
+<!-- Content -->
+
+<div class="container">
+
+<div class="card">
+<h2>📘 1. Purpose of DoubtHub</h2>
+
+<p>
+Welcome to <strong>DoubtHub!</strong> By creating an account or using our platform,
+you agree to these Terms of Service.
+</p>
+
+<br>
+
+<p>
+DoubtHub is an educational platform where students and teachers can ask questions,
+share knowledge, and learn together. Our goal is to create a safe, respectful,
+and supportive learning community.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>👤 2. User Accounts</h2>
+
+<ul>
+<li>You are responsible for keeping your account secure.</li>
+<li>Provide accurate information while creating your account.</li>
+<li>Do not share your account or password with others.</li>
+<li>You are responsible for all activities that occur under your account.</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h2>🤝 3. Community Rules</h2>
+
+<p>To keep DoubtHub safe and welcoming, users must not:</p>
+
+<ul>
+<li>Post abusive, hateful, or offensive content.</li>
+<li>Harass, threaten, or bully other users.</li>
+<li>Share spam, advertisements, or misleading information.</li>
+<li>Upload illegal or inappropriate content.</li>
+<li>Attempt to cheat, exploit, or misuse the platform.</li>
+</ul>
+
+<p><strong>Please treat everyone with kindness and respect.</strong></p>
+
+</div>
+
+<div class="card">
+
+<h2>❓ 4. Questions & Answers</h2>
+
+<p>
+Users are responsible for the questions, answers, and other content they post.
+Please ensure your contributions are educational, respectful, and appropriate.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🤖 5. AI Assistance</h2>
+
+<p>
+DoubtHub may provide AI-generated answers to assist students in learning.
+While we strive for accuracy, AI responses may sometimes contain mistakes.
+Always verify important information with teachers, textbooks, or trusted
+educational resources.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🚫 6. Account Suspension</h2>
+
+<p>
+DoubtHub reserves the right to remove content, temporarily suspend,
+or permanently terminate accounts that repeatedly violate these Terms
+or engage in harmful activities.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>©️ 7. Intellectual Property</h2>
+
+<p>
+The DoubtHub name, logo, branding, software, and design are the property of
+DoubtHub. Users may not copy, reproduce, distribute, or misuse any part of
+the platform without prior permission.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>🌐 8. Service Availability</h2>
+
+<p>
+We work hard to keep DoubtHub available at all times.
+However, we cannot guarantee uninterrupted service due to maintenance,
+technical issues, or unforeseen circumstances.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>📝 9. Changes to These Terms</h2>
+
+<p>
+These Terms of Service may be updated from time to time.
+By continuing to use DoubtHub after changes are made,
+you agree to the updated Terms.
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>📞 10. Contact</h2>
+
+<p style="margin-bottom:20px;">
+If you have any questions about these Terms,
+please contact the DoubtHub team.
+</p>
+
+<div class="contact">
+
+<div class="person">
+
+<h3>👨‍💻 Sidharth B.</h3>
+
+<p><strong>Project Lead & MERN Developer</strong></p>
+
+<p>
+📧
+<a href="mailto:sidharthtechworld2k@gmail.com">
+sidharthtechworld2k@gmail.com
+</a>
+</p>
+
+</div>
+
+<div class="person">
+
+<h3>🎨 Nandan R.</h3>
+
+<p><strong>UI/UX Designer</strong></p>
+
+<p>
+📧
+<a href="mailto:nandanr05182011@gmail.com">
+nandanr05182011@gmail.com
+</a>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer class="footer">
+
+<h2>🎓 DoubtHub</h2>
+
+<p>
+Thank you for being a part of the DoubtHub community.
+Let's learn, help, and grow together.
+</p>
+
+<p style="margin-top:15px;">
+© 2026 DoubtHub. All Rights Reserved.
+</p>
+
+</footer>
+</body>

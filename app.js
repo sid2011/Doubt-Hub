@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars')
 var logger = require('morgan');
 const db = require('./config/connections');
-
+const session=require('express-session')
 
 
 var indexRouter = require('./routes/index');
@@ -17,11 +17,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-db.connect().then(() => {
-    app.listen(3000, () => {
-        console.log("Server Started");
-    });
-});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,8 +30,21 @@ app.engine('hbs',engine({extname:'.hbs',defaultLayout:'layout',layoutsDir:__dirn
     }
   }}))
 app.set('view engine', 'hbs');
+app.use(session({
+  secret: 'Key',
+  cookie: {
+    maxAge: 600000
+  },
+  resave: false,
+  saveUninitialized: false
+}))
 
 
+db.connect().then(() => {
+    app.listen(3000, () => {
+        console.log("Server Started");
+    });
+});
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

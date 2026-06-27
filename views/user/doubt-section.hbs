@@ -18,9 +18,9 @@
       <div class="notif-wrap position-relative">
         <button class="btn btn-icon" id="notifBtnMobile">
           <i class="bi bi-bell"></i>
-          {{#if unreadCount}}
-            <span class="notif-badge">{{unreadCount}}</span>
-          {{/if}}
+          
+            <span class="notif-badge"></span>
+          
         </button>
       </div>
       <button class="navbar-toggler btn btn-icon" data-bs-toggle="collapse" data-bs-target="#navMain">
@@ -37,7 +37,7 @@
             <i class="bi bi-search search-icon"></i>
             <input type="text" name="search" id="searchInput" class="form-control dh-search"
               placeholder="Search doubts, subjects, tags…"
-              value="{{search}}" />
+              value="" />
             <div class="search-suggestions" id="searchSuggestions"></div>
           </div>
         </form>
@@ -48,16 +48,16 @@
         <!-- XP Display -->
         <div class="xp-pill">
           <i class="bi bi-star-fill xp-star"></i>
-          <span class="xp-val">{{formatNumber currentUser.xp}} XP</span>
+          <span class="xp-val"> XP</span>
         </div>
 
         <!-- Notifications (desktop) -->
         <div class="notif-wrap position-relative d-none d-lg-block">
           <button class="btn btn-icon" id="notifBtn">
             <i class="bi bi-bell-fill"></i>
-            {{#if unreadCount}}
-              <span class="notif-badge">{{unreadCount}}</span>
-            {{/if}}
+            
+              <span class="notif-badge"></span>
+            
           </button>
 
           <!-- Notification dropdown -->
@@ -67,15 +67,15 @@
               <button class="btn-link" id="markAllRead">Mark all read</button>
             </div>
             <div class="notif-list">
-              {{#each notifications}}
-                <div class="notif-item {{#if this.read}}read{{else}}unread{{/if}}">
-                  <span class="notif-icon">{{this.icon}}</span>
+              
+                <div class="notif-item readunread">
+                  <span class="notif-icon"></span>
                   <div class="notif-body">
-                    <p>{{this.message}}</p>
-                    <small>{{this.time}}</small>
+                    <p></p>
+                    <small></small>
                   </div>
                 </div>
-              {{/each}}
+              
             </div>
           </div>
         </div>
@@ -83,22 +83,22 @@
         <!-- Profile dropdown -->
         <div class="dropdown">
           <button class="btn profile-btn dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="user-avatar-sm">{{currentUser.avatar}}</span>
-            <span class="d-none d-md-inline username-text">{{currentUser.username}}</span>
+            <span class="user-avatar-sm"></span>
+            <span class="d-none d-md-inline username-text"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-end dh-dropdown" aria-labelledby="profileDropdown">
             <!-- Mini Profile Card -->
             <li class="profile-card-mini">
-              <div class="profile-avatar-lg">{{currentUser.avatar}}</div>
+              <div class="profile-avatar-lg"></div>
               <div class="profile-info">
-                <strong>{{currentUser.username}}</strong>
+                <strong></strong>
                 <div class="profile-stats">
-                  <span><i class="bi bi-star-fill text-warning"></i> {{formatNumber currentUser.xp}} XP</span>
-                  <span>Rank #{{currentUser.rank}}</span>
+                  <span><i class="bi bi-star-fill text-warning"></i>  XP</span>
+                  <span>Rank #</span>
                 </div>
                 <div class="profile-stats">
-                  <span><i class="bi bi-question-circle"></i> {{currentUser.totalDoubts}} doubts</span>
-                  <span><i class="bi bi-chat-dots"></i> {{currentUser.totalAnswers}} answers</span>
+                  <span><i class="bi bi-question-circle"></i>  doubts</span>
+                  <span><i class="bi bi-chat-dots"></i>  answers</span>
                 </div>
               </div>
             </li>
@@ -109,7 +109,7 @@
             <li><a class="dropdown-item" href="#leaderboard"><i class="bi bi-trophy"></i> Leaderboard</a></li>
             <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
             <li><hr class="dropdown-divider my-1"/></li>
-            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
           </ul>
         </div>
       </div>
@@ -121,7 +121,7 @@
     <form action="/" method="GET" class="px-3 py-2">
       <div class="search-input-wrap">
         <i class="bi bi-search search-icon"></i>
-        <input type="text" name="search" class="form-control dh-search" placeholder="Search doubts…" value="{{search}}"/>
+        <input type="text" name="search" class="form-control dh-search" placeholder="Search doubts…" value=""/>
       </div>
     </form>
   </div>
@@ -144,7 +144,7 @@
       <div class="feed-header d-flex align-items-center justify-content-between mb-3">
         <div>
           <h1 class="feed-title">Community Doubts</h1>
-          <p class="feed-subtitle text-muted mb-0">{{doubts.length}} doubts found</p>
+          <p class="feed-subtitle text-muted mb-0"> doubts found</p>
         </div>
         <button class="btn btn-primary dh-btn-primary d-none d-lg-flex" id="askDoubtDesktop">
           <i class="bi bi-plus-lg me-1"></i> Ask Doubt
@@ -154,29 +154,29 @@
       <!-- Filters -->
       <div class="filters-row mb-4">
         <div class="filter-pills d-flex flex-wrap gap-2">
-          {{#each filterOptions}}
-            <a href="/?filter={{this.key}}{{#if ../subject}}&subject={{../subject}}{{/if}}"
-               class="filter-pill {{#if (eq ../filter this.key)}}active{{/if}}">
-              <i class="bi {{this.icon}} me-1"></i>{{this.label}}
+          
+            <a href="/?filter=&subject="
+               class="filter-pill active">
+              <i class="bi  me-1"></i>
             </a>
-          {{/each}}
+          
         </div>
 
         <!-- Subject filter -->
         <div class="subject-filter-row mt-3 d-flex flex-wrap gap-2">
-          <a href="/?filter={{filter}}" class="subject-pill {{#unless subject}}active{{/unless}}">All</a>
-          {{#each subjects}}
-            <a href="/?filter={{../filter}}&subject={{this}}"
-               class="subject-pill subject-{{lowercase this}} {{#if (eq ../subject this)}}active{{/if}}">
-               {{this}}
+          <a href="/?filter=" class="subject-pill active">All</a>
+          
+            <a href="/?filter=&subject="
+               class="subject-pill subject- active">
+               
             </a>
-          {{/each}}
+          
         </div>
       </div>
 
       <!-- Doubts Feed -->
       <div id="doubtsFeed">
-        {{#unless doubts}}
+        
           <div class="empty-state text-center py-5">
             <div class="empty-icon">🤔</div>
             <h3>No doubts found</h3>
@@ -185,62 +185,62 @@
               <i class="bi bi-plus-lg me-1"></i> Ask the First Doubt
             </button>
           </div>
-        {{/unless}}
+        
 
-        {{#each doubts}}
-          <div class="doubt-card" id="card-{{this.id}}">
+        
+          <div class="doubt-card" id="card-">
             <!-- Card Header -->
             <div class="dc-header">
-              <div class="user-avatar">{{this.avatar}}</div>
+              <div class="user-avatar"></div>
               <div class="dc-user-info">
-                <span class="dc-username">{{this.username}}</span>
-                <span class="xp-badge-sm">⭐ {{formatNumber this.xp}} XP</span>
+                <span class="dc-username"></span>
+                <span class="xp-badge-sm">⭐  XP</span>
               </div>
               <div class="dc-meta ms-auto d-flex align-items-center gap-2">
-                {{#if this.solved}}
+                
                   <span class="solved-badge"><i class="bi bi-check-circle-fill me-1"></i>Solved</span>
-                {{/if}}
-                <span class="dc-time text-muted" title="{{this.timestamp}}">{{timeAgo this.timestamp}}</span>
+                
+                <span class="dc-time text-muted" title=""></span>
               </div>
             </div>
 
             <!-- Card Body -->
             <div class="dc-body">
-              <a href="#" class="dc-title">{{this.title}}</a>
-              <p class="dc-desc text-muted">{{truncate this.description 160}}</p>
+              <a href="#" class="dc-title"></a>
+              <p class="dc-desc text-muted"></p>
 
               <div class="dc-tags mt-2 d-flex flex-wrap gap-1">
-                <span class="subject-tag subject-{{lowercase this.subject}}">#{{this.subject}}</span>
-                {{#each this.tags}}
-                  <span class="tag-pill">#{{this}}</span>
-                {{/each}}
+                <span class="subject-tag subject-">#</span>
+                
+                  <span class="tag-pill">#</span>
+                
               </div>
             </div>
 
             <!-- Card Footer -->
             <div class="dc-footer">
-              <button class="action-btn vote-btn" data-id="{{this.id}}" data-type="up">
+              <button class="action-btn vote-btn" data-id="" data-type="up">
                 <i class="bi bi-hand-thumbs-up"></i>
-                <span class="vote-count" id="up-{{this.id}}">{{this.upvotes}}</span>
+                <span class="vote-count" id="up-"></span>
               </button>
-              <button class="action-btn vote-btn" data-id="{{this.id}}" data-type="down">
+              <button class="action-btn vote-btn" data-id="" data-type="down">
                 <i class="bi bi-hand-thumbs-down"></i>
-                <span class="vote-count" id="down-{{this.id}}">{{this.downvotes}}</span>
+                <span class="vote-count" id="down-"></span>
               </button>
               <button class="action-btn answers-btn">
                 <i class="bi bi-chat-dots"></i>
-                <span>{{this.answers}} Answers</span>
+                <span> Answers</span>
               </button>
-              <button class="action-btn save-btn ms-auto {{#if this.saved}}saved{{/if}}" data-id="{{this.id}}">
-                <i class="bi bi-bookmark{{#if this.saved}}-fill{{/if}}"></i>
-                <span>{{#if this.saved}}Saved{{else}}Save{{/if}}</span>
+              <button class="action-btn save-btn ms-auto saved" data-id="">
+                <i class="bi bi-bookmark-fill"></i>
+                <span>SavedSave</span>
               </button>
               <button class="action-btn report-btn">
                 <i class="bi bi-flag"></i>
               </button>
             </div>
           </div>
-        {{/each}}
+        
       </div>
     </div>
 
@@ -252,17 +252,17 @@
           <span><i class="bi bi-trophy-fill me-2 text-warning"></i>Top Contributors</span>
         </div>
         <div class="leaderboard-list">
-          {{#each leaderboard}}
-            <div class="lb-item {{#if (eq this.rank 1)}}lb-gold{{else if (eq this.rank 2)}}lb-silver{{else if (eq this.rank 3)}}lb-bronze{{/if}}">
-              <span class="lb-badge">{{this.badge}}</span>
-              <span class="lb-avatar">{{this.avatar}}</span>
+          
+            <div class="lb-item lb-goldlb-silverlb-bronze">
+              <span class="lb-badge"></span>
+              <span class="lb-avatar"></span>
               <div class="lb-info">
-                <span class="lb-name">{{this.username}}</span>
-                <span class="lb-xp">⭐ {{formatNumber this.xp}} XP</span>
+                <span class="lb-name"></span>
+                <span class="lb-xp">⭐  XP</span>
               </div>
-              <span class="lb-rank">#{{this.rank}}</span>
+              <span class="lb-rank">#</span>
             </div>
-          {{/each}}
+          
         </div>
       </div>
 
@@ -286,9 +286,9 @@
           <span><i class="bi bi-tags-fill me-2 text-primary"></i>Popular Tags</span>
         </div>
         <div class="popular-tags d-flex flex-wrap gap-2 p-3">
-          {{#each popularTags}}
-            <a href="/?search={{this}}" class="tag-pill">#{{this}}</a>
-          {{/each}}
+          
+            <a href="/?search=" class="tag-pill">#</a>
+          
         </div>
       </div>
     </div>
