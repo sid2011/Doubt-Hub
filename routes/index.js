@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 router.get('/signup',(req,res)=>{
-  res.render('signup_page')
+  res.render('user/user_auth/signup_page')
 })
 router.post('/signup',(req,res)=>{
    console.log("this is req body",req.body)
@@ -24,7 +24,7 @@ router.post('/signup',(req,res)=>{
 })
 
 router.get('/login',(req,res)=>{
-  res.render('login_page')
+  res.render('user/user_auth/login_page')
 })
 router.post('/login',async(req,res)=>{
 await userHelper.doLogIn(req.body).then((response)=>{
@@ -33,7 +33,7 @@ await userHelper.doLogIn(req.body).then((response)=>{
     req.session.user=response.user
     res.redirect('/doubts')
   }else{
-    res.render('login_page')
+    res.render('user/user_auth/login_page')
   }
 })
 })
