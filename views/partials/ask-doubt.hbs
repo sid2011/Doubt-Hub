@@ -1,0 +1,129 @@
+<div class="modal fade" id="askDoubtModal" tabindex="-1" aria-labelledby="askDoubtModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <form action="/ask-doubt" method="POST" enctype="multipart/form-data">
+
+                <div class="modal-head">
+                    <div>
+                        <h3 id="askDoubtModalLabel">
+                            <i class="bi bi-patch-question-fill" style="color:var(--p);margin-right:.35rem"></i>
+                            Ask a Doubt
+                        </h3>
+                        <p>Be specific — the more detail you give, the better the answers.</p>
+                    </div>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-mb">
+                        <label class="form-lbl">Doubt Title <span class="req">*</span></label>
+
+                        <input
+                            class="finput"
+                            type="text"
+                            name="title"
+                            placeholder="E.g. How do I find the derivative of sin(x)?"
+                            required>
+
+                        <div class="form-hint">
+                            Be specific. Imagine you're asking your teacher face-to-face.
+                        </div>
+                    </div>
+
+                    <div class="form-mb">
+                        <label class="form-lbl">Detailed Description <span class="req">*</span></label>
+
+                        <textarea
+                            class="finput"
+                            rows="4"
+                            name="description"
+                            placeholder="Explain where exactly you're stuck..."
+                            required></textarea>
+                    </div>
+
+                    <div class="form-row form-mb">
+
+                        <div>
+                            <label class="form-lbl">Subject <span class="req">*</span></label>
+
+                            <select class="finput fselect" name="subject" required>
+                                <option value="">Select subject…</option>
+                                <option>Mathematics</option>
+                                <option>Physics</option>
+                                <option>Chemistry</option>
+                                <option>Biology</option>
+                                <option>Computer Science</option>
+                                <option>English</option>
+                                <option>Social Science</option>
+                                <option>Malayalam</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="form-lbl">Class</label>
+
+                            <select class="finput fselect" name="class">
+                                <option value="">Select class…</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-mb">
+                        <label class="form-lbl">Tags</label>
+
+                        <input
+                            class="finput"
+                            type="text"
+                            name="tags"
+                            placeholder="algebra, equations, quadratic">
+                    </div>
+
+                    <div class="form-mb">
+                        <label class="form-lbl">Attach Image (Optional)</label>
+
+                        <input
+                            type="file"
+                            class="form-control"
+                            name="image"
+                            accept="image/*">
+                    </div>
+
+                    <div class="xp-hint-box">
+                        <i class="bi bi-star-fill" style="color:var(--amber);margin-right:.25rem"></i>
+                        Posting this doubt earns you <strong>+5 XP</strong>!
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+                        Post Doubt
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+const hbs = require('hbs');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -16,6 +17,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -24,7 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.engine('hbs',engine({extname:'.hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/layout/partials/', helpers: {
+app.engine('hbs',engine({extname:'.hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layouts/',partialsDir:__dirname+'/views/partials/', helpers: {
     inc: function(value) {
       return parseInt(value) + 1;
     }

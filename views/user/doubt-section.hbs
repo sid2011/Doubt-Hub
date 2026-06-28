@@ -1,372 +1,869 @@
-<!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
-<nav class="navbar navbar-expand-lg dh-navbar sticky-top">
-  <div class="container-fluid px-3 px-lg-4">
-
+<nav class="navbar">
+  <div class="nav-inner">
     <!-- Logo -->
-    <a class="navbar-brand dh-logo d-flex align-items-center gap-2" href="/">
-      <div class="logo-icon">
-        <i class="bi bi-patch-question-fill"></i>
-      </div>
-      <span class="logo-text">Doubt<span class="logo-accent">Hub</span></span>
+    <a href="#" class="nav-logo">
+      <div class="logo-box"><i class="bi bi-patch-question-fill"></i></div>
+      DoubtHub
     </a>
 
-    <!-- Mobile controls -->
-    <div class="d-flex align-items-center gap-2 d-lg-none">
-      <button class="btn btn-icon mobile-search-btn" id="mobileSearchToggle">
-        <i class="bi bi-search"></i>
-      </button>
-      <div class="notif-wrap position-relative">
-        <button class="btn btn-icon" id="notifBtnMobile">
-          <i class="bi bi-bell"></i>
-          
-            <span class="notif-badge"></span>
-          
-        </button>
-      </div>
-      <button class="navbar-toggler btn btn-icon" data-bs-toggle="collapse" data-bs-target="#navMain">
-        <i class="bi bi-list"></i>
-      </button>
+    <!-- Desktop Search -->
+    <div class="nav-search">
+      <i class="bi bi-search si"></i>
+      <input type="text" placeholder="Search doubts, subjects, topics…" id="navSearchInput"/>
     </div>
 
-    <!-- Collapsible -->
-    <div class="collapse navbar-collapse" id="navMain">
-      <!-- Search bar (desktop center) -->
-      <div class="dh-search-wrap mx-auto">
-        <form action="/" method="GET" id="searchForm" autocomplete="off">
-          <div class="search-input-wrap">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" name="search" id="searchInput" class="form-control dh-search"
-              placeholder="Search doubts, subjects, tags…"
-              value="" />
-            <div class="search-suggestions" id="searchSuggestions"></div>
-          </div>
-        </form>
+    <!-- Mobile search icon -->
+    <button class="ibtn mob-s-btn" id="mobSearchBtn" aria-label="Search">
+      <i class="bi bi-search"></i>
+    </button>
+
+    <div class="nav-right">
+      <!-- XP -->
+      <div class="xp-pill">
+        <span>⭐</span><span>6,240 XP</span>
       </div>
 
-      <!-- Right items -->
-      <div class="d-flex align-items-center gap-2 ms-auto">
-        <!-- XP Display -->
-        <div class="xp-pill">
-          <i class="bi bi-star-fill xp-star"></i>
-          <span class="xp-val"> XP</span>
-        </div>
-
-        <!-- Notifications (desktop) -->
-        <div class="notif-wrap position-relative d-none d-lg-block">
-          <button class="btn btn-icon" id="notifBtn">
-            <i class="bi bi-bell-fill"></i>
-            
-              <span class="notif-badge"></span>
-            
-          </button>
-
-          <!-- Notification dropdown -->
-          <div class="notif-dropdown" id="notifDropdown">
-            <div class="notif-header">
-              <span>Notifications</span>
-              <button class="btn-link" id="markAllRead">Mark all read</button>
+      <!-- Notifications -->
+      <div class="notif-wrap">
+        <button class="ibtn" id="notifBtn" aria-label="Notifications">
+          <i class="bi bi-bell-fill"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="notif-panel" id="notifPanel">
+          <div class="np-head">
+            <span>Notifications</span>
+            <button id="markRead">Mark all read</button>
+          </div>
+          <div class="np-list">
+            <div class="np-item unread">
+              <div class="np-ico green"><i class="bi bi-check-circle-fill"></i></div>
+              <div class="np-body">
+                <p><strong>Arjun Menon</strong> accepted your answer on <em>"Difference between speed and velocity"</em></p>
+                <small>2 min ago · +25 XP earned</small>
+              </div>
             </div>
-            <div class="notif-list">
-              
-                <div class="notif-item readunread">
-                  <span class="notif-icon"></span>
-                  <div class="notif-body">
-                    <p></p>
-                    <small></small>
-                  </div>
-                </div>
-              
+            <div class="np-item unread">
+              <div class="np-ico violet"><i class="bi bi-stars"></i></div>
+              <div class="np-body">
+                <p><strong>AI Assistant</strong> answered your doubt about <em>"Quadratic Formula derivation"</em></p>
+                <small>15 min ago</small>
+              </div>
+            </div>
+            <div class="np-item unread">
+              <div class="np-ico blue"><i class="bi bi-hand-thumbs-up-fill"></i></div>
+              <div class="np-body">
+                <p><strong>Sneha Pillai</strong> upvoted your answer on <em>"Photosynthesis vs Respiration"</em></p>
+                <small>32 min ago · +2 XP</small>
+              </div>
+            </div>
+            <div class="np-item">
+              <div class="np-ico amber"><i class="bi bi-trophy-fill"></i></div>
+              <div class="np-body">
+                <p>You climbed to <strong>Rank #14</strong> on the leaderboard! 🎉</p>
+                <small>1 hr ago</small>
+              </div>
+            </div>
+            <div class="np-item">
+              <div class="np-ico blue"><i class="bi bi-chat-dots-fill"></i></div>
+              <div class="np-body">
+                <p><strong>Mr. Rajeev Kumar</strong> (Teacher) answered your doubt on <em>"Newton's 3rd Law"</em></p>
+                <small>3 hrs ago · Teacher Verified</small>
+              </div>
+            </div>
+            <div class="np-item">
+              <div class="np-ico green"><i class="bi bi-star-fill"></i></div>
+              <div class="np-body">
+                <p>Daily login bonus! You earned <strong>+3 XP</strong> today</p>
+                <small>Today, 8:02 AM</small>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Profile dropdown -->
-        <div class="dropdown">
-          <button class="btn profile-btn dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="user-avatar-sm"></span>
-            <span class="d-none d-md-inline username-text"></span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end dh-dropdown" aria-labelledby="profileDropdown">
-            <!-- Mini Profile Card -->
-            <li class="profile-card-mini">
-              <div class="profile-avatar-lg"></div>
-              <div class="profile-info">
-                <strong></strong>
-                <div class="profile-stats">
-                  <span><i class="bi bi-star-fill text-warning"></i>  XP</span>
-                  <span>Rank #</span>
-                </div>
-                <div class="profile-stats">
-                  <span><i class="bi bi-question-circle"></i>  doubts</span>
-                  <span><i class="bi bi-chat-dots"></i>  answers</span>
-                </div>
+      <!-- Profile -->
+      <div style="position:relative">
+        <button class="prof-btn" id="profBtn">
+          <div class="ava ava-28">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=6366f1" alt="Rahul"/>
+          </div>
+          <span class="d-none d-md-inline" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem">Rahul K.</span>
+          <i class="bi bi-chevron-down chevron"></i>
+        </button>
+        <div class="prof-dd" id="profDd">
+          <div class="prof-mini">
+            <div class="ava ava-44">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=6366f1" alt="Rahul"/>
+            </div>
+            <div class="prof-mini-info">
+              <strong>Rahul Krishnan</strong>
+              <span>Class 11 · CBSE</span>
+              <div class="prof-mini-stats">
+                <span>⭐ 6,240 XP</span>
+                <span>·</span>
+                <span>Rank #14</span>
               </div>
-            </li>
-            <li><hr class="dropdown-divider my-1"/></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> View Profile</a></li>
-            <li><a class="dropdown-item" href="/?filter=my"><i class="bi bi-question-circle"></i> My Doubts</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark"></i> Saved Doubts</a></li>
-            <li><a class="dropdown-item" href="#leaderboard"><i class="bi bi-trophy"></i> Leaderboard</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Settings</a></li>
-            <li><hr class="dropdown-divider my-1"/></li>
-            <li><a class="dropdown-item text-danger" href="/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-          </ul>
+            </div>
+          </div>
+          <div class="dd-sep"></div>
+          <button class="dd-item"><i class="bi bi-person"></i> View Profile</button>
+          <button class="dd-item"><i class="bi bi-question-circle"></i> My Doubts</button>
+          <button class="dd-item"><i class="bi bi-bookmark"></i> Saved Doubts</button>
+          <button class="dd-item"><i class="bi bi-trophy"></i> Leaderboard</button>
+          <button class="dd-item"><i class="bi bi-gear"></i> Settings</button>
+          <div class="dd-sep"></div>
+          <button class="dd-item danger"><i class="bi bi-box-arrow-right"></i> Logout</button>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- Mobile search bar (collapsible) -->
-  <div class="mobile-search-bar" id="mobileSearchBar">
-    <form action="/" method="GET" class="px-3 py-2">
-      <div class="search-input-wrap">
-        <i class="bi bi-search search-icon"></i>
-        <input type="text" name="search" class="form-control dh-search" placeholder="Search doubts…" value=""/>
-      </div>
-    </form>
+  <!-- Mobile search bar -->
+  <div class="mob-search-bar" id="mobSearchBar">
+    <div style="position:relative">
+      <i class="bi bi-search si" style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--t3);font-size:.85rem;pointer-events:none"></i>
+      <input type="text" class="finput" style="border-radius:var(--r-pill);padding:.45rem 1rem .45rem 2.2rem;font-size:.83rem" placeholder="Search doubts…"/>
+    </div>
   </div>
 </nav>
 
-<!-- ═══════════════════════ XP TOAST ═══════════════════════ -->
-<div class="xp-toast" id="xpToast" aria-live="polite">
-  <span class="xp-toast-icon">⭐</span>
-  <span id="xpToastMsg">+5 XP earned!</span>
-</div>
+<!-- ══════════════════════════════════════════
+     PAGE BODY
+══════════════════════════════════════════ -->
+<div class="page-wrap">
+  <div class="layout">
 
-<!-- ═══════════════════════ MAIN ═══════════════════════ -->
-<div class="container-xxl py-4">
-  <div class="row g-4">
+    <!-- ════ FEED ════ -->
+    <div class="feed">
 
-    <!-- LEFT: Filters + Feed -->
-    <div class="col-lg-8">
-
-      <!-- Page Header -->
-      <div class="feed-header d-flex align-items-center justify-content-between mb-3">
-        <div>
-          <h1 class="feed-title">Community Doubts</h1>
-          <p class="feed-subtitle text-muted mb-0"> doubts found</p>
+      <!-- Welcome Banner -->
+      <div class="welcome-banner">
+        <div class="wb-ava">
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=b91c1c" alt="Rahul"/>
         </div>
-        <button class="btn btn-primary dh-btn-primary d-none d-lg-flex" id="askDoubtDesktop">
-          <i class="bi bi-plus-lg me-1"></i> Ask Doubt
-        </button>
+        <div class="wb-text">
+          <h2>Good morning, Rahul! 👋</h2>
+          <p>You have 3 unanswered doubts. Help others and earn XP!</p>
+        </div>
+        <div class="wb-stats">
+          <div class="wb-stat"><span class="num">6,240</span><span class="lbl">Total XP</span></div>
+          <div class="wb-stat"><span class="num">48</span><span class="lbl">Answers</span></div>
+          <div class="wb-stat"><span class="num">#14</span><span class="lbl">Rank</span></div>
+        </div>
+      </div>
+
+      <!-- Trending -->
+      <div class="trending-bar">
+        <div class="tr-label"><i class="bi bi-fire"></i> Trending</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>quadratic-formula</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>photosynthesis</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>newton-laws</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>python-lists</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>french-revolution</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>periodic-table</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>shakespeare</div>
+        <div class="tr-chip"><i class="bi bi-hash"></i>integration</div>
       </div>
 
       <!-- Filters -->
-      <div class="filters-row mb-4">
-        <div class="filter-pills d-flex flex-wrap gap-2">
-          
-            <a href="/?filter=&subject="
-               class="filter-pill active">
-              <i class="bi  me-1"></i>
-            </a>
-          
+      <div class="filters-wrap">
+        <div class="filter-row">
+          <a href="#" class="fpill active"><i class="bi bi-lightning-charge-fill"></i> Latest</a>
+          <a href="#" class="fpill"><i class="bi bi-fire"></i> Hot</a>
+          <a href="#" class="fpill"><i class="bi bi-clock-history"></i> Unanswered</a>
+          <a href="#" class="fpill"><i class="bi bi-check-circle-fill"></i> Solved</a>
+          <a href="#" class="fpill"><i class="bi bi-bookmark-fill"></i> Saved</a>
         </div>
-
-        <!-- Subject filter -->
-        <div class="subject-filter-row mt-3 d-flex flex-wrap gap-2">
-          <a href="/?filter=" class="subject-pill active">All</a>
-          
-            <a href="/?filter=&subject="
-               class="subject-pill subject- active">
-               
-            </a>
-          
+        <div class="subj-row">
+          <a href="#" class="spill active">All</a>
+          <a href="#" class="spill s-math">📐 Maths</a>
+          <a href="#" class="spill s-phy">⚛️ Physics</a>
+          <a href="#" class="spill s-chem">🧪 Chemistry</a>
+          <a href="#" class="spill s-bio">🌿 Biology</a>
+          <a href="#" class="spill s-cs">💻 CS</a>
+          <a href="#" class="spill s-eng">📖 English</a>
+          <a href="#" class="spill s-ss">🏛️ Social</a>
+          <a href="#" class="spill s-mal">🌺 Malayalam</a>
         </div>
       </div>
 
-      <!-- Doubts Feed -->
-      <div id="doubtsFeed">
-        
-          <div class="empty-state text-center py-5">
-            <div class="empty-icon">🤔</div>
-            <h3>No doubts found</h3>
-            <p class="text-muted">Be the first to ask a doubt in this category!</p>
-            <button class="btn btn-primary dh-btn-primary" id="askFromEmpty">
-              <i class="bi bi-plus-lg me-1"></i> Ask the First Doubt
-            </button>
-          </div>
-        
+      <!-- Feed header -->
+      <div class="feed-header-row">
+        <div>
+          <div class="feed-title">Community Doubts</div>
+          <div class="feed-count">2,841 doubts · 9,204 answers</div>
+        </div>
+        <button class="ask-btn" data-bs-toggle="modal"
+    data-bs-target="#askDoubtModal"">
+          <i class="bi bi-plus-lg"></i> Ask Doubt
+        </button>
+      </div>
+      
 
-        
-          <div class="doubt-card" id="card-">
-            <!-- Card Header -->
-            <div class="dc-header">
-              <div class="user-avatar"></div>
-              <div class="dc-user-info">
-                <span class="dc-username"></span>
-                <span class="xp-badge-sm">⭐  XP</span>
-              </div>
-              <div class="dc-meta ms-auto d-flex align-items-center gap-2">
-                
-                  <span class="solved-badge"><i class="bi bi-check-circle-fill me-1"></i>Solved</span>
-                
-                <span class="dc-time text-muted" title=""></span>
+      <!-- ════ DOUBT CARDS ════ -->
+
+      <!-- Card 1: Maths, Solved, Teacher Verified -->
+      <div class="dcard s-math" id="card-1">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priya&backgroundColor=7c3aed" alt="Priya"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Priya Nair</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 8,450 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 12 · CBSE</span>
               </div>
             </div>
-
-            <!-- Card Body -->
-            <div class="dc-body">
-              <a href="#" class="dc-title"></a>
-              <p class="dc-desc text-muted"></p>
-
-              <div class="dc-tags mt-2 d-flex flex-wrap gap-1">
-                <span class="subject-tag subject-">#</span>
-                
-                  <span class="tag-pill">#</span>
-                
-              </div>
-            </div>
-
-            <!-- Card Footer -->
-            <div class="dc-footer">
-              <button class="action-btn vote-btn" data-id="" data-type="up">
-                <i class="bi bi-hand-thumbs-up"></i>
-                <span class="vote-count" id="up-"></span>
-              </button>
-              <button class="action-btn vote-btn" data-id="" data-type="down">
-                <i class="bi bi-hand-thumbs-down"></i>
-                <span class="vote-count" id="down-"></span>
-              </button>
-              <button class="action-btn answers-btn">
-                <i class="bi bi-chat-dots"></i>
-                <span> Answers</span>
-              </button>
-              <button class="action-btn save-btn ms-auto saved" data-id="">
-                <i class="bi bi-bookmark-fill"></i>
-                <span>SavedSave</span>
-              </button>
-              <button class="action-btn report-btn">
-                <i class="bi bi-flag"></i>
-              </button>
+            <div class="dc-right">
+              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
+              <span class="badge-teacher"><i class="bi bi-patch-check-fill"></i> Teacher</span>
+              <span class="dc-time">2 min ago</span>
             </div>
           </div>
-        
-      </div>
-    </div>
-
-    <!-- RIGHT: Sidebar -->
-    <div class="col-lg-4" id="leaderboard">
-      <!-- Leaderboard Widget -->
-      <div class="sidebar-widget">
-        <div class="widget-header">
-          <span><i class="bi bi-trophy-fill me-2 text-warning"></i>Top Contributors</span>
-        </div>
-        <div class="leaderboard-list">
-          
-            <div class="lb-item lb-goldlb-silverlb-bronze">
-              <span class="lb-badge"></span>
-              <span class="lb-avatar"></span>
-              <div class="lb-info">
-                <span class="lb-name"></span>
-                <span class="lb-xp">⭐  XP</span>
-              </div>
-              <span class="lb-rank">#</span>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">How do I derive the quadratic formula from ax² + bx + c = 0 by completing the square?</a>
+            <p class="dc-desc">I understand the formula itself but I'm confused about the "completing the square" method used to derive it. My textbook skips steps between isolating x² and getting the final ±√(b²−4ac)/2a. Can someone walk through each step clearly?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-math">#Mathematics</span>
+              <span class="tag-misc">#algebra</span>
+              <span class="tag-misc">#class-12</span>
+              <span class="tag-misc">#quadratic</span>
             </div>
-          
+          </div>
+        </div>
+        <div class="ai-strip">
+          <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
+          <div class="ai-strip-text"><strong>AI Preview:</strong> To complete the square, divide everything by a, then move c/a to the right side. Add (b/2a)² to both sides to form a perfect square trinomial: (x + b/2a)² = (b²−4ac)/4a²…  <a href="#" onclick="openModal('answersModal');return false" style="color:var(--violet);font-weight:600">Read full answer →</a></div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt up-active" onclick="handleVote(this,1)"><i class="bi bi-hand-thumbs-up-fill"></i><span class="cnt">124</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">3</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">14 Answers</span></button>
+          <button class="fbt ms-a save-active" onclick="toggleSave(this)"><i class="bi bi-bookmark-fill"></i><span>Saved</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
         </div>
       </div>
 
-      <!-- XP Rules Widget -->
-      <div class="sidebar-widget mt-4">
-        <div class="widget-header">
-          <span><i class="bi bi-star-fill me-2 text-warning"></i>Earn XP</span>
+      <!-- Card 2: Physics, Unsolved, Hot -->
+      <div class="dcard s-phy" id="card-2">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=1d4ed8" alt="Arjun"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Arjun Menon</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 5,120 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 11 · State Board</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-hot"><i class="bi bi-fire"></i> Hot</span>
+              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
+              <span class="dc-time">18 min ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">Why does a heavier object not fall faster than a lighter one? Contradicts everyday experience!</a>
+            <p class="dc-desc">When I drop a stone and a feather from the same height, the stone hits the ground first. But my teacher says Galileo proved they fall at the same rate. How can both be true? Is it about air resistance only?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-phy">#Physics</span>
+              <span class="tag-misc">#gravitation</span>
+              <span class="tag-misc">#free-fall</span>
+              <span class="tag-misc">#galileo</span>
+            </div>
+          </div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,2)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">89</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">1</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">7 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 3: Chemistry, Solved, AI badge -->
+      <div class="dcard s-chem" id="card-3">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38" style="background:linear-gradient(135deg,#10b981,#059669)">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sneha&backgroundColor=059669" alt="Sneha"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Sneha Pillai</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 3,780 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 10 · CBSE</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
+              <span class="badge-ai"><i class="bi bi-stars"></i> AI Answered</span>
+              <span class="dc-time">45 min ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What is the difference between an ionic bond and a covalent bond? Give examples.</a>
+            <p class="dc-desc">I keep confusing these two in my Chemistry exam. Both involve sharing or transferring electrons but I can never remember which is which. My textbook examples are NaCl and H₂O but I don't see why.</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-chem">#Chemistry</span>
+              <span class="tag-misc">#chemical-bonding</span>
+              <span class="tag-misc">#class-10</span>
+              <span class="tag-misc">#ionic</span>
+              <span class="tag-misc">#covalent</span>
+            </div>
+          </div>
+        </div>
+        <div class="ai-strip">
+          <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
+          <div class="ai-strip-text"><strong>AI Preview:</strong> Ionic bonds form when one atom completely transfers electrons to another (e.g. Na gives its electron to Cl, forming Na⁺ and Cl⁻). Covalent bonds involve sharing electrons between atoms of similar electronegativity…  <a href="#" onclick="openModal('answersModal');return false" style="color:var(--violet);font-weight:600">See full explanation →</a></div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,3)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">67</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">9 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 4: CS, Open, Hot -->
+      <div class="dcard s-cs" id="card-4">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Devika&backgroundColor=7c3aed" alt="Devika"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Devika Suresh</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 2,340 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 11 · CBSE CS</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-hot"><i class="bi bi-fire"></i> Hot</span>
+              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
+              <span class="dc-time">1 hr ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">Python list vs tuple — when should I use which one? Is there a performance difference?</a>
+            <p class="dc-desc">I know lists are mutable and tuples are immutable but my teacher says "use tuple when data shouldn't change". How do I know when my data shouldn't change? And does tuple actually run faster in real programs?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-cs">#Computer Science</span>
+              <span class="tag-misc">#python</span>
+              <span class="tag-misc">#data-structures</span>
+              <span class="tag-misc">#class-11</span>
+            </div>
+          </div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,4)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">53</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">2</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">5 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 5: Social Science, Solved -->
+      <div class="dcard s-ss" id="card-5">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Akshay&backgroundColor=c2410c" alt="Akshay"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Akshay Thomas</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 1,890 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 9 · CBSE</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
+              <span class="dc-time">2 hrs ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What caused the French Revolution? Was it only about bread prices or were there deeper reasons?</a>
+            <p class="dc-desc">My textbook mentions food shortages but also Enlightenment ideas. Were ordinary people actually reading philosophy, or was it just poverty that caused the revolution? What came first — ideas or hunger?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-ss">#Social Science</span>
+              <span class="tag-misc">#history</span>
+              <span class="tag-misc">#french-revolution</span>
+              <span class="tag-misc">#class-9</span>
+            </div>
+          </div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,5)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">41</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">6 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 6: English, Open -->
+      <div class="dcard s-eng" id="card-6">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Meera&backgroundColor=be185d" alt="Meera"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Meera Krishnan</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 4,210 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 10 · ICSE</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
+              <span class="dc-time">3 hrs ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">In Shakespeare's "The Merchant of Venice", is Shylock a villain or a victim? How to write a balanced essay?</a>
+            <p class="dc-desc">My English exam asks me to argue both sides. I can see he's portrayed badly but also treated unfairly because of his religion. How do I structure a 600-word essay that covers both perspectives without being contradictory?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-eng">#English Literature</span>
+              <span class="tag-misc">#shakespeare</span>
+              <span class="tag-misc">#merchant-of-venice</span>
+              <span class="tag-misc">#essay-writing</span>
+            </div>
+          </div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,6)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">38</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">1</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">4 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 7: Biology, Teacher Verified -->
+      <div class="dcard s-bio" id="card-7">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rohit&backgroundColor=b45309" alt="Rohit"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Rohit Varma</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 6,670 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 12 · CBSE Bio</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
+              <span class="badge-teacher"><i class="bi bi-patch-check-fill"></i> Teacher</span>
+              <span class="dc-time">5 hrs ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What is the exact difference between mitosis and meiosis? I always mix them up in exams.</a>
+            <p class="dc-desc">Both involve cell division but meiosis gives 4 daughter cells and mitosis gives 2. But what about genetic variation? Why does meiosis cause variation but mitosis doesn't? My biology teacher mentioned "crossing over" but didn't explain it fully.</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-bio">#Biology</span>
+              <span class="tag-misc">#cell-division</span>
+              <span class="tag-misc">#mitosis</span>
+              <span class="tag-misc">#meiosis</span>
+              <span class="tag-misc">#class-12</span>
+            </div>
+          </div>
+        </div>
+        <div class="ai-strip">
+          <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
+          <div class="ai-strip-text"><strong>AI Preview:</strong> Mitosis produces 2 genetically identical daughter cells (used for growth/repair). Meiosis produces 4 genetically unique cells (used for reproduction). "Crossing over" in meiosis I shuffles DNA segments between homologous chromosomes…  <a href="#" onclick="openModal('answersModal');return false" style="color:var(--violet);font-weight:600">Read more →</a></div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,7)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">92</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">4</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">11 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Card 8: Malayalam -->
+      <div class="dcard s-mal" id="card-8">
+        <div class="dcard-inner">
+          <div class="dc-head">
+            <div class="ava ava-38" style="background:linear-gradient(135deg,#0e7490,#0891b2)">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anjali&backgroundColor=0e7490" alt="Anjali"/>
+            </div>
+            <div class="dc-user">
+              <div class="dc-uname">Anjali Rajan</div>
+              <div class="dc-sub-row">
+                <span class="xp-sm">⭐ 2,100 XP</span>
+                <span class="dot-sep">●</span>
+                <span class="class-tag">Class 8 · Kerala State</span>
+              </div>
+            </div>
+            <div class="dc-right">
+              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
+              <span class="dc-time">6 hrs ago</span>
+            </div>
+          </div>
+          <div class="dc-body">
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">"ഓണം" കവിതയിലെ മുഖ്യ ആശയം എന്ത്? ഉള്ളൂർ എസ്. പരമേശ്വരൻ ഐൻ ഈ കവിത എഴുതിയതിന്റെ ഉദ്ദേശ്യം വ്യക്തമാക്കുക.</a>
+            <p class="dc-desc">Malayalam exam preparation — Class 8 poem "Onam". Need to understand the central theme and the poet's intention for writing it. How does the poem connect to Kerala's cultural identity?</p>
+            <div class="dc-tags">
+              <span class="tag-subj s-mal">#Malayalam</span>
+              <span class="tag-misc">#poetry</span>
+              <span class="tag-misc">#onam</span>
+              <span class="tag-misc">#class-8</span>
+            </div>
+          </div>
+        </div>
+        <div class="dc-foot">
+          <button class="fbt" onclick="handleVote(this,8)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">29</span></button>
+          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
+          <div class="fbt-sep"></div>
+          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">3 Answers</span></button>
+          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
+          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
+        </div>
+      </div>
+
+      <!-- Load more -->
+      <button class="load-more" id="loadMoreBtn">
+        <i class="bi bi-arrow-down-circle"></i> Load 20 more doubts
+      </button>
+    </div><!-- /feed -->
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="sidebar">
+
+      <!-- Leaderboard -->
+      <div class="sw">
+        <div class="sw-head">
+          <i class="bi bi-trophy-fill" style="color:var(--amber);margin-right:.45rem"></i>
+          Top Contributors
+        </div>
+        <div class="lb-list">
+          <div class="lb-item lb-1">
+            <div class="lb-pos">🥇</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nithya&backgroundColor=7c3aed" alt="Nithya"/></div>
+            <div class="lb-info"><div class="lb-name">Nithya Rajan</div><div class="lb-xp">⭐ 18,420 XP · 142 answers</div></div>
+            <div class="lb-badge-wrap"><div class="lb-bdg bdg-gold">🏆</div><div class="lb-bdg bdg-fire">🔥</div></div>
+          </div>
+          <div class="lb-item lb-2">
+            <div class="lb-pos">🥈</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Krishnadev&backgroundColor=1d4ed8" alt="Krishnadev"/></div>
+            <div class="lb-info"><div class="lb-name">Krishnadev P.</div><div class="lb-xp">⭐ 15,880 XP · 118 answers</div></div>
+            <div class="lb-badge-wrap"><div class="lb-bdg bdg-star">⭐</div></div>
+          </div>
+          <div class="lb-item lb-3">
+            <div class="lb-pos">🥉</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ammu&backgroundColor=059669" alt="Ammu"/></div>
+            <div class="lb-info"><div class="lb-name">Ammu Vijayan</div><div class="lb-xp">⭐ 12,340 XP · 97 answers</div></div>
+            <div class="lb-badge-wrap"><div class="lb-bdg bdg-fire">🔥</div></div>
+          </div>
+          <div class="lb-item lb-n">
+            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">4</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sanjay&backgroundColor=c2410c" alt="Sanjay"/></div>
+            <div class="lb-info"><div class="lb-name">Sanjay Iyer</div><div class="lb-xp">⭐ 10,910 XP · 83 answers</div></div>
+          </div>
+          <div class="lb-item lb-n">
+            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">5</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lakshmi&backgroundColor=be185d" alt="Lakshmi"/></div>
+            <div class="lb-info"><div class="lb-name">Lakshmi Devi</div><div class="lb-xp">⭐ 9,780 XP · 74 answers</div></div>
+          </div>
+          <div class="lb-item lb-n">
+            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">6</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Vishnu&backgroundColor=0e7490" alt="Vishnu"/></div>
+            <div class="lb-info"><div class="lb-name">Vishnu Kumar</div><div class="lb-xp">⭐ 8,920 XP · 68 answers</div></div>
+          </div>
+          <div class="lb-item lb-n" style="background:linear-gradient(90deg,#f5f3ff,#fff);border-top:1px solid #ede9fe">
+            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--p)">14</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=6366f1" alt="Rahul"/></div>
+            <div class="lb-info"><div class="lb-name" style="color:var(--p)">Rahul Krishnan <span style="font-size:.65rem;font-weight:500;color:var(--t3)">(you)</span></div><div class="lb-xp">⭐ 6,240 XP · 48 answers</div></div>
+          </div>
+        </div>
+        <div class="active-strip">
+          <div class="active-avas">
+            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user1&backgroundColor=7c3aed" alt=""/></div>
+            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user2&backgroundColor=059669" alt=""/></div>
+            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user3&backgroundColor=1d4ed8" alt=""/></div>
+            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user4&backgroundColor=be185d" alt=""/></div>
+            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user5&backgroundColor=c2410c" alt=""/></div>
+          </div>
+          <span class="active-text"><strong>247 students</strong> online now</span>
+        </div>
+      </div>
+
+      <!-- Earn XP -->
+      <div class="sw">
+        <div class="sw-head">
+          <i class="bi bi-star-fill" style="color:var(--amber);margin-right:.45rem"></i>
+          Earn XP
         </div>
         <div class="xp-rules">
-          <div class="xp-rule"><span class="xp-action">Ask a doubt</span><span class="xp-pts xp-pos">+5 XP</span></div>
-          <div class="xp-rule"><span class="xp-action">Answer a doubt</span><span class="xp-pts xp-pos">+10 XP</span></div>
-          <div class="xp-rule"><span class="xp-action">Answer accepted</span><span class="xp-pts xp-pos">+25 XP</span></div>
-          <div class="xp-rule"><span class="xp-action">Upvote received</span><span class="xp-pts xp-pos">+2 XP</span></div>
-          <div class="xp-rule"><span class="xp-action">Daily login</span><span class="xp-pts xp-pos">+3 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Ask a doubt</span><span class="xp-pts xp-pos">+5 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Answer a doubt</span><span class="xp-pts xp-pos">+10 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Answer accepted</span><span class="xp-pts xp-pos">+25 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Upvote received</span><span class="xp-pts xp-pos">+2 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Daily login</span><span class="xp-pts xp-pos">+3 XP</span></div>
+          <div class="xp-row"><span class="xp-act">Downvote received</span><span class="xp-pts xp-neg">−1 XP</span></div>
         </div>
       </div>
 
-      <!-- Popular Tags Widget -->
-      <div class="sidebar-widget mt-4">
-        <div class="widget-header">
-          <span><i class="bi bi-tags-fill me-2 text-primary"></i>Popular Tags</span>
+      <!-- Popular tags -->
+      <div class="sw">
+        <div class="sw-head">
+          <i class="bi bi-tags-fill" style="color:var(--p);margin-right:.45rem"></i>
+          Popular Tags
         </div>
-        <div class="popular-tags d-flex flex-wrap gap-2 p-3">
-          
-            <a href="/?search=" class="tag-pill">#</a>
-          
+        <div class="pop-tags">
+          <a href="#" class="pop-tag">#algebra</a>
+          <a href="#" class="pop-tag">#calculus</a>
+          <a href="#" class="pop-tag">#newton-laws</a>
+          <a href="#" class="pop-tag">#photosynthesis</a>
+          <a href="#" class="pop-tag">#python</a>
+          <a href="#" class="pop-tag">#french-revolution</a>
+          <a href="#" class="pop-tag">#shakespeare</a>
+          <a href="#" class="pop-tag">#periodic-table</a>
+          <a href="#" class="pop-tag">#cell-division</a>
+          <a href="#" class="pop-tag">#thermodynamics</a>
+          <a href="#" class="pop-tag">#integration</a>
+          <a href="#" class="pop-tag">#organic-chemistry</a>
+          <a href="#" class="pop-tag">#sql</a>
+          <a href="#" class="pop-tag">#sorting-algorithms</a>
+          <a href="#" class="pop-tag">#kerala-history</a>
+          <a href="#" class="pop-tag">#prose-writing</a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<!-- ════ FAB ════ -->
+<button class="fab" id="fab" onclick="openModal('askModal')" aria-label="Ask a doubt">
+  <i class="bi bi-plus-lg"></i>
+</button>
+
+<!-- ══════════════════════════════════════════
+     ASK DOUBT MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="askModal" onclick="closeOnOverlay(event,'askModal')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <h3><i class="bi bi-patch-question-fill" style="color:var(--p);margin-right:.35rem"></i>Ask a Doubt</h3>
+        <p>Be specific — the more detail you give, the better the answers.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal('askModal')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-mb">
+        <label class="form-lbl">Doubt Title <span class="req">*</span></label>
+        <input class="finput" type="text" placeholder="E.g. How do I find the derivative of sin(x)?"/>
+        <div class="form-hint">Be specific. Imagine you're asking your teacher face-to-face.</div>
+      </div>
+      <div class="form-mb">
+        <label class="form-lbl">Detailed Description <span class="req">*</span></label>
+        <textarea class="finput" rows="4" placeholder="Explain where exactly you're stuck, what you've tried, and any relevant formulas or context…"></textarea>
+      </div>
+      <div class="form-row form-mb">
+        <div>
+          <label class="form-lbl">Subject <span class="req">*</span></label>
+          <select class="finput fselect">
+            <option value="">Select subject…</option>
+            <option>Mathematics</option>
+            <option>Physics</option>
+            <option>Chemistry</option>
+            <option>Biology</option>
+            <option>Computer Science</option>
+            <option>English</option>
+            <option>Social Science</option>
+            <option>Malayalam</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="form-lbl">Class / Grade</label>
+          <select class="finput fselect">
+            <option value="">Select class…</option>
+            <option>Class 6</option><option>Class 7</option><option>Class 8</option>
+            <option>Class 9</option><option>Class 10</option><option>Class 11</option>
+            <option>Class 12</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-mb">
+        <label class="form-lbl">Tags</label>
+        <input class="finput" type="text" placeholder="algebra, equations, quadratic (comma-separated)"/>
+        <div class="form-hint">Helps others find your doubt faster.</div>
+      </div>
+      <div class="form-mb">
+        <label class="form-lbl">Attach Image (Optional)</label>
+        <div class="upload-area">
+          <i class="bi bi-cloud-upload"></i>
+          <p>Drag & drop or click to upload</p>
+          <small>PNG, JPG up to 5MB — great for equations or diagrams</small>
+        </div>
+      </div>
+      <div class="xp-hint-box">
+        <i class="bi bi-star-fill" style="color:var(--amber);margin-right:.25rem"></i>
+        Posting this doubt earns you <strong>+5 XP</strong>!
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal('askModal')">Cancel</button>
+      <button class="ask-btn" onclick="submitDoubt()">
+        <i class="bi bi-send-fill"></i> Post Doubt
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ANSWERS MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay answers-modal" id="answersModal" onclick="closeOnOverlay(event,'answersModal')">
+  <div class="modal-box" style="max-width:680px">
+    <div class="modal-head">
+      <div>
+        <h3><i class="bi bi-chat-dots-fill" style="color:var(--p);margin-right:.35rem"></i>Answers</h3>
+        <p>14 answers · 124 upvotes · Solved</p>
+      </div>
+      <button class="modal-close" onclick="closeModal('answersModal')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+      <!-- Question recap -->
+      <div class="ans-question-box">
+        <div class="ans-q-title">How do I derive the quadratic formula from ax² + bx + c = 0 by completing the square?</div>
+        <div class="ans-q-desc">I understand the formula itself but I'm confused about the "completing the square" method used to derive it. My textbook skips steps between isolating x² and getting the final ±√(b²−4ac)/2a.</div>
+        <div style="margin-top:.45rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap">
+          <span class="tag-subj s-math">#Mathematics</span>
+          <span class="tag-misc">#algebra</span>
+          <span class="tag-misc">#quadratic</span>
+          <span class="tag-misc">#class-12</span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="ans-tabs">
+        <button class="ans-tab active">All (14)</button>
+        <button class="ans-tab">Top Voted</button>
+        <button class="ans-tab"><i class="bi bi-stars" style="font-size:.8rem"></i> AI Answer</button>
+        <button class="ans-tab"><i class="bi bi-patch-check-fill" style="font-size:.8rem"></i> Teacher</button>
+      </div>
+
+      <!-- Accepted answer -->
+      <div class="ans-card accepted">
+        <div class="accepted-lbl"><i class="bi bi-check-circle-fill"></i> Accepted Answer</div>
+        <div class="ans-head">
+          <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=RajeevKumar&backgroundColor=1d4ed8" alt="Mr. Rajeev"/></div>
+          <div class="ans-user">
+            <div class="ans-uname">Mr. Rajeev Kumar <span class="badge-teacher"><i class="bi bi-patch-check-fill"></i> Maths Teacher</span></div>
+            <div class="ans-utime">⭐ 34,200 XP · 8 hrs ago</div>
+          </div>
+        </div>
+        <div class="ans-text">
+          <strong>Step-by-step derivation by completing the square:</strong><br/><br/>
+          <strong>Step 1:</strong> Start with ax² + bx + c = 0. Divide everything by a:<br/>
+          x² + (b/a)x + c/a = 0<br/><br/>
+          <strong>Step 2:</strong> Move c/a to the right:<br/>
+          x² + (b/a)x = −c/a<br/><br/>
+          <strong>Step 3:</strong> Add (b/2a)² to both sides to "complete the square":<br/>
+          x² + (b/a)x + (b/2a)² = −c/a + (b/2a)²<br/><br/>
+          <strong>Step 4:</strong> The left side is now a perfect square:<br/>
+          (x + b/2a)² = (b² − 4ac) / 4a²<br/><br/>
+          <strong>Step 5:</strong> Take the square root of both sides:<br/>
+          x + b/2a = ±√(b² − 4ac) / 2a<br/><br/>
+          <strong>Step 6:</strong> Isolate x:<br/>
+          x = [−b ± √(b² − 4ac)] / 2a ✓<br/><br/>
+          The key insight is that (b/2a)² is added to form a perfect square trinomial. This technique is called "completing the square" because you're literally completing the square pattern (a + b)² = a² + 2ab + b².
+        </div>
+        <div class="ans-foot">
+          <button class="ans-vote up-active"><i class="bi bi-hand-thumbs-up-fill"></i> 87</button>
+          <button class="ans-vote"><i class="bi bi-hand-thumbs-down"></i> 0</button>
+          <button class="ans-vote" style="margin-left:auto"><i class="bi bi-flag"></i> Report</button>
+        </div>
+      </div>
+
+      <!-- AI answer -->
+      <div class="ans-card">
+        <div class="ans-head">
+          <div class="ava ava-34" style="background:linear-gradient(135deg,var(--violet),#c084fc)"><i class="bi bi-stars" style="font-size:.9rem"></i></div>
+          <div class="ans-user">
+            <div class="ans-uname">DoubtHub AI <span class="badge-ai"><i class="bi bi-stars"></i> AI Generated</span></div>
+            <div class="ans-utime">Instant answer · powered by AI</div>
+          </div>
+        </div>
+        <div class="ans-text">
+          The quadratic formula is derived using a technique called <strong>completing the square</strong>. Think of it geometrically: you're rearranging x² + (b/a)x into a perfect square shape by adding a "missing corner".<br/><br/>
+          The "missing corner" is always <strong>(half the coefficient of x)²</strong> — in this case (b/2a)². Once you add it to both sides, the left becomes (x + b/2a)², which you can then square-root directly.<br/><br/>
+          <strong>Memory tip:</strong> "Complete the square → square root → isolate x" — that's the three-step mental model for any completing-the-square problem.
+        </div>
+        <div class="ans-foot">
+          <button class="ans-vote"><i class="bi bi-hand-thumbs-up"></i> 34</button>
+          <button class="ans-vote"><i class="bi bi-hand-thumbs-down"></i> 2</button>
+        </div>
+      </div>
+
+      <!-- Student answer -->
+      <div class="ans-card">
+        <div class="ans-head">
+          <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nithya&backgroundColor=7c3aed" alt="Nithya"/></div>
+          <div class="ans-user">
+            <div class="ans-uname">Nithya Rajan <span class="badge-ai" style="background:#d1fae5;color:#065f46;border:none"><i class="bi bi-star-fill"></i> Top Contributor</span></div>
+            <div class="ans-utime">⭐ 18,420 XP · 6 hrs ago</div>
+          </div>
+        </div>
+        <div class="ans-text">
+          I struggled with this exact thing in Class 11! The trick that finally clicked for me was remembering that the goal of "completing the square" is to get something that looks like (x + something)².<br/><br/>
+          Whatever "something" is, when you expand (x + k)² you get x² + 2kx + k². So if your equation has x² + (b/a)x, you need k = b/2a, and then k² = b²/4a².<br/><br/>
+          Once I drew this out as an actual square on paper with areas, it made total sense. Try it!
+        </div>
+        <div class="ans-foot">
+          <button class="ans-vote"><i class="bi bi-hand-thumbs-up"></i> 22</button>
+          <button class="ans-vote"><i class="bi bi-hand-thumbs-down"></i> 0</button>
+          <button class="ans-vote" style="margin-left:auto"><i class="bi bi-flag"></i> Report</button>
+        </div>
+      </div>
+
+      <!-- Write answer -->
+      <div class="write-ans">
+        <label>Your Answer</label>
+        <textarea placeholder="Share what you know. Be clear and step-by-step. You'll earn +10 XP for answering!"></textarea>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:.5rem">
+          <span style="font-size:.73rem;color:var(--t3)">⭐ +10 XP for answering · +25 XP if accepted</span>
+          <button class="post-ans-btn" onclick="showXpToast('+10 XP earned for answering!')">
+            <i class="bi bi-send-fill"></i> Post Answer
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- ═══════════════════════ FAB ═══════════════════════ -->
-<button class="fab-btn d-lg-none" id="fabAsk" title="Ask a doubt">
-  <i class="bi bi-plus-lg"></i>
-</button>
-
-<!-- ═══════════════════════ ASK DOUBT MODAL ═══════════════════════ -->
-<div class="modal fade" id="askDoubtModal" tabindex="-1" aria-labelledby="askDoubtLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content dh-modal">
-      <div class="modal-header border-0 pb-0">
-        <div>
-          <h5 class="modal-title fw-bold" id="askDoubtLabel">
-            <i class="bi bi-patch-question-fill text-primary me-2"></i>Ask a Doubt
-          </h5>
-          <p class="text-muted small mb-0">Get help from the community. Be specific!</p>
-        </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Doubt Title <span class="text-danger">*</span></label>
-          <input type="text" id="doubtTitle" class="form-control dh-input"
-            placeholder="E.g. How do I find the derivative of sin(x)?"/>
-          <div class="form-text">Be specific and clear. Imagine you're asking a teacher.</div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Detailed Description <span class="text-danger">*</span></label>
-          <textarea id="doubtDesc" class="form-control dh-input" rows="4"
-            placeholder="Explain what you tried, where you're stuck, and any relevant context…"></textarea>
-        </div>
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">Subject <span class="text-danger">*</span></label>
-            <select id="doubtSubject" class="form-select dh-input">
-              <option value="">Select subject…</option>
-              <option>Maths</option>
-              <option>Physics</option>
-              <option>Chemistry</option>
-              <option>Programming</option>
-              <option>English</option>
-              <option>Biology</option>
-              <option>History</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label fw-semibold">Tags</label>
-            <input type="text" id="doubtTags" class="form-control dh-input"
-              placeholder="algebra, equations, calculus"/>
-            <div class="form-text">Comma-separated</div>
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Image (Optional)</label>
-          <div class="img-upload-area" id="imgUploadArea">
-            <i class="bi bi-cloud-upload fs-2 text-muted"></i>
-            <p class="mb-1 text-muted">Drag & drop or click to upload</p>
-            <small class="text-muted">PNG, JPG up to 5MB</small>
-            <input type="file" id="imgUpload" class="d-none" accept="image/*"/>
-          </div>
-        </div>
-        <div class="xp-hint">
-          <i class="bi bi-star-fill text-warning me-1"></i>
-          You'll earn <strong>+5 XP</strong> for posting this doubt!
-        </div>
-      </div>
-      <div class="modal-footer border-0 pt-0">
-        <button class="btn btn-light dh-btn-cancel" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary dh-btn-primary" id="postDoubtBtn">
-          <i class="bi bi-send me-1"></i> Post Doubt
-        </button>
-      </div>
-    </div>
-  </div>
+{{> ask-doubt}}
+<!-- XP Toast -->
+<div class="xp-toast" id="xpToast">
+  <span>⭐</span><span id="xpToastMsg">+5 XP earned!</span>
 </div>
