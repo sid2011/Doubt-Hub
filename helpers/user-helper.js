@@ -20,6 +20,8 @@ response.status=true
 }else {
         return { status: false }
     }
+},askDoubt:async(doubt)=>{
+await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
 }
 
 

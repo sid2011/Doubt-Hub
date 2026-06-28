@@ -7,7 +7,10 @@ const { engine } = require('express-handlebars')
 var logger = require('morgan');
 const db = require('./config/connections');
 const session=require('express-session')
-
+const multer = require('multer');
+const upload = multer({
+    dest: 'uploads/'
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,7 +24,7 @@ hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(cookieParser());

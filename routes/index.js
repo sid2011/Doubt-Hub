@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const userHelper = require('../helpers/user-helper');
+const collections = require('../config/collections');
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -17,7 +18,6 @@ router.get('/signup',(req,res)=>{
   res.render('user/user_auth/signup_page')
 })
 router.post('/signup',(req,res)=>{
-   console.log("this is req body",req.body)
   userHelper.doSignup(req.body).then((response)=>{
     res.redirect('/login')
   })
@@ -37,7 +37,7 @@ await userHelper.doLogIn(req.body).then((response)=>{
   }
 })
 })
-router.get('/doubts',(req,res)=>{
+router.get('/doubts',verify,(req,res)=>{
 res.render('user/doubt-section');
 })
 
@@ -51,7 +51,19 @@ router.get('/logout',(req,res)=>{
 res.redirect('/login')
     }
   })
-  
+})
+router.post('/ask-doubt',verify,async(req,res)=>{
+  const studentId = req.session.user._id;
+
+    const doubt = {
+        studentId: studentId,
+        title: req.body.title,
+        description: req.body.description,
+        subject: req.body.subject,
+        class: req.body.class,
+    };
+await userHelper.askDoubt(doubt)
+res.redirect('/doubts')
 })
 router.get('/terms-conditions',(req,res)=>{
   res.render('user/terms-conditions')

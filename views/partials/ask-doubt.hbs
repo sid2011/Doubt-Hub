@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
 
-            <form action="/ask-doubt" method="POST" enctype="multipart/form-data">
+            <form action="/ask-doubt" method="POST" >
 
                 <div class="modal-head">
                     <div>
@@ -20,7 +20,10 @@
 
                     <div class="form-mb">
                         <label class="form-lbl">Doubt Title <span class="req">*</span></label>
-
+                         <input
+                            class="finput"
+                            type="hidden"
+                            name="studentId" value="{{this.req.session._id}}">
                         <input
                             class="finput"
                             type="text"
@@ -66,7 +69,7 @@
                         <div>
                             <label class="form-lbl">Class</label>
 
-                            <select class="finput fselect" name="class">
+                            <select class="finput fselect" name="class" required>
                                 <option value="">Select class…</option>
                                 <option>6</option>
                                 <option>7</option>
@@ -78,25 +81,7 @@
 
                     </div>
 
-                    <div class="form-mb">
-                        <label class="form-lbl">Tags</label>
-
-                        <input
-                            class="finput"
-                            type="text"
-                            name="tags"
-                            placeholder="algebra, equations, quadratic">
-                    </div>
-
-                    <div class="form-mb">
-                        <label class="form-lbl">Attach Image (Optional)</label>
-
-                        <input
-                            type="file"
-                            class="form-control"
-                            name="image"
-                            accept="image/*">
-                    </div>
+                    
 
                     <div class="xp-hint-box">
                         <i class="bi bi-star-fill" style="color:var(--amber);margin-right:.25rem"></i>
