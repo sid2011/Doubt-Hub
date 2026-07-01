@@ -85,18 +85,18 @@
       <div style="position:relative">
         <button class="prof-btn" id="profBtn">
           <div class="ava ava-28">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=6366f1" alt="Rahul"/>
+            <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
           </div>
-          <span class="d-none d-md-inline" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem">Rahul K.</span>
+          <span class="d-none d-md-inline" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem">{{../userInfo.name}}</span>
           <i class="bi bi-chevron-down chevron"></i>
         </button>
         <div class="prof-dd" id="profDd">
           <div class="prof-mini">
             <div class="ava ava-44">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=6366f1" alt="Rahul"/>
+              <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
             </div>
             <div class="prof-mini-info">
-              <strong>Rahul Krishnan</strong>
+              <strong>{{../userInfo.name}}</strong>
               <span>Class 11 · CBSE</span>
               <div class="prof-mini-stats">
                 <span>⭐ 6,240 XP</span>
@@ -202,19 +202,22 @@
       <!-- ════ DOUBT CARDS ════ -->
 
       <!-- Card 1: Maths, Solved, Teacher Verified -->
+      {{#each response}}
       <div class="dcard s-math" id="card-1">
         <div class="dcard-inner">
           <div class="dc-head">
             <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priya&backgroundColor=7c3aed" alt="Priya"/>
+              <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
             </div>
+            
             <div class="dc-user">
-              <div class="dc-uname">Priya Nair</div>
+              <div class="dc-uname">{{../userInfo.name}}</div>
               <div class="dc-sub-row">
                 <span class="xp-sm">⭐ 8,450 XP</span>
                 <span class="dot-sep">●</span>
-                <span class="class-tag">Class 12 · CBSE</span>
+                <span class="class-tag">Class {{../userInfo.class}} · STATE</span>
               </div>
+              
             </div>
             <div class="dc-right">
               <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
@@ -223,15 +226,10 @@
             </div>
           </div>
           <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">How do I derive the quadratic formula from ax² + bx + c = 0 by completing the square?</a>
-            <p class="dc-desc">I understand the formula itself but I'm confused about the "completing the square" method used to derive it. My textbook skips steps between isolating x² and getting the final ±√(b²−4ac)/2a. Can someone walk through each step clearly?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-math">#Mathematics</span>
-              <span class="tag-misc">#algebra</span>
-              <span class="tag-misc">#class-12</span>
-              <span class="tag-misc">#quadratic</span>
-            </div>
+            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">{{this.title}}</a>
+            <p class="dc-desc">{{this.description}}</p>
           </div>
+          
         </div>
         <div class="ai-strip">
           <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
@@ -246,308 +244,9 @@
           <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
         </div>
       </div>
-
-      <!-- Card 2: Physics, Unsolved, Hot -->
-      <div class="dcard s-phy" id="card-2">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Arjun&backgroundColor=1d4ed8" alt="Arjun"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Arjun Menon</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 5,120 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 11 · State Board</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-hot"><i class="bi bi-fire"></i> Hot</span>
-              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
-              <span class="dc-time">18 min ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">Why does a heavier object not fall faster than a lighter one? Contradicts everyday experience!</a>
-            <p class="dc-desc">When I drop a stone and a feather from the same height, the stone hits the ground first. But my teacher says Galileo proved they fall at the same rate. How can both be true? Is it about air resistance only?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-phy">#Physics</span>
-              <span class="tag-misc">#gravitation</span>
-              <span class="tag-misc">#free-fall</span>
-              <span class="tag-misc">#galileo</span>
-            </div>
-          </div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,2)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">89</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">1</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">7 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 3: Chemistry, Solved, AI badge -->
-      <div class="dcard s-chem" id="card-3">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38" style="background:linear-gradient(135deg,#10b981,#059669)">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sneha&backgroundColor=059669" alt="Sneha"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Sneha Pillai</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 3,780 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 10 · CBSE</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
-              <span class="badge-ai"><i class="bi bi-stars"></i> AI Answered</span>
-              <span class="dc-time">45 min ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What is the difference between an ionic bond and a covalent bond? Give examples.</a>
-            <p class="dc-desc">I keep confusing these two in my Chemistry exam. Both involve sharing or transferring electrons but I can never remember which is which. My textbook examples are NaCl and H₂O but I don't see why.</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-chem">#Chemistry</span>
-              <span class="tag-misc">#chemical-bonding</span>
-              <span class="tag-misc">#class-10</span>
-              <span class="tag-misc">#ionic</span>
-              <span class="tag-misc">#covalent</span>
-            </div>
-          </div>
-        </div>
-        <div class="ai-strip">
-          <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
-          <div class="ai-strip-text"><strong>AI Preview:</strong> Ionic bonds form when one atom completely transfers electrons to another (e.g. Na gives its electron to Cl, forming Na⁺ and Cl⁻). Covalent bonds involve sharing electrons between atoms of similar electronegativity…  <a href="#" onclick="openModal('answersModal');return false" style="color:var(--violet);font-weight:600">See full explanation →</a></div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,3)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">67</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">9 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 4: CS, Open, Hot -->
-      <div class="dcard s-cs" id="card-4">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Devika&backgroundColor=7c3aed" alt="Devika"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Devika Suresh</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 2,340 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 11 · CBSE CS</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-hot"><i class="bi bi-fire"></i> Hot</span>
-              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
-              <span class="dc-time">1 hr ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">Python list vs tuple — when should I use which one? Is there a performance difference?</a>
-            <p class="dc-desc">I know lists are mutable and tuples are immutable but my teacher says "use tuple when data shouldn't change". How do I know when my data shouldn't change? And does tuple actually run faster in real programs?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-cs">#Computer Science</span>
-              <span class="tag-misc">#python</span>
-              <span class="tag-misc">#data-structures</span>
-              <span class="tag-misc">#class-11</span>
-            </div>
-          </div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,4)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">53</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">2</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">5 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 5: Social Science, Solved -->
-      <div class="dcard s-ss" id="card-5">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Akshay&backgroundColor=c2410c" alt="Akshay"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Akshay Thomas</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 1,890 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 9 · CBSE</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
-              <span class="dc-time">2 hrs ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What caused the French Revolution? Was it only about bread prices or were there deeper reasons?</a>
-            <p class="dc-desc">My textbook mentions food shortages but also Enlightenment ideas. Were ordinary people actually reading philosophy, or was it just poverty that caused the revolution? What came first — ideas or hunger?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-ss">#Social Science</span>
-              <span class="tag-misc">#history</span>
-              <span class="tag-misc">#french-revolution</span>
-              <span class="tag-misc">#class-9</span>
-            </div>
-          </div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,5)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">41</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">6 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 6: English, Open -->
-      <div class="dcard s-eng" id="card-6">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Meera&backgroundColor=be185d" alt="Meera"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Meera Krishnan</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 4,210 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 10 · ICSE</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
-              <span class="dc-time">3 hrs ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">In Shakespeare's "The Merchant of Venice", is Shylock a villain or a victim? How to write a balanced essay?</a>
-            <p class="dc-desc">My English exam asks me to argue both sides. I can see he's portrayed badly but also treated unfairly because of his religion. How do I structure a 600-word essay that covers both perspectives without being contradictory?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-eng">#English Literature</span>
-              <span class="tag-misc">#shakespeare</span>
-              <span class="tag-misc">#merchant-of-venice</span>
-              <span class="tag-misc">#essay-writing</span>
-            </div>
-          </div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,6)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">38</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">1</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">4 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 7: Biology, Teacher Verified -->
-      <div class="dcard s-bio" id="card-7">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rohit&backgroundColor=b45309" alt="Rohit"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Rohit Varma</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 6,670 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 12 · CBSE Bio</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-solved"><i class="bi bi-check-circle-fill"></i> Solved</span>
-              <span class="badge-teacher"><i class="bi bi-patch-check-fill"></i> Teacher</span>
-              <span class="dc-time">5 hrs ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">What is the exact difference between mitosis and meiosis? I always mix them up in exams.</a>
-            <p class="dc-desc">Both involve cell division but meiosis gives 4 daughter cells and mitosis gives 2. But what about genetic variation? Why does meiosis cause variation but mitosis doesn't? My biology teacher mentioned "crossing over" but didn't explain it fully.</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-bio">#Biology</span>
-              <span class="tag-misc">#cell-division</span>
-              <span class="tag-misc">#mitosis</span>
-              <span class="tag-misc">#meiosis</span>
-              <span class="tag-misc">#class-12</span>
-            </div>
-          </div>
-        </div>
-        <div class="ai-strip">
-          <div class="ai-strip-icon"><i class="bi bi-stars"></i></div>
-          <div class="ai-strip-text"><strong>AI Preview:</strong> Mitosis produces 2 genetically identical daughter cells (used for growth/repair). Meiosis produces 4 genetically unique cells (used for reproduction). "Crossing over" in meiosis I shuffles DNA segments between homologous chromosomes…  <a href="#" onclick="openModal('answersModal');return false" style="color:var(--violet);font-weight:600">Read more →</a></div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,7)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">92</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">4</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">11 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
-      <!-- Card 8: Malayalam -->
-      <div class="dcard s-mal" id="card-8">
-        <div class="dcard-inner">
-          <div class="dc-head">
-            <div class="ava ava-38" style="background:linear-gradient(135deg,#0e7490,#0891b2)">
-              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Anjali&backgroundColor=0e7490" alt="Anjali"/>
-            </div>
-            <div class="dc-user">
-              <div class="dc-uname">Anjali Rajan</div>
-              <div class="dc-sub-row">
-                <span class="xp-sm">⭐ 2,100 XP</span>
-                <span class="dot-sep">●</span>
-                <span class="class-tag">Class 8 · Kerala State</span>
-              </div>
-            </div>
-            <div class="dc-right">
-              <span class="badge-unsolved"><i class="bi bi-circle"></i> Open</span>
-              <span class="dc-time">6 hrs ago</span>
-            </div>
-          </div>
-          <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">"ഓണം" കവിതയിലെ മുഖ്യ ആശയം എന്ത്? ഉള്ളൂർ എസ്. പരമേശ്വരൻ ഐൻ ഈ കവിത എഴുതിയതിന്റെ ഉദ്ദേശ്യം വ്യക്തമാക്കുക.</a>
-            <p class="dc-desc">Malayalam exam preparation — Class 8 poem "Onam". Need to understand the central theme and the poet's intention for writing it. How does the poem connect to Kerala's cultural identity?</p>
-            <div class="dc-tags">
-              <span class="tag-subj s-mal">#Malayalam</span>
-              <span class="tag-misc">#poetry</span>
-              <span class="tag-misc">#onam</span>
-              <span class="tag-misc">#class-8</span>
-            </div>
-          </div>
-        </div>
-        <div class="dc-foot">
-          <button class="fbt" onclick="handleVote(this,8)"><i class="bi bi-hand-thumbs-up"></i><span class="cnt">29</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">0</span></button>
-          <div class="fbt-sep"></div>
-          <button class="fbt answers-fbt" onclick="openModal('answersModal')"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">3 Answers</span></button>
-          <button class="fbt ms-a" onclick="toggleSave(this)"><i class="bi bi-bookmark"></i><span>Save</span></button>
-          <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
-        </div>
-      </div>
-
+      
+{{/each}}
+      
       <!-- Load more -->
       <button class="load-more" id="loadMoreBtn">
         <i class="bi bi-arrow-down-circle"></i> Load 20 more doubts

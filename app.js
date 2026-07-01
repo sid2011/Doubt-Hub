@@ -43,11 +43,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
-
-
 db.connect().then(() => {
     app.listen(3000, () => {
-        console.log("Server Started");
+        console.log("Server running");
     });
 });
 app.use('/', indexRouter);

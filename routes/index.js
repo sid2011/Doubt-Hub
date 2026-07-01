@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const userHelper = require('../helpers/user-helper');
 const collections = require('../config/collections');
+const { ObjectId } = require('mongodb');
+const db=require('../config/connections')
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -37,8 +39,12 @@ await userHelper.doLogIn(req.body).then((response)=>{
   }
 })
 })
-router.get('/doubts',verify,(req,res)=>{
-res.render('user/doubt-section');
+router.get('/doubts',verify,async(req,res)=>{
+let userInfo=await db.get().collection(collections.STUDENT_COLLECTION).findOne({_id:new ObjectId(req.session.user._id)})
+  userHelper.showDoubt(req.session.user).then((response)=>{
+    console.log(response);
+    res.render('user/doubt-section', { response,userInfo });
+  })
 })
 
 router.get('/logout',(req,res)=>{
