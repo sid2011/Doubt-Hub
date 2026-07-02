@@ -22,8 +22,20 @@ response.status=true
     }
 },askDoubt:async(doubt)=>{
 await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
-},showDoubt:async(userData)=>{
-    let doubts=await db.get().collection(collection.DOUBT_COLLECTION).find({class:userData.class}).toArray()
-    return doubts
+},showDoubt:async(userData,subject)=>{
+     let query = {
+        class: userData.class
+    };
+
+    if (subject) {
+        query.subject = subject;
+    }
+
+    let doubts = await db.get()
+        .collection(collection.DOUBT_COLLECTION)
+        .find(query)
+        .toArray();
+
+    return doubts;
 }
 }
