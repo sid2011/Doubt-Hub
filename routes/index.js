@@ -42,7 +42,7 @@ await userHelper.doLogIn(req.body).then((response)=>{
 router.get('/doubts',verify,async(req,res)=>{
 let userInfo=await db.get().collection(collections.STUDENT_COLLECTION).findOne({_id:new ObjectId(req.session.user._id)})
   userHelper.showDoubt(req.session.user,req.query.subject).then((response)=>{
-    console.log(response);
+    //console.log(response);
     res.render('user/doubt-section', { response,userInfo });
   })
 })

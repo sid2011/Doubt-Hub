@@ -5,6 +5,8 @@ const { ObjectId } = require('mongodb')
 
 module.exports={
 doSignup:async(userData)=>{
+    const avatar = `https://api.dicebear.com/10.x/fun-emoji/svg?seed=${userData.name}`;
+    userData.avatar=avatar
 userData.password=await bcrypt.hash(userData.password,10)
 let response=await db.get().collection(collection.STUDENT_COLLECTION).insertOne(userData)
 },doLogIn:async(userData)=>{
