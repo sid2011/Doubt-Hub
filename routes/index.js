@@ -4,6 +4,8 @@ const userHelper = require('../helpers/user-helper');
 const collections = require('../config/collections');
 const { ObjectId } = require('mongodb');
 const db=require('../config/connections')
+
+
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -42,7 +44,7 @@ await userHelper.doLogIn(req.body).then((response)=>{
 router.get('/doubts',verify,async(req,res)=>{
 let userInfo=await db.get().collection(collections.STUDENT_COLLECTION).findOne({_id:new ObjectId(req.session.user._id)})
   userHelper.showDoubt(req.session.user,req.query.subject).then((response)=>{
-    //console.log(response);
+    console.log("idiot look",response);
     res.render('user/doubt-section', { response,userInfo });
   })
 })
@@ -62,7 +64,7 @@ router.post('/ask-doubt',verify,async(req,res)=>{
   const studentId = req.session.user._id;
 
     const doubt = {
-        studentId: studentId,
+        studentId: new ObjectId(studentId),
         title: req.body.title,
         description: req.body.description,
         subject: req.body.subject,
@@ -74,5 +76,24 @@ res.redirect('/doubts')
 })
 router.get('/terms-conditions',(req,res)=>{
   res.render('user/terms-conditions')
+})
+router.get('/answer-doubt/:id',verify, async (req, res) => {
+    const doubtId = new ObjectId(req.params.id);
+    const [doubt, answers] = await Promise.all([
+        userHelper.getDoubt(doubtId),
+        userHelper.getAnswers(doubtId)
+    ]);
+console.log("this is doubt",doubt)
+    res.render('user/answer-doubt', { doubt, answers });
+});
+router.post('/answer-doubt',verify,async(req,res)=>{
+  const answer={
+        doubtId:new ObjectId(req.body.doubtId),
+        studentId: new ObjectId(req.session.user._id),
+        answer: req.body.answer,
+        createdAt: new Date()
+  }
+await db.get().collection(collections.ANSWER_COLLECTION).insertOne(answer)
+res.redirect('/doubts')
 })
 module.exports = router;

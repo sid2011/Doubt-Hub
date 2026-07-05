@@ -1,6 +1,7 @@
 module.exports={
-    STUDENT_COLLECTION:'student',
+    STUDENT_COLLECTION:'students',
     DOUBT_COLLECTION:'doubts',
     TEACHER_COLLECTION:'teacher',
-    ADMIN_COLLECTION:'admin'
+    ADMIN_COLLECTION:'admin',
+    ANSWER_COLLECTION:'answer'
 }

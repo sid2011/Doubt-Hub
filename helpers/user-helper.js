@@ -2,6 +2,7 @@ const db=require('../config/connections')
 const collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { ObjectId } = require('mongodb')
+const collections = require('../config/collections')
 
 module.exports={
 doSignup:async(userData)=>{
@@ -39,5 +40,31 @@ await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
         .toArray();
 
     return doubts;
+},getDoubt: async (doubtId) => {
+    return await db.get()
+        .collection(collections.DOUBT_COLLECTION)
+        .findOne({ _id: doubtId });
+},
+getAnswers:async(doubtId)=>{
+    return db.get().collection(collections.ANSWER_COLLECTION)
+        .aggregate([
+            {
+                $match: {
+                    doubtId: doubtId
+                }
+            },
+            {
+                $lookup: {
+                    from: collections.STUDENT_COLLECTION,
+                    localField: "studentId",
+                    foreignField: "_id",
+                    as: "student"
+                }
+            },
+            {
+                $unwind: "$student"
+            }
+        ])
+        .toArray();
 }
 }
