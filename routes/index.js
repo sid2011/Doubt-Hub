@@ -84,9 +84,14 @@ router.get('/answer-doubt/:id',verify, async (req, res) => {
         userHelper.getAnswers(doubtId)
     ]);
 console.log("this is doubt",doubt)
-    res.render('user/answer-doubt', { doubt, answers });
+    res.render('user/answer-doubt', { doubt, answers ,doubtId});
 });
 router.post('/answer-doubt',verify,async(req,res)=>{
+  console.log("req.body:", req.body);
+console.log("doubtId:", req.body.doubtId);
+console.log("session:", req.session);
+console.log("user:", req.session.user);
+console.log("user id:", req.session.user?._id);
   const answer={
         doubtId:new ObjectId(req.body.doubtId),
         studentId: new ObjectId(req.session.user._id),
