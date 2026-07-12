@@ -2674,6 +2674,21 @@ button{cursor:pointer;font-family:inherit}
     .doubt-modal .modal-body { padding: .85rem; }
     .doubt-title { font-size: 1.15rem; }
     .btn-post-answer { width: 100%; }
-  }
+  }.subj-row a {
+    text-decoration: none;
+}
+.subj-row a:hover,
+.subj-row a:focus,
+.subj-row a:active {
+    text-decoration: none;
+}.dc-title {
+    text-decoration: none;
+    color: inherit; /* Optional: keeps the text color the same as its parent */
+}
+.dc-title:hover,
+.dc-title:focus,
+.dc-title:active {
+    text-decoration: none;
+}
 
   

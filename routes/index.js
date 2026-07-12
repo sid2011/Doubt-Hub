@@ -4,7 +4,10 @@ const userHelper = require('../helpers/user-helper');
 const collections = require('../config/collections');
 const { ObjectId } = require('mongodb');
 const db=require('../config/connections')
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
 
+dayjs.extend(relativeTime);
 
 /* GET home page. */
 const verify = (req, res, next) => {
@@ -44,7 +47,6 @@ await userHelper.doLogIn(req.body).then((response)=>{
 router.get('/doubts',verify,async(req,res)=>{
 let userInfo=await db.get().collection(collections.STUDENT_COLLECTION).findOne({_id:new ObjectId(req.session.user._id)})
   userHelper.showDoubt(req.session.user,req.query.subject).then((response)=>{
-    console.log("idiot look",response);
     res.render('user/doubt-section', { response,userInfo });
   })
 })
@@ -60,20 +62,28 @@ res.redirect('/login')
     }
   })
 })
-router.post('/ask-doubt',verify,async(req,res)=>{
-  const studentId = req.session.user._id;
+router.post('/ask-doubt', verify, async (req, res) => {
+
+    const studentId = req.session.user._id;
 
     const doubt = {
         studentId: new ObjectId(studentId),
-        title: req.body.title,
-        description: req.body.description,
+        title: req.body.title.trim(),
+        description: req.body.description.trim(),
         subject: req.body.subject,
         class: req.body.class,
         createdAt: new Date()
     };
-await userHelper.askDoubt(doubt)
-res.redirect('/doubts')
-})
+
+    await userHelper.askDoubt(doubt);
+
+    // Award XP only if description has at least 40 characters
+    if (doubt.description.length >= 40) {
+        await xpHelper.addXP(studentId, 5);
+    }
+
+    res.redirect('/doubts');
+});
 router.get('/terms-conditions',(req,res)=>{
   res.render('user/terms-conditions')
 })
@@ -87,11 +97,11 @@ console.log("this is doubt",doubt)
     res.render('user/answer-doubt', { doubt, answers ,doubtId});
 });
 router.post('/answer-doubt',verify,async(req,res)=>{
-  console.log("req.body:", req.body);
-console.log("doubtId:", req.body.doubtId);
-console.log("session:", req.session);
-console.log("user:", req.session.user);
-console.log("user id:", req.session.user?._id);
+// console.log("req.body:", req.body);
+// console.log("doubtId:", req.body.doubtId);
+// console.log("session:", req.session);
+// console.log("user:", req.session.user);
+// console.log("user id:", req.session.user?._id);
   const answer={
         doubtId:new ObjectId(req.body.doubtId),
         studentId: new ObjectId(req.session.user._id),

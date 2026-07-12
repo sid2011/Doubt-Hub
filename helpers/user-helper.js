@@ -3,6 +3,10 @@ const collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { ObjectId } = require('mongodb')
 const collections = require('../config/collections')
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
+
+dayjs.extend(relativeTime);
 
 module.exports={
 doSignup:async(userData)=>{
@@ -38,12 +42,17 @@ await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
         .collection(collection.DOUBT_COLLECTION)
         .find(query)
         .toArray();
-
+ doubts.forEach(doubt => {
+        doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
+    });
     return doubts;
 },getDoubt: async (doubtId) => {
-    return await db.get()
+    let doubts=await db.get()
         .collection(collections.DOUBT_COLLECTION)
         .findOne({ _id: doubtId });
+        doubts.forEach(doubt => {
+        doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
+        return doubts;
 },
 getAnswers:async(doubtId)=>{
     return db.get().collection(collections.ANSWER_COLLECTION)
@@ -66,5 +75,6 @@ getAnswers:async(doubtId)=>{
             }
         ])
         .toArray();
+}
 }
 }
