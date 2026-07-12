@@ -97,14 +97,10 @@ router.post('/ask-doubt', verify, async (req, res) => {
         class: req.body.class,
         createdAt: new Date()
     };
-
-    await userHelper.askDoubt(doubt);
-
-    // Award XP only if description has at least 40 characters
-    if (doubt.description.length >= 40) {
-        await xpHelper.addXP(studentId, xp.ASK_DOUBT);
-    }
-
+await Promise.all([
+    userHelper.askDoubt(doubt),
+    xpHelper.addXP(studentId, xp.ASK_DOUBT)
+]);
     res.redirect('/doubts');
 });
 router.get('/terms-conditions',(req,res)=>{
@@ -137,15 +133,10 @@ router.post('/answer-doubt', verify, async (req, res) => {
     await db.get()
         .collection(collections.ANSWER_COLLECTION)
         .insertOne(answer);
-console.log(doubt.studentId);
-console.log(typeof doubt.studentId);
-console.log(answer.studentId);
-console.log(typeof answer.studentId);
     // Award XP only if answering someone else's doubt
     if (doubt.studentId.toString() !== answer.studentId.toString()) {
     await xpHelper.addXP(answer.studentId,xp.ANSWER_DOUBT);
 }
-
     res.redirect('/doubts');
 });
 module.exports = router;

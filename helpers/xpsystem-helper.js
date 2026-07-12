@@ -3,7 +3,7 @@ const db = require("../config/connections");
 const collection = require("../config/collections");
 
 module.exports.addXP = async (userId, amount) => {
-
+console.log("recieved amount",amount)
     // Increase XP
     await db.get().collection(collection.STUDENT_COLLECTION).updateOne(
         { _id: new ObjectId(userId) },
