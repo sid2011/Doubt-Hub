@@ -1,216 +1,272 @@
-  <header>
-    <nav class="dh-navbar" id="dh-navbar" role="navigation" aria-label="Main navigation">
-      <div class="dh-navbar-inner">
+<header>
+  <nav
+    class="dh-navbar"
+    id="dh-navbar"
+    role="navigation"
+    aria-label="Main navigation"
+  >
+    <div class="dh-navbar-inner">
 
-        {{!-- Logo --}}
-        <a href="/" class="dh-logo" aria-label="DoubtHub home">
-          <span class="dh-logo-mark" aria-hidden="true">
-            {{!-- Spark / lightning SVG icon --}}
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
-          </span>
-          <span class="dh-logo-text">DoubtHub</span>
-        </a>
+      {{! Logo }}
+      <a href="/" class="dh-logo" aria-label="DoubtHub home">
+        <span class="dh-logo-mark" aria-hidden="true">
+          {{! Spark / lightning SVG icon }}
+          <svg
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </span>
+        <span class="dh-logo-text">DoubtHub</span>
+      </a>
 
-        {{!-- Desktop nav links --}}
-        <ul class="dh-nav-links" role="list">
-          <li><a href="/">Home</a></li>
-          <li><a href="/explore">Explore</a></li>
-          <li><a href="/doubts">Ask Doubt</a></li>
-          <li><a href="/about">About</a></li>
-        </ul>
-
-        {{!-- Desktop CTA buttons --}}
-        <div class="dh-nav-cta">
-          <a href="/login" class="dh-btn-ghost">Login</a>
-          <a href="/signup" class="dh-btn-primary-sm">Sign Up</a>
-        </div>
-
-        {{!-- Mobile hamburger --}}
-        <button
-          class="dh-hamburger"
-          id="dh-hamburger"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          aria-controls="dh-mobile-menu"
-        >
-          <span class="dh-hamburger-bar"></span>
-          <span class="dh-hamburger-bar"></span>
-          <span class="dh-hamburger-bar"></span>
-        </button>
-
-      </div>
-    </nav>
-
-    {{!-- Mobile drawer menu --}}
-    <div class="dh-mobile-menu" id="dh-mobile-menu" role="dialog" aria-modal="false" aria-label="Mobile navigation">
-      <ul class="dh-mobile-nav-links" role="list">
+      {{! Desktop nav links }}
+      <ul class="dh-nav-links" role="list">
         <li><a href="/">Home</a></li>
+        <li><a href="/explore">Explore</a></li>
         <li><a href="/doubts">Ask Doubt</a></li>
         <li><a href="/about">About</a></li>
       </ul>
-      <div class="dh-mobile-cta">
+
+      {{! Desktop CTA buttons }}
+      <div class="dh-nav-cta">
         <a href="/login" class="dh-btn-ghost">Login</a>
-        <a href="/signup" class="dh-btn-primary-sm">Sign Up — It's Free</a>
+        <a href="/signup" class="dh-btn-primary-sm">Sign Up</a>
       </div>
+
+      {{! Mobile hamburger }}
+      <button
+        class="dh-hamburger"
+        id="dh-hamburger"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="dh-mobile-menu"
+      >
+        <span class="dh-hamburger-bar"></span>
+        <span class="dh-hamburger-bar"></span>
+        <span class="dh-hamburger-bar"></span>
+      </button>
+
     </div>
-  </header>
+  </nav>
+
+  {{! Mobile drawer menu }}
+  <div
+    class="dh-mobile-menu"
+    id="dh-mobile-menu"
+    role="dialog"
+    aria-modal="false"
+    aria-label="Mobile navigation"
+  >
+    <ul class="dh-mobile-nav-links" role="list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/doubts">Ask Doubt</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+    <div class="dh-mobile-cta">
+      <a href="/login" class="dh-btn-ghost">Login</a>
+      <a href="/signup" class="dh-btn-primary-sm">Sign Up — It's Free</a>
+    </div>
+  </div>
+</header>
 
 <main>
-    <section class="dh-hero" aria-labelledby="dh-hero-headline">
+  <section class="dh-hero" aria-labelledby="dh-hero-headline">
 
-      {{!-- Background decorations --}}
-      <div class="dh-hero-bg" aria-hidden="true"></div>
-      <div class="dh-hero-glow-1" aria-hidden="true"></div>
-      <div class="dh-hero-glow-2" aria-hidden="true"></div>
+    {{! Background decorations }}
+    <div class="dh-hero-bg" aria-hidden="true"></div>
+    <div class="dh-hero-glow-1" aria-hidden="true"></div>
+    <div class="dh-hero-glow-2" aria-hidden="true"></div>
 
-      <div class="dh-hero-inner">
+    <div class="dh-hero-inner">
 
-        {{!-- ── Left: Copy ── --}}
-        <div class="dh-hero-copy">
+      {{! ── Left: Copy ── }}
+      <div class="dh-hero-copy">
 
-          {{!-- Announcement badge --}}
-          <div class="dh-hero-badge" role="status" aria-live="polite">
-            <span class="dh-hero-badge-dot" aria-hidden="true"></span>
-            AI-powered doubt solving is here
+        {{! Announcement badge }}
+        <div class="dh-hero-badge" role="status" aria-live="polite">
+          <span class="dh-hero-badge-dot" aria-hidden="true"></span>
+          AI-powered doubt solving is here
+        </div>
+
+        {{! Headline }}
+        <h1 class="dh-hero-headline" id="dh-hero-headline">
+          Ask Smarter.<br />
+          <span class="dh-headline-gradient">Learn Faster.</span><br />
+          Together.
+        </h1>
+
+        {{! Subtitle }}
+        <p class="dh-hero-subtitle">
+          Join a collaborative learning community where students, teachers, and
+          AI work together to solve doubts instantly — any subject, any time.
+        </p>
+
+        {{! CTA Buttons }}
+        <div class="dh-hero-actions" role="group" aria-label="Primary actions">
+          <a href="/signup" class="dh-btn-hero-primary">
+            Get Started
+            {{! Arrow right icon }}
+            <svg
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="/doubts" class="dh-btn-hero-secondary">
+            Explore Doubts
+          </a>
+        </div>
+
+        {{! Trust strip }}
+        <div class="dh-trust">
+          <div class="dh-trust-avatars" aria-hidden="true">
+            <span class="dh-trust-avatar" title="Student">AK</span>
+            <span class="dh-trust-avatar" title="Teacher">SR</span>
+            <span class="dh-trust-avatar" title="Student">MP</span>
+            <span class="dh-trust-avatar" title="Student">JT</span>
           </div>
+          <div class="dh-trust-text">
+            <strong>Trusted by 12,000+ learners</strong>
+            Students and teachers across India
+          </div>
+        </div>
 
-          {{!-- Headline --}}
-          <h1 class="dh-hero-headline" id="dh-hero-headline">
-            Ask Smarter.<br />
-            <span class="dh-headline-gradient">Learn Faster.</span><br />
-            Together.
-          </h1>
+      </div>{{! /.dh-hero-copy }}
 
-          {{!-- Subtitle --}}
-          <p class="dh-hero-subtitle">
-            Join a collaborative learning community where students, teachers, and AI
-            work together to solve doubts instantly — any subject, any time.
+      {{! ── Right: UI Mockup ── }}
+      <div
+        class="dh-hero-visual"
+        aria-hidden="true"
+        role="img"
+        aria-label="DoubtHub discussion interface preview"
+      >
+
+        {{! Background ring glow }}
+        <div class="dh-visual-ring"></div>
+
+        {{! ── Card 1: Active discussion (main, center) ── }}
+        <div class="dh-card-main">
+          <div class="dh-card-header">
+            <div class="dh-card-avatar">RK</div>
+            <div class="dh-card-meta">
+              <div class="dh-card-author">Rohan Kumar</div>
+              <div class="dh-card-time">2 minutes ago</div>
+            </div>
+            <span class="dh-card-badge dh-badge-student">Student</span>
+          </div>
+          <p class="dh-card-question">
+            Why does light bend when it passes through glass? Is this related to
+            Snell's law?
           </p>
-
-          {{!-- CTA Buttons --}}
-          <div class="dh-hero-actions" role="group" aria-label="Primary actions">
-            <a href="/signup" class="dh-btn-hero-primary">
-              Get Started
-              {{!-- Arrow right icon --}}
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+          <span class="dh-card-tag">Physics · Class 10</span>
+          <div class="dh-card-divider"></div>
+          <div class="dh-card-footer">
+            <span class="dh-card-stat">
+              {{! Reply icon }}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                />
               </svg>
-            </a>
-            <a href="/doubts" class="dh-btn-hero-secondary">
-              Explore Doubts
-            </a>
+              7 replies
+            </span>
+            <span class="dh-card-stat">
+              {{! Eye icon }}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle
+                  cx="12"
+                  cy="12"
+                  r="3"
+                />
+              </svg>
+              143
+            </span>
+            <span class="dh-card-upvote">
+              {{! Thumbs up }}
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"
+                />
+              </svg>
+              42
+            </span>
           </div>
+        </div>
 
-          {{!-- Trust strip --}}
-          <div class="dh-trust">
-            <div class="dh-trust-avatars" aria-hidden="true">
-              <span class="dh-trust-avatar" title="Student">AK</span>
-              <span class="dh-trust-avatar" title="Teacher">SR</span>
-              <span class="dh-trust-avatar" title="Student">MP</span>
-              <span class="dh-trust-avatar" title="Student">JT</span>
+        {{! ── Card 2: AI answer (top right) ── }}
+        <div class="dh-card-ai">
+          <div class="dh-ai-header">
+            <div class="dh-ai-icon">
+              {{! Sparkle icon }}
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2l1.8 5.4L19.2 9l-5.4 1.8L12 16.2l-1.8-5.4L4.8 9l5.4-1.8L12 2z"
+                />
+              </svg>
             </div>
-            <div class="dh-trust-text">
-              <strong>Trusted by 12,000+ learners</strong>
-              Students and teachers across India
-            </div>
+            <span class="dh-ai-label">AI Assistant</span>
           </div>
-
-        </div>{{!-- /.dh-hero-copy --}}
-
-        {{!-- ── Right: UI Mockup ── --}}
-        <div class="dh-hero-visual" aria-hidden="true" role="img" aria-label="DoubtHub discussion interface preview">
-
-          {{!-- Background ring glow --}}
-          <div class="dh-visual-ring"></div>
-
-          {{!-- ── Card 1: Active discussion (main, center) ── --}}
-          <div class="dh-card-main">
-            <div class="dh-card-header">
-              <div class="dh-card-avatar">RK</div>
-              <div class="dh-card-meta">
-                <div class="dh-card-author">Rohan Kumar</div>
-                <div class="dh-card-time">2 minutes ago</div>
-              </div>
-              <span class="dh-card-badge dh-badge-student">Student</span>
-            </div>
-            <p class="dh-card-question">
-              Why does light bend when it passes through glass? Is this related to Snell's law?
-            </p>
-            <span class="dh-card-tag">Physics · Class 10</span>
-            <div class="dh-card-divider"></div>
-            <div class="dh-card-footer">
-              <span class="dh-card-stat">
-                {{!-- Reply icon --}}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-                7 replies
-              </span>
-              <span class="dh-card-stat">
-                {{!-- Eye icon --}}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-                </svg>
-                143
-              </span>
-              <span class="dh-card-upvote">
-                {{!-- Thumbs up --}}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/>
-                </svg>
-                42
-              </span>
-            </div>
+          <p class="dh-ai-text">
+            Light bends because it slows down when entering a denser medium.
+            This is refraction — yes, Snell's law describes it exactly…
+          </p>
+          <div class="dh-ai-typing">
+            <span class="dh-typing-dot"></span>
+            <span class="dh-typing-dot"></span>
+            <span class="dh-typing-dot"></span>
           </div>
+        </div>
 
-          {{!-- ── Card 2: AI answer (top right) ── --}}
-          <div class="dh-card-ai">
-            <div class="dh-ai-header">
-              <div class="dh-ai-icon">
-                {{!-- Sparkle icon --}}
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2l1.8 5.4L19.2 9l-5.4 1.8L12 16.2l-1.8-5.4L4.8 9l5.4-1.8L12 2z"/>
-                </svg>
-              </div>
-              <span class="dh-ai-label">AI Assistant</span>
-            </div>
-            <p class="dh-ai-text">
-              Light bends because it slows down when entering a denser medium. This is refraction — yes, Snell's law describes it exactly…
-            </p>
-            <div class="dh-ai-typing">
-              <span class="dh-typing-dot"></span>
-              <span class="dh-typing-dot"></span>
-              <span class="dh-typing-dot"></span>
+        {{! ── Card 3: Teacher reply (bottom left) ── }}
+        <div class="dh-card-teacher">
+          <div class="dh-teacher-header">
+            <div class="dh-teacher-avatar">SP</div>
+            <div>
+              <span class="dh-teacher-name">Ms. Priya</span>
+              <span class="dh-teacher-badge">✓ Verified Teacher</span>
             </div>
           </div>
+          <p class="dh-teacher-text">
+            Great question! Think of it like a car wheel hitting sand — one side
+            slows before the other, causing a turn.
+          </p>
+        </div>
 
-          {{!-- ── Card 3: Teacher reply (bottom left) ── --}}
-          <div class="dh-card-teacher">
-            <div class="dh-teacher-header">
-              <div class="dh-teacher-avatar">SP</div>
-              <div>
-                <span class="dh-teacher-name">Ms. Priya</span>
-                <span class="dh-teacher-badge">✓ Verified Teacher</span>
-              </div>
-            </div>
-            <p class="dh-teacher-text">
-              Great question! Think of it like a car wheel hitting sand — one side slows before the other, causing a turn.
-            </p>
+        {{! ── Card 4: Community stat (top left) ── }}
+        <div class="dh-card-replies">
+          <span class="dh-replies-count">7</span>
+          <div class="dh-replies-label">
+            <strong>Community replies</strong>
+            in under 3 min
           </div>
+        </div>
 
-          {{!-- ── Card 4: Community stat (top left) ── --}}
-          <div class="dh-card-replies">
-            <span class="dh-replies-count">7</span>
-            <div class="dh-replies-label">
-              <strong>Community replies</strong>
-              in under 3 min
-            </div>
-          </div>
+      </div>{{! /.dh-hero-visual }}
 
-        </div>{{!-- /.dh-hero-visual --}}
-
-      </div>{{!-- /.dh-hero-inner --}}
-    </section>
-  </main>
+    </div>{{! /.dh-hero-inner }}
+  </section>
+</main>
