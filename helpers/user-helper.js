@@ -1,5 +1,4 @@
 const db=require('../config/connections')
-const collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { ObjectId } = require('mongodb')
 const collections = require('../config/collections')
@@ -13,10 +12,10 @@ doSignup:async(userData)=>{
     const avatar = `https://api.dicebear.com/10.x/fun-emoji/svg?seed=${userData.name}`;
     userData.avatar=avatar
 userData.password=await bcrypt.hash(userData.password,10)
-let response=await db.get().collection(collection.STUDENT_COLLECTION).insertOne(userData)
+let response=await db.get().collection(collections.STUDENT_COLLECTION).insertOne(userData)
 },doLogIn:async(userData)=>{
     let response={}
-let user=await db.get().collection(collection.STUDENT_COLLECTION).findOne({email:userData.email})
+let user=await db.get().collection(collections.STUDENT_COLLECTION).findOne({email:userData.email})
 if(!user){
     return {status:false};
 }let status=await bcrypt.compare(userData.password,user.password)
@@ -28,7 +27,7 @@ response.status=true
         return { status: false }
     }
 },askDoubt:async(doubt)=>{
-await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
+await db.get().collection(collections.DOUBT_COLLECTION).insertOne(doubt)
 },showDoubt:async(userData,subject)=>{
      let query = {
         class: userData.class
@@ -39,7 +38,7 @@ await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
     }
 
     let doubts = await db.get()
-        .collection(collection.DOUBT_COLLECTION)
+        .collection(collections.DOUBT_COLLECTION)
         .find(query)
         .toArray();
  doubts.forEach(doubt => {
@@ -47,12 +46,15 @@ await db.get().collection(collection.DOUBT_COLLECTION).insertOne(doubt)
     });
     return doubts;
 },getDoubt: async (doubtId) => {
-    let doubts=await db.get()
+    let doubt = await db.get()
         .collection(collections.DOUBT_COLLECTION)
         .findOne({ _id: doubtId });
-        doubts.forEach(doubt => {
+
+    if (doubt) {
         doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
-        return doubts;
+    }
+
+    return doubt;
 },
 getAnswers:async(doubtId)=>{
     return db.get().collection(collections.ANSWER_COLLECTION)
@@ -75,6 +77,5 @@ getAnswers:async(doubtId)=>{
             }
         ])
         .toArray();
-}
 }
 }
