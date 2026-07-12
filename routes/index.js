@@ -6,9 +6,9 @@ const { ObjectId } = require('mongodb');
 const db=require('../config/connections')
 const dayjs = require("dayjs");
 const relativeTime = require("dayjs/plugin/relativeTime");
-
+const xpHelper=require('../helpers/xpsystem-helper');
 dayjs.extend(relativeTime);
-
+const xp=require('../config/xp-points')
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -33,21 +33,44 @@ router.post('/signup',(req,res)=>{
 router.get('/login',(req,res)=>{
   res.render('user/user_auth/login_page')
 })
-router.post('/login',async(req,res)=>{
-await userHelper.doLogIn(req.body).then((response)=>{
-  if(response.status){
-    req.session.loggedIn=true
-    req.session.user=response.user
-    res.redirect('/doubts')
-  }else{
-    res.render('user/user_auth/login_page')
-  }
-})
-})
+router.post('/login', async (req, res) => {
+
+    const response = await userHelper.doLogIn(req.body);
+
+    if (response.status) {
+
+        req.session.loggedIn = true;
+        req.session.user = response.user;
+
+        const today = new Date().toISOString().split('T')[0];
+
+        if (response.user.lastLoginBonus !== today) {
+
+            await xpHelper.addXP(response.user._id,xp.DAILY_LOGIN);
+
+            await db.get()
+                .collection(collections.STUDENT_COLLECTION)
+                .updateOne(
+                    { _id: new ObjectId(response.user._id) },
+                    {
+                        $set: {
+                            lastLoginBonus: today
+                        }
+                    }
+                );
+        }
+
+        res.redirect('/doubts');
+
+    } else {
+        res.render('user/user_auth/login_page');
+    }
+
+});
 router.get('/doubts',verify,async(req,res)=>{
 let userInfo=await db.get().collection(collections.STUDENT_COLLECTION).findOne({_id:new ObjectId(req.session.user._id)})
   userHelper.showDoubt(req.session.user,req.query.subject).then((response)=>{
-    res.render('user/doubt-section', { response,userInfo });
+    res.render('user/doubt-section', { response,userInfo,userName:userInfo.name,userXP:userInfo.xp });
   })
 })
 
@@ -79,7 +102,7 @@ router.post('/ask-doubt', verify, async (req, res) => {
 
     // Award XP only if description has at least 40 characters
     if (doubt.description.length >= 40) {
-        await xpHelper.addXP(studentId, 5);
+        await xpHelper.addXP(studentId, xp.ASK_DOUBT);
     }
 
     res.redirect('/doubts');
@@ -96,19 +119,33 @@ router.get('/answer-doubt/:id',verify, async (req, res) => {
 console.log("this is doubt",doubt)
     res.render('user/answer-doubt', { doubt, answers ,doubtId});
 });
-router.post('/answer-doubt',verify,async(req,res)=>{
-// console.log("req.body:", req.body);
-// console.log("doubtId:", req.body.doubtId);
-// console.log("session:", req.session);
-// console.log("user:", req.session.user);
-// console.log("user id:", req.session.user?._id);
-  const answer={
-        doubtId:new ObjectId(req.body.doubtId),
+router.post('/answer-doubt', verify, async (req, res) => {
+
+    const answer = {
+        doubtId: new ObjectId(req.body.doubtId),
         studentId: new ObjectId(req.session.user._id),
         answer: req.body.answer,
         createdAt: new Date()
-  }
-await db.get().collection(collections.ANSWER_COLLECTION).insertOne(answer)
-res.redirect('/doubts')
-})
+    };
+
+    // Get the doubt
+    const doubt = await db.get()
+        .collection(collections.DOUBT_COLLECTION)
+        .findOne({ _id: new ObjectId(req.body.doubtId) });
+
+    // Save the answer
+    await db.get()
+        .collection(collections.ANSWER_COLLECTION)
+        .insertOne(answer);
+console.log(doubt.studentId);
+console.log(typeof doubt.studentId);
+console.log(answer.studentId);
+console.log(typeof answer.studentId);
+    // Award XP only if answering someone else's doubt
+    if (doubt.studentId.toString() !== answer.studentId.toString()) {
+    await xpHelper.addXP(answer.studentId,xp.ANSWER_DOUBT);
+}
+
+    res.redirect('/doubts');
+});
 module.exports = router;
