@@ -68,12 +68,14 @@ router.get("/doubts", verify, async (req, res) => {
     .get()
     .collection(collections.STUDENT_COLLECTION)
     .findOne({ _id: new ObjectId(req.session.user._id) });
+let xpReward = req.session.xpReward;
+req.session.xpReward = null;
   userHelper.showDoubt(req.session.user, req.query.subject).then((response) => {
     res.render("user/doubt-section", {
       response,
       userInfo,
       userName: userInfo.name,
-      userXP: userInfo.xp,
+      userXP: userInfo.xp,xpReward
     });
   });
 });
@@ -103,7 +105,9 @@ router.post("/ask-doubt", verify, async (req, res) => {
   await Promise.all([
     userHelper.askDoubt(doubt),
     xpHelper.addXP(studentId, xp.ASK_DOUBT),
-  ]);
+  ]);req.session.xpReward = {
+    amount: xp.ASK_DOUBT
+};
   res.redirect("/doubts");
 });
 router.get("/terms-conditions", (req, res) => {
@@ -138,6 +142,9 @@ router.post("/answer-doubt", verify, async (req, res) => {
   if (doubt.studentId.toString() !== answer.studentId.toString()) {
     await xpHelper.addXP(answer.studentId, xp.ANSWER_DOUBT);
   }
+  req.session.xpReward = {
+    amount: xp.ANSWER_DOUBT
+};
   res.redirect("/doubts");
 });
 module.exports = router;
