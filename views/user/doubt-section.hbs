@@ -22,6 +22,11 @@
       <div class="xp-pill">
         <span>⭐</span><span>{{userXP}} XP</span>
       </div>
+      <div class="nav-right">
+      <!-- XP -->
+      <div class="xp-pill">
+        <span>👑</span><span>Level:{{userLevel}}</span>
+      </div>
 
       <!-- Notifications -->
       <div class="notif-wrap">
@@ -210,7 +215,7 @@
             </div>
           </div>
           <div class="dc-body">
-            <a href="#" class="dc-title" onclick="openModal('answersModal');return false">{{this.title}}</a>
+            <a href="/answer-doubt/{{this._id}}" class="dc-title" onclick="openModal('answersModal');return false">{{this.title}}</a>
             <p class="dc-desc">{{this.description}}</p>
           </div>
           
@@ -224,12 +229,7 @@
         </div>
       </div>
 {{/each}}
-      
-      <!-- Load more -->
-      <button class="load-more" id="loadMoreBtn">
-        <i class="bi bi-arrow-down-circle"></i> Load 20 more doubts
-      </button>
-    </div><!-- /feed -->
+
 
     <!-- ════ SIDEBAR ════ -->
     <aside class="sidebar">

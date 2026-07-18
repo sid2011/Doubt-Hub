@@ -67,6 +67,11 @@ module.exports = {
     doubts.forEach((doubt) => {
     doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
     });
+      doubts.forEach(doubt => {
+        doubt.isOwner =
+            doubt.studentId.toString() === userData._id.toString();
+    });
+
     return doubts;
   },
   getDoubt: async (doubtId) => {

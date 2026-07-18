@@ -1,9 +1,5 @@
 <div class="dh-filter-bar d-flex flex-column flex-md-row gap-3 align-items-md-center mb-3">
-  <ul class="nav nav-pills dh-pills">
-    <li class="nav-item"><a class="nav-link {{#if (eq activeFilter 'latest')}}active{{/if}}" href="?filter=latest"><i class="bi bi-clock me-1"></i>Latest</a></li>
-    <li class="nav-item"><a class="nav-link {{#if (eq activeFilter 'top')}}active{{/if}}" href="?filter=top"><i class="bi bi-fire me-1"></i>Top</a></li>
-    <li class="nav-item"><a class="nav-link {{#if (eq activeFilter 'unanswered')}}active{{/if}}" href="?filter=unanswered"><i class="bi bi-question-circle me-1"></i>Unanswered</a></li>
-  </ul>
+
   <div class="d-flex flex-wrap gap-2 ms-md-auto">
     <a href="?subject=all" class="badge dh-subject-pill active">All</a>
     {{#each subjects}}

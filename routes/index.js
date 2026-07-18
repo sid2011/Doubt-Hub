@@ -75,7 +75,7 @@ req.session.xpReward = null;
       response,
       userInfo,
       userName: userInfo.name,
-      userXP: userInfo.xp,xpReward
+      userXP: userInfo.xp,xpReward,userLevel:userInfo.level
     });
   });
 });
@@ -119,7 +119,7 @@ router.get("/answer-doubt/:id", verify, async (req, res) => {
     userHelper.getDoubt(doubtId),
     userHelper.getAnswers(doubtId),
   ]);
-  console.log("this is doubt", doubt);
+
   res.render("user/answer-doubt", { doubt, answers, doubtId });
 });
 router.post("/answer-doubt", verify, async (req, res) => {
