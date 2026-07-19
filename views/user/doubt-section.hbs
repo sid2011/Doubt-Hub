@@ -1,34 +1,24 @@
-<nav class="navbar">
-  <div class="nav-inner">
-    <!-- Logo -->
-    <a href="#" class="nav-logo">
-      <div class="logo-box"><i class="bi bi-patch-question-fill"></i></div>
-      DoubtHub
-    </a>
+<div class="nav-right">
+  <!-- XP -->
+  <div class="xp-pill">
+    <span>⭐</span><span>{{userXP}} XP</span>
+  </div>
 
-    <!-- Desktop Search -->
-    <div class="nav-search">
-      <i class="bi bi-search si"></i>
-      <input type="text" placeholder="Search doubts, subjects, topics…" id="navSearchInput"/>
-    </div>
+  <!-- Level -->
+  <div class="xp-pill">
+    <span>👑</span><span>Level: {{userLevel}}</span>
+  </div>
 
-    <!-- Mobile search icon -->
-    <button class="ibtn mob-s-btn" id="mobSearchBtn" aria-label="Search">
-      <i class="bi bi-search"></i>
-    </button>
+  <!-- Notifications -->
+  <div class="notif-wrap">
+    ...
+  </div>
 
-    <div class="nav-right">
-      <!-- XP -->
-      <div class="xp-pill">
-        <span>⭐</span><span>{{userXP}} XP</span>
-      </div>
-      <div class="nav-right">
-      <!-- XP -->
-      <div class="xp-pill">
-        <span>👑</span><span>Level:{{userLevel}}</span>
-      </div>
-
-      <!-- Notifications -->
+  <!-- Profile -->
+  <div style="position: relative;">
+    ...
+  </div>
+</div>      <!-- Notifications -->
       <div class="notif-wrap">
         <button class="ibtn" id="notifBtn" aria-label="Notifications">
           <i class="bi bi-bell-fill"></i>
