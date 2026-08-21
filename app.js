@@ -37,10 +37,14 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts/",
     partialsDir: __dirname + "/views/partials/",
     helpers: {
-      inc: function (value) {
-        return parseInt(value) + 1;
-      },
-    },
+  inc: function (value) {
+    return parseInt(value) + 1;
+  },
+
+  eq: function (a, b) {
+    return a === b;
+  },
+},
   }),
 );
 app.set("view engine", "hbs");

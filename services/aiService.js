@@ -1,5 +1,10 @@
 const { GoogleGenAI } = require("@google/genai");
+const { marked } = require("marked");
+const createDOMPurify = require("dompurify");
+const { JSDOM } = require("jsdom");
 
+const window = new JSDOM("").window;
+const DOMPurify = createDOMPurify(window);
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
@@ -28,7 +33,9 @@ ${doubt}
         contents: prompt
     });
 
-    return response.text;
+    const markdown = response.text;
+    const html = DOMPurify.sanitize(marked.parse(markdown));
+    return html;
 }
 
 module.exports = {
