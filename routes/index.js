@@ -9,6 +9,7 @@ const relativeTime = require("dayjs/plugin/relativeTime");
 const xpHelper = require("../helpers/xpsystem-helper");
 dayjs.extend(relativeTime);
 const xp = require("../config/xp-points");
+const aiService = require("../services/aiService");
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -102,12 +103,37 @@ router.post("/ask-doubt", verify, async (req, res) => {
     class: req.body.class,
     createdAt: new Date(),
   };
-  await Promise.all([
+ const [result]= await Promise.all([
     userHelper.askDoubt(doubt),
     xpHelper.addXP(studentId, xp.ASK_DOUBT),
   ]);req.session.xpReward = {
     amount: xp.ASK_DOUBT
 };
+console.log(result.insertedId)
+const savedDoubt = await db.get()
+    .collection(collections.DOUBT_COLLECTION)
+    .findOne({
+        _id: result.insertedId
+    });
+    aiService.generateAIAnswer(savedDoubt.title)
+    .then(async (aiAnswer) => {
+
+        await db.get()
+            .collection(collections.ANSWER_COLLECTION)
+            .insertOne({
+                doubtId: savedDoubt._id,
+                role: "ai",
+                answer: aiAnswer,
+                createdAt: new Date()
+            });
+
+        console.log("AI answer saved successfully 🤖");
+
+    })
+    .catch((error) => {
+        console.error("AI generation failed:", error);
+    });
+console.log(savedDoubt);
   res.redirect("/doubts");
 });
 router.get("/terms-conditions", (req, res) => {

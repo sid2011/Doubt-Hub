@@ -36,7 +36,7 @@ module.exports = {
     }
   },
   askDoubt: async (doubt) => {
-    await db.get().collection(collections.DOUBT_COLLECTION).insertOne(doubt);
+    return await db.get().collection(collections.DOUBT_COLLECTION).insertOne(doubt);
   },
   showDoubt: async (userData, subject) => {
     let query = {
@@ -113,7 +113,10 @@ doubts.forEach(doubt => {
           },
         },
         {
-          $unwind: "$student",
+          $unwind: {
+        path: "$student",
+        preserveNullAndEmptyArrays: true
+    }
         },
       ])
       .toArray();
