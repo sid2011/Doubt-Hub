@@ -171,7 +171,6 @@
       <div class="feed-header-row">
         <div>
           <div class="feed-title">Community Doubts</div>
-          <div class="feed-count">2,841 doubts · 9,204 answers</div>
         </div>
         <button class="ask-btn" data-bs-toggle="modal"
     data-bs-target="#askDoubtModal"">
@@ -181,7 +180,6 @@
       
 
       <!-- ════ DOUBT CARDS ════ -->
-
       <!-- Card 1: Maths, Solved, Teacher Verified -->
       {{#each response}}
       <div class="dcard s-math" id="card-1">
@@ -211,9 +209,14 @@
           
         </div>
         <div class="dc-foot">
-          <button class="fbt up-active" onclick="handleVote(this,1)"><i class="bi bi-hand-thumbs-up-fill"></i><span class="cnt">124</span></button>
-          <button class="fbt" onclick="handleVoteDown(this)"><i class="bi bi-hand-thumbs-down"></i><span class="cnt">3</span></button>
-          <div class="fbt-sep"></div>
+          <button class="like-btn" data-doubt-id="{{_id}}">
+          {{#if isLiked}}
+          <i class="bi bi-heart-fill"></i>
+          {{else}}
+          <i class="bi bi-heart"></i>
+          {{/if}}
+         <span class="like-count">{{likes.length}}</span>
+         </button>
           <a href="/answer-doubt/{{this._id}}" class="fbt answers-fbt" role="button"><i class="bi bi-chat-dots-fill"></i><span class="answers-fbt">Answers</span></a>
           <button class="fbt" title="Report"><i class="bi bi-flag"></i></button>
         </div>

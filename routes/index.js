@@ -113,6 +113,35 @@ router.post("/ask-doubt", verify, async (req, res) => {
 router.get("/terms-conditions", (req, res) => {
   res.render("user/terms-conditions");
 });
+router.post('/doubts/:id/like',verify,async(req,res)=>{
+  let doubtId=req.params.id
+  let studentId=req.session.user._id
+  let doubt=await db.get().collection(collections.DOUBT_COLLECTION).findOne({_id:new ObjectId(doubtId)})
+  const alreadyLiked = doubt.likes
+    ? doubt.likes.includes(studentId)
+    : false;
+  if(alreadyLiked){
+await db.get()
+    .collection(collections.DOUBT_COLLECTION)
+    .updateOne(
+        { _id: new ObjectId(doubtId) },
+        {
+            $pull: {
+                likes: studentId
+            }
+        }
+    );
+  }else{
+await db.get().collection(collections.DOUBT_COLLECTION).updateOne({_id:new ObjectId(doubtId)},{$addToSet:{likes:studentId}});
+  }
+  console.log("RECIVED",doubtId)
+  console.log("StudentId:",studentId)
+  let updatedDoubt= await db.get().collection(collections.DOUBT_COLLECTION).findOne({_id:new ObjectId(doubtId)})
+  return res.json({
+    liked: !alreadyLiked,
+    likeCount:updatedDoubt.likes.length
+});
+})
 router.get("/answer-doubt/:id", verify, async (req, res) => {
   const doubtId = new ObjectId(req.params.id);
   const [doubt, answers] = await Promise.all([

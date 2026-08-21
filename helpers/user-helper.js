@@ -64,6 +64,14 @@ module.exports = {
         $unwind: "$student"
     }
 ]).toArray();
+const studentId = userData._id;
+
+doubts.forEach(doubt => {
+    doubt.isLiked = doubt.likes
+        ? doubt.likes.includes(studentId)
+        : false;
+
+});
     doubts.forEach((doubt) => {
     doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
     });
