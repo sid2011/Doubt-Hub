@@ -7,18 +7,7 @@
   <!-- Level -->
   <div class="xp-pill">
     <span>👑</span><span>Level: {{userLevel}}</span>
-  </div>
-
-  <!-- Notifications -->
-  <div class="notif-wrap">
-    ...
-  </div>
-
-  <!-- Profile -->
-  <div style="position: relative;">
-    ...
-  </div>
-</div>      <!-- Notifications -->
+  </div>   <!-- Notifications -->
       <div class="notif-wrap">
         <button class="ibtn" id="notifBtn" aria-label="Notifications">
           <i class="bi bi-bell-fill"></i>
@@ -81,7 +70,7 @@
         <button class="prof-btn" id="profBtn">
           <div class="ava ava-28">
             <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
-          </div>
+          </div></button></div>
           <span class="d-none d-md-inline" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem">{{../userInfo.name}}</span>
           <i class="bi bi-chevron-down chevron"></i>
         </button>
@@ -223,7 +212,7 @@
       </div>
 {{/each}}
 
-
+    </div>
     <!-- ════ SIDEBAR ════ -->
     <aside class="sidebar">
 
