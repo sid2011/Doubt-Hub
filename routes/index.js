@@ -7,6 +7,7 @@ const db = require("../config/connections");
 const dayjs = require("dayjs");
 const relativeTime = require("dayjs/plugin/relativeTime");
 const xpHelper = require("../helpers/xpsystem-helper");
+const rewardHelper = require("../helpers/reward-helper");
 dayjs.extend(relativeTime);
 const xp = require("../config/xp-points");
 const aiService = require("../services/aiService");
@@ -65,28 +66,57 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/doubts", verify, async (req, res) => {
-  const [userInfo,leaderboardItems] = await Promise.all([
-  db.get().collection(collections.STUDENT_COLLECTION).findOne({ _id: new ObjectId(req.session.user._id) }),
-  db.get().collection(collections.STUDENT_COLLECTION).find({}).sort({ xp: -1 }).toArray()
-]);
-const topLeaderboard = leaderboardItems.slice(0, 10);
+
+  const [userInfo, leaderboardItems] = await Promise.all([
+
+    db.get()
+      .collection(collections.STUDENT_COLLECTION)
+      .findOne({
+        _id: new ObjectId(req.session.user._id)
+      }),
+
+    db.get()
+      .collection(collections.STUDENT_COLLECTION)
+      .find({})
+      .sort({ xp: -1 })
+      .toArray()
+
+  ]);
+
+  const topLeaderboard = leaderboardItems.slice(0, 10);
+
   const rank = leaderboardItems.findIndex(
     student => student._id.equals(userInfo._id)
-) + 1;
-let xpReward = req.session.xpReward;
-req.session.xpReward = null;
+  ) + 1;
+
+  const xpReward = userInfo.xpReward || 0;
+
+  // Clear the reward after reading it
+  if (xpReward > 0) {
+    await db.get()
+      .collection(collections.STUDENT_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(req.session.user._id) },
+        { $set: { xpReward: 0 } }
+      );
+  }
+
   userHelper.showDoubt(req.session.user, req.query.subject).then((response) => {
+
     res.render("user/doubt-section", {
       response,
       userInfo,
       userName: userInfo.name,
-      userXP: userInfo.xp,xpReward,userLevel:userInfo.level,
+      userXP: userInfo.xp,
+      xpReward,
+      userLevel: userInfo.level,
       topLeaderboard,
       rank
     });
-  });
-});
 
+  });
+
+});
 router.get("/logout", (req, res) => {
   req.session.loggedIn = false;
   req.session.user = null;
@@ -145,35 +175,83 @@ console.log(savedDoubt);
 router.get("/terms-conditions", (req, res) => {
   res.render("user/terms-conditions");
 });
-router.post('/doubts/:id/like',verify,async(req,res)=>{
-  let doubtId=req.params.id
-  let studentId=req.session.user._id
-  let doubt=await db.get().collection(collections.DOUBT_COLLECTION).findOne({_id:new ObjectId(doubtId)})
+router.post('/doubts/:id/like', verify, async (req, res) => {
+
+  let doubtId = req.params.id;
+  let studentId = req.session.user._id;
+
+  let doubt = await db.get()
+    .collection(collections.DOUBT_COLLECTION)
+    .findOne({
+      _id: new ObjectId(doubtId)
+    });
+
   const alreadyLiked = doubt.likes
     ? doubt.likes.includes(studentId)
     : false;
-  if(alreadyLiked){
-await db.get()
-    .collection(collections.DOUBT_COLLECTION)
-    .updateOne(
+
+  const alreadyRewarded = doubt.xpRewardedBy
+    ? doubt.xpRewardedBy.includes(studentId)
+    : false;
+
+  if (alreadyLiked) {
+
+    await db.get()
+      .collection(collections.DOUBT_COLLECTION)
+      .updateOne(
         { _id: new ObjectId(doubtId) },
         {
-            $pull: {
-                likes: studentId
-            }
+          $pull: {
+            likes: studentId
+          }
         }
-    );
-  }else{
-await db.get().collection(collections.DOUBT_COLLECTION).updateOne({_id:new ObjectId(doubtId)},{$addToSet:{likes:studentId}});
+      );
+
+  } else {
+
+    await db.get()
+      .collection(collections.DOUBT_COLLECTION)
+      .updateOne(
+        { _id: new ObjectId(doubtId) },
+        {
+          $addToSet: {
+            likes: studentId
+          }
+        }
+      );
+
+    if (!alreadyRewarded) {
+
+      await Promise.all([
+        xpHelper.addXP(doubt.studentId, 2),
+        rewardHelper.rewardXp(doubt.studentId, 2)
+      ]);
+
+      await db.get()
+        .collection(collections.DOUBT_COLLECTION)
+        .updateOne(
+          { _id: new ObjectId(doubtId) },
+          {
+            $addToSet: {
+              xpRewardedBy: studentId
+            }
+          }
+        );
+    }
   }
-  console.log("RECIVED",doubtId)
-  console.log("StudentId:",studentId)
-  let updatedDoubt= await db.get().collection(collections.DOUBT_COLLECTION).findOne({_id:new ObjectId(doubtId)})
+
+  let updatedDoubt = await db.get()
+    .collection(collections.DOUBT_COLLECTION)
+    .findOne({
+      _id: new ObjectId(doubtId)
+    });
+
   return res.json({
     liked: !alreadyLiked,
-    likeCount:updatedDoubt.likes.length
+    likeCount: updatedDoubt.likes.length
+  });
+
 });
-})
 router.get("/answer-doubt/:id", verify, async (req, res) => {
   const doubtId = new ObjectId(req.params.id);
   const [doubt, answers] = await Promise.all([
