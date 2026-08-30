@@ -217,60 +217,51 @@
     <aside class="sidebar">
 
       <!-- Leaderboard -->
+      
       <div class="sw">
         <div class="sw-head">
           <i class="bi bi-trophy-fill" style="color:var(--amber);margin-right:.45rem"></i>
           Top Contributors
         </div>
         <div class="lb-list">
+        {{#each topLeaderboard}}
           <div class="lb-item lb-1">
-            <div class="lb-pos">🥇</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nithya&backgroundColor=7c3aed" alt="Nithya"/></div>
-            <div class="lb-info"><div class="lb-name">Nithya Rajan</div><div class="lb-xp">⭐ 18,420 XP </div></div>
+            <div class="lb-pos">{{#if (eq @index 0)}}
+  🥇
+{{else if (eq @index 1)}}
+  🥈
+{{else if (eq @index 2)}}
+  🥉
+{{else}}
+  {{inc @index}}
+{{/if}}</div>
+            <div class="ava ava-34"><img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{name}}" alt="{{name}}"/></div>
+            <div class="lb-info"><div class="lb-name">{{name}}</div><div class="lb-xp">⭐ {{xp}} XP </div></div>
             <div class="lb-badge-wrap"><div class="lb-bdg bdg-gold">🏆</div><div class="lb-bdg bdg-fire">🔥</div></div>
           </div>
-          <div class="lb-item lb-2">
-            <div class="lb-pos">🥈</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Krishnadev&backgroundColor=1d4ed8" alt="Krishnadev"/></div>
-            <div class="lb-info"><div class="lb-name">Krishnadev P.</div><div class="lb-xp">⭐ 15,880 XP </div></div>
-            <div class="lb-badge-wrap"><div class="lb-bdg bdg-star">⭐</div></div>
-          </div>
-          <div class="lb-item lb-3">
-            <div class="lb-pos">🥉</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ammu&backgroundColor=059669" alt="Ammu"/></div>
-            <div class="lb-info"><div class="lb-name">Ammu Vijayan</div><div class="lb-xp">⭐ 12,340 XP </div></div>
-            <div class="lb-badge-wrap"><div class="lb-bdg bdg-fire">🔥</div></div>
-          </div>
-          <div class="lb-item lb-n">
-            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">4</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sanjay&backgroundColor=c2410c" alt="Sanjay"/></div>
-            <div class="lb-info"><div class="lb-name">Sanjay Iyer</div><div class="lb-xp">⭐ 10,910 XP </div></div>
-          </div>
-          <div class="lb-item lb-n">
-            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">5</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lakshmi&backgroundColor=be185d" alt="Lakshmi"/></div>
-            <div class="lb-info"><div class="lb-name">Lakshmi Devi</div><div class="lb-xp">⭐ 9,780 XP </div></div>
-          </div>
-          <div class="lb-item lb-n">
-            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--t3)">6</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Vishnu&backgroundColor=0e7490" alt="Vishnu"/></div>
-            <div class="lb-info"><div class="lb-name">Vishnu Kumar</div><div class="lb-xp">⭐ 8,920 XP </div></div>
-          </div>
-          <div class="lb-item lb-n" style="background:linear-gradient(90deg,#f5f3ff,#fff);border-top:1px solid #ede9fe">
-            <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--p)">14</div>
-            <div class="ava ava-34"><img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{userName}}" alt="{{userName}}"/></div>
-            <div class="lb-info"><div class="lb-name" style="color:var(--p)">{{userName}} <span style="font-size:.65rem;font-weight:500;color:var(--t3)">(you)</span></div><div class="lb-xp">⭐ {{userXP}} XP</div></div>
-          </div>
-        </div>
-        <div class="active-strip">
-          <div class="active-avas">
-            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user1&backgroundColor=7c3aed" alt=""/></div>
-            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user2&backgroundColor=059669" alt=""/></div>
-            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user3&backgroundColor=1d4ed8" alt=""/></div>
-            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user4&backgroundColor=be185d" alt=""/></div>
-            <div class="ava ava-28"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=user5&backgroundColor=c2410c" alt=""/></div>
-          </div>
-          <span class="active-text"><strong>247 students</strong> online now</span>
+          {{/each}}
+          {{#if (gt rank 10)}}
+   {{#if (gt rank 10)}}
+  <div class="lb-item lb-n" style="background:linear-gradient(90deg,#f5f3ff,#fff);border-top:1px solid #ede9fe">
+    <div class="lb-pos" style="font-size:.7rem;font-weight:800;color:var(--p)">
+      {{rank}}
+    </div>
+
+    <div class="ava ava-34">
+      <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{userName}}" alt="{{userName}}"/>
+    </div>
+
+    <div class="lb-info">
+      <div class="lb-name" style="color:var(--p)">
+        {{userName}}
+        <span style="font-size:.65rem;font-weight:500;color:var(--t3)">(you)</span>
+      </div>
+
+      <div class="lb-xp">⭐ {{userXP}} XP</div>
+    </div>
+  </div>
+{{/if}}
+{{/if}}
         </div>
       </div>
 

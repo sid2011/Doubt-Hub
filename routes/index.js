@@ -65,10 +65,14 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/doubts", verify, async (req, res) => {
-  let userInfo = await db
-    .get()
-    .collection(collections.STUDENT_COLLECTION)
-    .findOne({ _id: new ObjectId(req.session.user._id) });
+  const [userInfo,leaderboardItems] = await Promise.all([
+  db.get().collection(collections.STUDENT_COLLECTION).findOne({ _id: new ObjectId(req.session.user._id) }),
+  db.get().collection(collections.STUDENT_COLLECTION).find({}).sort({ xp: -1 }).toArray()
+]);
+const topLeaderboard = leaderboardItems.slice(0, 10);
+  const rank = leaderboardItems.findIndex(
+    student => student._id.equals(userInfo._id)
+) + 1;
 let xpReward = req.session.xpReward;
 req.session.xpReward = null;
   userHelper.showDoubt(req.session.user, req.query.subject).then((response) => {
@@ -76,7 +80,9 @@ req.session.xpReward = null;
       response,
       userInfo,
       userName: userInfo.name,
-      userXP: userInfo.xp,xpReward,userLevel:userInfo.level
+      userXP: userInfo.xp,xpReward,userLevel:userInfo.level,
+      topLeaderboard,
+      rank
     });
   });
 });
