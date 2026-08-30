@@ -1,0 +1,71 @@
+<div class="container py-4" style="max-width: 720px;">
+  <header class="d-flex justify-content-between align-items-center mb-4">
+    <a href="/teacher" class="text-decoration-none text-secondary">
+      <i class="bi bi-arrow-left me-1"></i> Dashboard
+    </a>
+    <a href="/logout" class="text-decoration-none text-secondary">Log out</a>
+  </header>
+
+  <main>
+    {{#if caughtUp}}
+      <div class="card">
+        <div class="card-body text-center py-5">
+          <h1 class="h3 mb-2">You're all caught up!</h1>
+          <p class="text-secondary mb-0">There are no student answers waiting for review.</p>
+        </div>
+      </div>
+    {{else}}
+      <p class="text-secondary small mb-2">{{item.doubt.subject}}</p>
+      <h1 class="h4 mb-1">{{item.student.name}}</h1>
+      <p class="text-secondary mb-4">Answer to review</p>
+
+      <section class="card mb-3" aria-labelledby="doubt-heading">
+        <div class="card-body">
+          <h2 id="doubt-heading" class="h6 text-secondary text-uppercase mb-2">Doubt</h2>
+          <h3 class="h5 mb-2">{{item.doubt.title}}</h3>
+          <p class="mb-0" style="line-height: 1.6;">{{item.doubt.description}}</p>
+        </div>
+      </section>
+
+      <section class="card mb-4" aria-labelledby="answer-heading">
+        <div class="card-body">
+          <h2 id="answer-heading" class="h6 text-secondary text-uppercase mb-2">Student answer</h2>
+          <p class="mb-0" style="line-height: 1.6;">{{item.answer}}</p>
+        </div>
+      </section>
+
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <form action="/teacher/review/{{item._id}}/verify" method="POST" class="flex-fill">
+          <button type="submit" class="btn btn-success w-100 py-3" aria-label="Verify this answer">
+            ✓ Verify
+          </button>
+        </form>
+        <form action="/teacher/review/{{item._id}}/reject" method="POST" class="flex-fill">
+          <button type="submit" class="btn btn-outline-danger w-100 py-3" aria-label="Reject this answer">
+            ✕ Reject
+          </button>
+        </form>
+      </div>
+    {{/if}}
+  </main>
+</div>
+
+{{#if notice}}
+<div id="teacherNotice" data-notice="{{notice}}" hidden></div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var el = document.getElementById("teacherNotice");
+    if (el && window.Swal) {
+      Swal.fire({
+        toast: true,
+        position: "top",
+        icon: "success",
+        title: el.getAttribute("data-notice"),
+        showConfirmButton: false,
+        timer: 1800,
+        timerProgressBar: true
+      });
+    }
+  });
+</script>
+{{/if}}

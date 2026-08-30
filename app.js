@@ -14,6 +14,7 @@ const upload = multer({
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var teacherRouter = require("./routes/teacher");
 
 var app = express();
 
@@ -67,6 +68,7 @@ db.connect().then(() => {
 });
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/teacher", teacherRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
