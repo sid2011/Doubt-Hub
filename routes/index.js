@@ -141,13 +141,12 @@ router.post("/ask-doubt", verify, async (req, res) => {
   ]);req.session.xpReward = {
     amount: xp.ASK_DOUBT
 };
-console.log("XP REWARD SET:", req.session.xpReward);
 const savedDoubt = await db.get()
     .collection(collections.DOUBT_COLLECTION)
     .findOne({
         _id: result.insertedId
     });
-    aiService.generateAIAnswer(savedDoubt.title)
+    aiService.generateAIAnswerWithRetry(savedDoubt.title)
     .then(async (aiAnswer) => {
 
         await db.get()
@@ -165,7 +164,6 @@ const savedDoubt = await db.get()
     .catch((error) => {
         console.error("AI generation failed:", error);
     });
-console.log(savedDoubt);
   res.redirect("/doubts");
 });
 router.get("/terms-conditions", (req, res) => {

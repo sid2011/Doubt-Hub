@@ -39,6 +39,25 @@ ${doubt}
     return html;
 }
 
+async function generateAIAnswerWithRetry(doubt, retries = 3) {
+
+    for (let attempt = 1; attempt <= retries; attempt++) {
+
+        try {
+            return await generateAIAnswer(doubt);
+
+        } catch (error) {
+
+            if (attempt === retries) {
+                throw error;
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+    }
+}
+
+
 module.exports = {
-    generateAIAnswer
+    generateAIAnswer,generateAIAnswerWithRetry
 };

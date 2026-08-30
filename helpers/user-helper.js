@@ -56,7 +56,7 @@ module.exports = {
         if (!isActiveAccount(teacher)) {
           return { status: false };
         }
-        console.log("correct")
+       
         teacher.role = "teacher";
         response.user = teacher;
         response.status = true;
