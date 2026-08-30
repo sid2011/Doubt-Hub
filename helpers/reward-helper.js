@@ -7,6 +7,6 @@ module.exports.rewardXp=async(userId,amount)=>{
     .collection(collection.STUDENT_COLLECTION)
     .updateOne(
       { _id: new ObjectId(userId) },
-      { $inc: { xpReward: amount } }
+      { $inc: { upvoteReward: amount } }
     );
 }

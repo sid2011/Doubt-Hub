@@ -412,3 +412,14 @@ Swal.fire({
 });
 </script>
 {{/if}}
+{{#if upvoteReward}}
+<script>
+Swal.fire({
+  title: "👍 Upvote Received!",
+  text: "Your doubt received upvotes! +{{upvoteReward}} XP",
+  icon: "success",
+  timer: 2500,
+  showConfirmButton: false
+});
+</script>
+{{/if}}

@@ -90,6 +90,7 @@ router.get("/doubts", verify, async (req, res) => {
   ) + 1;
 
   const xpReward = userInfo.xpReward || 0;
+  const upvoteReward = userInfo.upvoteReward || 0;
 
   // Clear the reward after reading it
   if (xpReward > 0) {
@@ -100,6 +101,14 @@ router.get("/doubts", verify, async (req, res) => {
         { $set: { xpReward: 0 } }
       );
   }
+if (upvoteReward > 0) {
+  await db.get()
+    .collection(collections.STUDENT_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(req.session.user._id) },
+      { $set: { upvoteReward: 0 } }
+    );
+}
 
   userHelper.showDoubt(req.session.user, req.query.subject).then((response) => {
 
