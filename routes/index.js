@@ -88,27 +88,9 @@ router.get("/doubts", verify, async (req, res) => {
   const rank = leaderboardItems.findIndex(
     student => student._id.equals(userInfo._id)
   ) + 1;
+const xpReward = req.session.xpReward?.amount || 0;
+const upvoteReward = req.session.upvoteReward?.amount || 0;
 
-  const xpReward = userInfo.xpReward || 0;
-  const upvoteReward = userInfo.upvoteReward || 0;
-
-  // Clear the reward after reading it
-  if (xpReward > 0) {
-    await db.get()
-      .collection(collections.STUDENT_COLLECTION)
-      .updateOne(
-        { _id: new ObjectId(req.session.user._id) },
-        { $set: { xpReward: 0 } }
-      );
-  }
-if (upvoteReward > 0) {
-  await db.get()
-    .collection(collections.STUDENT_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(req.session.user._id) },
-      { $set: { upvoteReward: 0 } }
-    );
-}
 
   userHelper.showDoubt(req.session.user, req.query.subject).then((response) => {
 
@@ -122,7 +104,8 @@ if (upvoteReward > 0) {
       topLeaderboard,
       rank
     });
-
+delete req.session.xpReward;
+delete req.session.upvoteReward;
   });
 
 });
@@ -154,7 +137,7 @@ router.post("/ask-doubt", verify, async (req, res) => {
   ]);req.session.xpReward = {
     amount: xp.ASK_DOUBT
 };
-console.log(result.insertedId)
+console.log("XP REWARD SET:", req.session.xpReward);
 const savedDoubt = await db.get()
     .collection(collections.DOUBT_COLLECTION)
     .findOne({

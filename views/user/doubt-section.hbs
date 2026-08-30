@@ -1,106 +1,65 @@
-<div class="nav-right">
-  <!-- XP -->
-  <div class="xp-pill">
-    <span>⭐</span><span>{{userXP}} XP</span>
-  </div>
+<div class="profile-wrapper">
 
-  <!-- Level -->
-  <div class="xp-pill">
-    <span>👑</span><span>Level: {{userLevel}}</span>
-  </div>   <!-- Notifications -->
-      <div class="notif-wrap">
-        <button class="ibtn" id="notifBtn" aria-label="Notifications">
-          <i class="bi bi-bell-fill"></i>
-          <span class="notif-dot"></span>
-        </button>
-        <div class="notif-panel" id="notifPanel">
-          <div class="np-head">
-            <span>Notifications</span>
-            <button id="markRead">Mark all read</button>
-          </div>
-          <div class="np-list">
-            <div class="np-item unread">
-              <div class="np-ico green"><i class="bi bi-check-circle-fill"></i></div>
-              <div class="np-body">
-                <p><strong>Arjun Menon</strong> accepted your answer on <em>"Difference between speed and velocity"</em></p>
-                <small>2 min ago · +25 XP earned</small>
-              </div>
-            </div>
-            <div class="np-item unread">
-              <div class="np-ico violet"><i class="bi bi-stars"></i></div>
-              <div class="np-body">
-                <p><strong>AI Assistant</strong> answered your doubt about <em>"Quadratic Formula derivation"</em></p>
-                <small>15 min ago</small>
-              </div>
-            </div>
-            <div class="np-item unread">
-              <div class="np-ico blue"><i class="bi bi-hand-thumbs-up-fill"></i></div>
-              <div class="np-body">
-                <p><strong>Sneha Pillai</strong> upvoted your answer on <em>"Photosynthesis vs Respiration"</em></p>
-                <small>32 min ago · +2 XP</small>
-              </div>
-            </div>
-            <div class="np-item">
-              <div class="np-ico amber"><i class="bi bi-trophy-fill"></i></div>
-              <div class="np-body">
-                <p>You climbed to <strong>Rank #14</strong> on the leaderboard! 🎉</p>
-                <small>1 hr ago</small>
-              </div>
-            </div>
-            <div class="np-item">
-              <div class="np-ico blue"><i class="bi bi-chat-dots-fill"></i></div>
-              <div class="np-body">
-                <p><strong>Mr. Rajeev Kumar</strong> (Teacher) answered your doubt on <em>"Newton's 3rd Law"</em></p>
-                <small>3 hrs ago · Teacher Verified</small>
-              </div>
-            </div>
-            <div class="np-item">
-              <div class="np-ico green"><i class="bi bi-star-fill"></i></div>
-              <div class="np-body">
-                <p>Daily login bonus! You earned <strong>+3 XP</strong> today</p>
-                <small>Today, 8:02 AM</small>
-              </div>
-            </div>
-          </div>
+    <button class="prof-btn" id="profBtn" type="button">
+
+        <div class="ava ava-28">
+            <img
+                src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{userInfo.name}}"
+                alt="{{userInfo.name}}"
+            >
         </div>
-      </div>
 
-      <!-- Profile -->
-      <div style="position:relative">
-        <button class="prof-btn" id="profBtn">
-          <div class="ava ava-28">
-            <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
-          </div></button></div>
-          <span class="d-none d-md-inline" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem">{{../userInfo.name}}</span>
-          <i class="bi bi-chevron-down chevron"></i>
-        </button>
-        <div class="prof-dd" id="profDd">
-          <div class="prof-mini">
+        <span class="d-none d-md-inline">
+            {{userInfo.name}}
+        </span>
+
+        <i class="bi bi-chevron-down chevron"></i>
+
+    </button>
+
+
+    <div class="prof-dd" id="profDd">
+
+        <div class="prof-mini">
+
             <div class="ava ava-44">
-              <img src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{../userInfo.name}}" alt="{{../userInfo.name}}"/>
+                <img
+                    src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{userInfo.name}}"
+                    alt="{{userInfo.name}}"
+                >
             </div>
+
             <div class="prof-mini-info">
-              <strong>{{../userInfo.name}}</strong>
-              <span>Class 11 · CBSE</span>
-              <div class="prof-mini-stats">
-                <span>⭐6240 XP</span>
-                <span>·</span>
-                <span>Rank #14</span>
-              </div>
+                <strong>{{userInfo.name}}</strong>
+                <div class="prof-mini-stats">
+                    <span>⭐ {{userXP}} XP</span>
+                    <span>·</span>
+                    <span>Rank #{{rank}}</span>
+                </div>
             </div>
-          </div>
-          <div class="dd-sep"></div>
-          <button class="dd-item"><i class="bi bi-person"></i> View Profile</button>
-          <button class="dd-item"><i class="bi bi-question-circle"></i> My Doubts</button>
-          <button class="dd-item"><i class="bi bi-bookmark"></i> Saved Doubts</button>
-          <button class="dd-item"><i class="bi bi-trophy"></i> Leaderboard</button>
-          <button class="dd-item"><i class="bi bi-gear"></i> Settings</button>
-          <div class="dd-sep"></div>
-          <button class="dd-item danger"><i class="bi bi-box-arrow-right"></i> Logout</button>
+
         </div>
-      </div>
+
+        <div class="dd-sep"></div>
+
+        <a class="dd-item" href="/profile">
+            <i class="bi bi-person"></i>
+            Profile
+        </a>
+
+        <a class="dd-item" href="/settings">
+            <i class="bi bi-gear"></i>
+            Settings
+        </a>
+
+        <a class="dd-item danger" href="/logout">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
+        </a>
+
     </div>
-  </div>
+
+</div>
   <!-- Mobile search bar -->
   <div class="mob-search-bar" id="mobSearchBar">
     <div style="position:relative">
@@ -130,7 +89,7 @@
         </div>
         <div class="wb-stats">
           <div class="wb-stat"><span class="num">{{userXP}}</span><span class="lbl">Total XP</span></div>
-          <div class="wb-stat"><span class="num">#14</span><span class="lbl">Rank</span></div>
+          <div class="wb-stat"><span class="num">#{{rank}}</span><span class="lbl">Rank</span></div>
         </div>
       </div>
 
@@ -278,32 +237,6 @@
           <div class="xp-row"><span class="xp-act">Upvote received</span><span class="xp-pts xp-pos">+2 XP</span></div>
           <div class="xp-row"><span class="xp-act">Daily login</span><span class="xp-pts xp-pos">+3 XP</span></div>
           <div class="xp-row"><span class="xp-act">Downvote received</span><span class="xp-pts xp-neg">−1 XP</span></div>
-        </div>
-      </div>
-
-      <!-- Popular tags -->
-      <div class="sw">
-        <div class="sw-head">
-          <i class="bi bi-tags-fill" style="color:var(--p);margin-right:.45rem"></i>
-          Popular Tags
-        </div>
-        <div class="pop-tags">
-          <a href="#" class="pop-tag">#algebra</a>
-          <a href="#" class="pop-tag">#calculus</a>
-          <a href="#" class="pop-tag">#newton-laws</a>
-          <a href="#" class="pop-tag">#photosynthesis</a>
-          <a href="#" class="pop-tag">#python</a>
-          <a href="#" class="pop-tag">#french-revolution</a>
-          <a href="#" class="pop-tag">#shakespeare</a>
-          <a href="#" class="pop-tag">#periodic-table</a>
-          <a href="#" class="pop-tag">#cell-division</a>
-          <a href="#" class="pop-tag">#thermodynamics</a>
-          <a href="#" class="pop-tag">#integration</a>
-          <a href="#" class="pop-tag">#organic-chemistry</a>
-          <a href="#" class="pop-tag">#sql</a>
-          <a href="#" class="pop-tag">#sorting-algorithms</a>
-          <a href="#" class="pop-tag">#kerala-history</a>
-          <a href="#" class="pop-tag">#prose-writing</a>
         </div>
       </div>
 

@@ -48,22 +48,28 @@ module.exports = {
     }
 
    let doubts = await db.get().collection(collections.DOUBT_COLLECTION)
-.aggregate([
-    {
-        $match: query
-    },
-    {
-        $lookup: {
-            from: collections.STUDENT_COLLECTION,
-            localField: "studentId",
-            foreignField: "_id",
-            as: "student"
+    .aggregate([
+        {
+            $match: query
+        },
+        {
+            $sort: {
+                createdAt: -1
+            }
+        },
+        {
+            $lookup: {
+                from: collections.STUDENT_COLLECTION,
+                localField: "studentId",
+                foreignField: "_id",
+                as: "student"
+            }
+        },
+        {
+            $unwind: "$student"
         }
-    },
-    {
-        $unwind: "$student"
-    }
-]).toArray();
+    ])
+    .toArray();
 const studentId = userData._id;
 
 doubts.forEach(doubt => {
