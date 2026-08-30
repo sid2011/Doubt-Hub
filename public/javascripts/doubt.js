@@ -27,15 +27,21 @@ document.addEventListener("DOMContentLoaded", () => {
 fetch("/verification-notification")
   .then(res => res.json())
   .then(data => {
+
     if (data.show) {
-        console.log("🔔 Notification response:", data);
+
       Swal.fire({
         icon: "success",
         title: "🎉 Congratulations!",
-        text: "Your answer has been verified by a teacher!",
+        text: data.count === 1
+          ? "Your answer has been verified by a teacher!"
+          : `${data.count} of your answers have been verified by a teacher!`,
+        html: `<b>⭐ You earned ${data.count * data.xp} XP</b>`,
         confirmButtonText: "Awesome! ⭐"
       });
+
     }
+
   })
   .catch(err => {
     console.error("Verification notification error:", err);

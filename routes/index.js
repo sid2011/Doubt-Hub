@@ -77,7 +77,12 @@ router.get("/doubts", verify, async (req, res) => {
       .toArray()
 
   ]);
-
+if (!userInfo) {
+    req.session.destroy(() => {
+        res.redirect("/login");
+    });
+    return;
+}
   const topLeaderboard = leaderboardItems.slice(0, 10);
 
   const rank = leaderboardItems.findIndex(
@@ -276,19 +281,17 @@ router.post("/answer-doubt", verify, async (req, res) => {
   res.redirect("/doubts");
 });router.get("/verification-notification", verify, async (req, res) => {
 
-  console.log("🔔 Notification route called");
-  console.log("USER:", req.session.user._id);
-  const notification = await db
+  const notifications = await db
     .get()
     .collection(collections.ANSWER_COLLECTION)
-    .findOne({
+    .find({
       studentId: new ObjectId(req.session.user._id),
       reviewStatus: "verified",
       verificationNotified: { $ne: true }
-    });
+    })
+    .toArray();
 
-  if (!notification) {
-    console.log("opop")
+  if (notifications.length === 0) {
     return res.json({
       show: false
     });
@@ -297,8 +300,12 @@ router.post("/answer-doubt", verify, async (req, res) => {
   await db
     .get()
     .collection(collections.ANSWER_COLLECTION)
-    .updateOne(
-      { _id: notification._id },
+    .updateMany(
+      {
+        _id: {
+          $in: notifications.map(answer => answer._id)
+        }
+      },
       {
         $set: {
           verificationNotified: true
@@ -307,7 +314,10 @@ router.post("/answer-doubt", verify, async (req, res) => {
     );
 
   res.json({
-    show: true
+    show: true,
+    count: notifications.length,
+    xp: xp.ACCEPTED_ANSWER
   });
+
 });
 module.exports = router;

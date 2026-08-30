@@ -55,98 +55,206 @@
     </div>
   </div>
 
-{{!-- ========== ANSWERS LIST ========== --}}
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h6 class="fw-semibold mb-0">Answers ({{answers.length}})</h6>
-</div>
+```hbs
+<div class="container py-4">
 
-{{#if answers.length}}
+  {{!-- ========== ANSWERS LIST ========== --}}
+  <div class="d-flex align-items-center justify-content-between mb-3">
 
-  {{#each answers}}
+    <h6 class="fw-semibold mb-0">
+      Answers ({{answers.length}})
+    </h6>
 
-    <div class="card answer-card mb-3">
-      <div class="card-body p-3">
+  </div>
 
-        {{#if (eq this.role "ai")}}
 
-          {{!-- AI ANSWER --}}
-          <div class="d-flex align-items-center mb-3">
-            <div class="avatar me-3 d-flex align-items-center justify-content-center">
-              🤖
-            </div>
+  {{#if answers.length}}
 
-            <div>
-              <h6 class="mb-0 fw-semibold">DoubtHub AI</h6>
-              <span class="muted-sm">
-                <i class="bi bi-stars me-1"></i>AI Answer
-              </span>
-            </div>
-          </div>
+    {{#each answers}}
 
-          <div class="text-secondary mb-3 ps-1 ai-answer">
-            {{{this.answer}}}
-          </div>
+      <div class="card answer-card mb-3">
 
-        {{else}}
+        <div class="card-body p-3">
 
-          {{!-- STUDENT / TEACHER ANSWER --}}
-          <div class="d-flex align-items-center mb-2">
 
-            <img
-              src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{this.student.name}}"
-              class="avatar me-3"
-              alt="answerer"
-            >
+          {{!-- ========== AI ANSWER ========== --}}
+          {{#if (eq this.role "ai")}}
 
-            <div class="flex-grow-1">
+            <div class="d-flex align-items-center mb-3">
 
-              <div class="d-flex flex-wrap align-items-center gap-2">
+              <div class="avatar me-3 d-flex align-items-center justify-content-center">
+                🤖
+              </div>
+
+              <div>
+
                 <h6 class="mb-0 fw-semibold">
-                  {{this.student.name}}
+                  DoubtHub AI
                 </h6>
 
                 <span class="muted-sm">
-                  • Class {{this.student.class}}
+                  <i class="bi bi-stars me-1"></i>
+                  AI Answer
                 </span>
 
-                {{#if this.xp}}
-                  <span class="xp-badge">
-                    <i class="bi bi-star-fill me-1"></i>
-                    {{this.xp}} XP
-                  </span>
-                {{/if}}
               </div>
 
-              <span class="muted-sm">
-                <i class="bi bi-clock me-1"></i>
-                {{this.postedAt}}
-              </span>
+            </div>
+
+
+            <div class="text-secondary mb-3 ps-1 ai-answer">
+              {{{this.answer}}}
+            </div>
+
+
+          {{else}}
+
+
+            {{!-- ========== STUDENT ANSWER ========== --}}
+
+            <div class="d-flex align-items-center mb-2">
+
+              <img
+                src="https://api.dicebear.com/10.x/fun-emoji/svg?seed={{this.student.name}}"
+                class="avatar me-3"
+                alt="answerer"
+              >
+
+              <div class="flex-grow-1">
+
+                <div class="d-flex flex-wrap align-items-center gap-2">
+
+                  <h6 class="mb-0 fw-semibold">
+                    {{this.student.name}}
+                  </h6>
+
+                  <span class="muted-sm">
+                    • Class {{this.student.class}}
+                  </span>
+
+
+                  {{#if this.xp}}
+
+                    <span class="xp-badge">
+
+                      <i class="bi bi-star-fill me-1"></i>
+
+                      {{this.xp}} XP
+
+                    </span>
+
+                  {{/if}}
+
+                </div>
+
+
+                <span class="muted-sm">
+
+                  <i class="bi bi-clock me-1"></i>
+
+                  {{this.postedAt}}
+
+                </span>
+
+              </div>
 
             </div>
-          </div>
 
-          <p class="text-secondary mb-3 ps-1" style="line-height:1.6;">
-            {{this.answer}}
-          </p>
 
-        {{/if}}
+            {{!-- ANSWER CONTENT --}}
+
+            <p
+              class="text-secondary mb-3 ps-1"
+              style="line-height:1.6;"
+            >
+              {{this.answer}}
+            </p>
+
+
+            {{!-- ========== VERIFICATION STATUS ========== --}}
+
+            {{#if (eq this.reviewStatus "pending")}}
+
+              <span class="badge rounded-pill text-bg-warning">
+
+                <i class="bi bi-hourglass-split me-1"></i>
+
+                Pending Verification
+
+              </span>
+
+
+            {{else if (eq this.reviewStatus "verified")}}
+
+              <span class="badge rounded-pill text-bg-success">
+
+                <i class="bi bi-patch-check-fill me-1"></i>
+
+                Verified Answer
+
+              </span>
+
+
+            {{else if (eq this.reviewStatus "rejected")}}
+
+              <span class="badge rounded-pill text-bg-danger">
+
+                <i class="bi bi-exclamation-circle-fill me-1"></i>
+
+                Rejected Answer
+
+              </span>
+
+              <small class="d-block text-secondary mt-2">
+
+                This answer might be wrong or may need more explanation.
+
+              </small>
+
+            {{/if}}
+
+
+          {{/if}}
+
+
+        </div>
 
       </div>
+
+    {{/each}}
+
+
+  {{else}}
+
+
+    {{!-- ========== NO ANSWERS ========== --}}
+
+    <div class="card answer-card">
+
+      <div class="card-body empty-state">
+
+        <span class="emoji">
+          💬
+        </span>
+
+        <h6 class="fw-semibold mb-1">
+          No answers yet.
+        </h6>
+
+        <p class="mb-0">
+          Be the first to help this student.
+        </p>
+
+      </div>
+
     </div>
 
-  {{/each}}
 
-{{else}}
+  {{/if}}
 
-  <div class="card answer-card">
-    <div class="card-body empty-state">
-      <span class="emoji">💬</span>
-      <h6 class="fw-semibold mb-1">No answers yet.</h6>
-      <p class="mb-0">Be the first to help this student.</p>
-    </div>
-  </div>
+</div>
+```
 
-{{/if}}
 <script>
   const answerTextArea = document.getElementById('answerText');
   const charCount = document.getElementById('charCount');
