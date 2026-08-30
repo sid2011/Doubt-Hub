@@ -23,14 +23,6 @@ const verify = (req, res, next) => {
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
-router.get("/signup", (req, res) => {
-  res.render("user/user_auth/signup_page");
-});
-router.post("/signup", (req, res) => {
-  userHelper.doSignup(req.body).then((response) => {
-    res.redirect("/login");
-  });
-});
 
 router.get("/login", (req, res) => {
   res.render("user/user_auth/login_page");
@@ -41,6 +33,10 @@ router.post("/login", async (req, res) => {
   if (response.status) {
     req.session.loggedIn = true;
     req.session.user = response.user;
+
+    if (response.user.role === "teacher") {
+      return res.redirect("/teacher");
+    }
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -66,7 +62,6 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/doubts", verify, async (req, res) => {
-
   const [userInfo, leaderboardItems] = await Promise.all([
 
     db.get()
@@ -259,6 +254,8 @@ router.post("/answer-doubt", verify, async (req, res) => {
     studentId: new ObjectId(req.session.user._id),
     answer: req.body.answer,
     createdAt: new Date(),
+    reviewStatus: "pending",
+    verificationNotified:false
   };
 
   // Get the doubt
@@ -277,5 +274,40 @@ router.post("/answer-doubt", verify, async (req, res) => {
     amount: xp.ANSWER_DOUBT
 };
   res.redirect("/doubts");
+});router.get("/verification-notification", verify, async (req, res) => {
+
+  console.log("🔔 Notification route called");
+  console.log("USER:", req.session.user._id);
+  const notification = await db
+    .get()
+    .collection(collections.ANSWER_COLLECTION)
+    .findOne({
+      studentId: new ObjectId(req.session.user._id),
+      reviewStatus: "verified",
+      verificationNotified: { $ne: true }
+    });
+
+  if (!notification) {
+    console.log("opop")
+    return res.json({
+      show: false
+    });
+  }
+
+  await db
+    .get()
+    .collection(collections.ANSWER_COLLECTION)
+    .updateOne(
+      { _id: notification._id },
+      {
+        $set: {
+          verificationNotified: true
+        }
+      }
+    );
+
+  res.json({
+    show: true
+  });
 });
 module.exports = router;

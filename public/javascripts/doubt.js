@@ -24,3 +24,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     });
 });
+fetch("/verification-notification")
+  .then(res => res.json())
+  .then(data => {
+    if (data.show) {
+        console.log("🔔 Notification response:", data);
+      Swal.fire({
+        icon: "success",
+        title: "🎉 Congratulations!",
+        text: "Your answer has been verified by a teacher!",
+        confirmButtonText: "Awesome! ⭐"
+      });
+    }
+  })
+  .catch(err => {
+    console.error("Verification notification error:", err);
+  });

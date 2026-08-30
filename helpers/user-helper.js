@@ -18,7 +18,29 @@ module.exports = {
       .insertOne(userData);
   },
   doLogIn: async (userData) => {
+    const hash = await bcrypt.hash("123", 10);
+
+
     let response = {};
+
+    const teacher = await db
+      .get()
+      .collection(collections.TEACHER_COLLECTION)
+      .findOne({ email: userData.email });
+
+    if (teacher) {
+    
+      const teacherOk = await bcrypt.compare(userData.password, teacher.password);
+      if (teacherOk) {
+        console.log("correct")
+        teacher.role = "teacher";
+        response.user = teacher;
+        response.status = true;
+        return response;
+      }
+      return { status: false };
+    }
+
     let user = await db
       .get()
       .collection(collections.STUDENT_COLLECTION)
@@ -29,6 +51,7 @@ module.exports = {
     let status = await bcrypt.compare(userData.password, user.password);
     if (status) {
       response.user = user;
+      response.user.role = "student";
       response.status = true;
       return response;
     } else {
