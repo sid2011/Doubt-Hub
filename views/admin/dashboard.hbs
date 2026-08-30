@@ -1,0 +1,41 @@
+{{> admin-shell-start}}
+
+<h1 class="h4 mb-1">Dashboard</h1>
+<p class="text-secondary mb-4">Hello{{#if adminName}}, {{adminName}}{{/if}}</p>
+
+<div class="row g-3">
+  <div class="col-6 col-lg-3">
+    <a href="/admin/students" class="card admin-card text-decoration-none text-dark h-100">
+      <div class="card-body">
+        <div class="text-secondary small mb-1">Students</div>
+        <div class="display-6">{{studentCount}}</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="/admin/teachers" class="card admin-card text-decoration-none text-dark h-100">
+      <div class="card-body">
+        <div class="text-secondary small mb-1">Teachers</div>
+        <div class="display-6">{{teacherCount}}</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="/admin/content#doubts" class="card admin-card text-decoration-none text-dark h-100">
+      <div class="card-body">
+        <div class="text-secondary small mb-1">Doubts</div>
+        <div class="display-6">{{doubtCount}}</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-6 col-lg-3">
+    <a href="/admin/content#answers" class="card admin-card text-decoration-none text-dark h-100">
+      <div class="card-body">
+        <div class="text-secondary small mb-1">Answers</div>
+        <div class="display-6">{{answerCount}}</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+{{> admin-shell-end}}

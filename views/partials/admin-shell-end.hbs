@@ -1,0 +1,56 @@
+    </div>
+  </div>
+</div>
+
+{{#if notice}}
+<div id="adminNotice" data-notice="{{notice}}" hidden></div>
+{{/if}}
+{{#if error}}
+<div id="adminError" data-error="{{error}}" hidden></div>
+{{/if}}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var notice = document.getElementById("adminNotice");
+    var error = document.getElementById("adminError");
+    if (window.Swal && notice) {
+      Swal.fire({
+        toast: true,
+        position: "top",
+        icon: "success",
+        title: notice.getAttribute("data-notice"),
+        showConfirmButton: false,
+        timer: 1800
+      });
+    }
+    if (window.Swal && error) {
+      Swal.fire({
+        icon: "error",
+        title: error.getAttribute("data-error"),
+        confirmButtonText: "OK"
+      });
+    }
+
+    document.querySelectorAll(".js-confirm").forEach(function (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var message = form.getAttribute("data-message") || "Are you sure?";
+        if (!window.Swal) {
+          form.submit();
+          return;
+        }
+        Swal.fire({
+          title: message,
+          showCancelButton: true,
+          confirmButtonText: form.getAttribute("data-confirm") || "Delete",
+          cancelButtonText: "Cancel",
+          confirmButtonColor: "#dc3545"
+        }).then(function (result) {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+  });
+</script>

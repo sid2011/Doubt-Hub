@@ -1,0 +1,54 @@
+<style>
+  .admin-shell { min-height: 100vh; background: #f7f8fa; }
+  .admin-sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #fff;
+    border-right: 1px solid #e8eaed;
+  }
+  .admin-nav-link {
+    display: block;
+    padding: 0.65rem 1rem;
+    border-radius: 0.5rem;
+    color: #334155;
+    text-decoration: none;
+  }
+  .admin-nav-link:hover,
+  .admin-nav-link.is-active {
+    background: #eef4ff;
+    color: #0d6efd;
+  }
+  .admin-main { min-width: 0; }
+  .admin-card { border: 0; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); }
+</style>
+
+<div class="admin-shell d-flex">
+  <aside class="admin-sidebar d-none d-lg-flex flex-column p-3">
+    <a href="/admin" class="fw-semibold text-dark text-decoration-none mb-4 px-1">DoubtHub Admin</a>
+    {{> admin-menu}}
+    <div class="mt-auto px-1">
+      <a href="/logout" class="admin-nav-link">🚪 Logout</a>
+    </div>
+  </aside>
+
+  <div class="flex-grow-1 admin-main">
+    <nav class="navbar navbar-light bg-white border-bottom d-lg-none px-3">
+      <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminMobileNav" aria-controls="adminMobileNav" aria-label="Open menu">
+        <i class="bi bi-list"></i>
+      </button>
+      <span class="fw-semibold">DoubtHub Admin</span>
+      <a href="/logout" class="text-decoration-none text-secondary">Logout</a>
+    </nav>
+
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="adminMobileNav" aria-labelledby="adminMobileNavLabel">
+      <div class="offcanvas-header">
+        <h2 class="offcanvas-title h5" id="adminMobileNavLabel">DoubtHub Admin</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        {{> admin-menu}}
+        <a href="/logout" class="admin-nav-link mt-auto">🚪 Logout</a>
+      </div>
+    </div>
+
+    <div class="p-3 p-md-4">

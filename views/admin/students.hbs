@@ -1,0 +1,52 @@
+{{> admin-shell-start}}
+
+<h1 class="h4 mb-4">Students</h1>
+
+<div class="card admin-card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Class</th>
+          <th>XP</th>
+          <th>Level</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if students.length}}
+          {{#each students}}
+            <tr>
+              <td>{{name}}</td>
+              <td>{{email}}</td>
+              <td>{{classLabel}}</td>
+              <td>{{xp}}</td>
+              <td>{{level}}</td>
+              <td>{{statusLabel}}</td>
+              <td class="text-end">
+                {{#if isActive}}
+                  <form class="d-inline js-confirm" data-message="Deactivate this student?" data-confirm="Deactivate" action="/admin/students/{{_id}}/deactivate" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Deactivate</button>
+                  </form>
+                {{else}}
+                  <form class="d-inline" action="/admin/students/{{_id}}/activate" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Activate</button>
+                  </form>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="7" class="text-secondary py-4">No students yet.</td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{{> admin-shell-end}}

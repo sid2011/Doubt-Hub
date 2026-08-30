@@ -34,6 +34,10 @@ router.post("/login", async (req, res) => {
     req.session.loggedIn = true;
     req.session.user = response.user;
 
+    if (response.user.role === "admin") {
+      return res.redirect("/admin");
+    }
+
     if (response.user.role === "teacher") {
       return res.redirect("/teacher");
     }

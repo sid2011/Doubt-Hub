@@ -23,6 +23,27 @@ module.exports = {
 
     let response = {};
 
+    const isActiveAccount = (doc) => doc && doc.active !== false;
+
+    const admin = await db
+      .get()
+      .collection(collections.ADMIN_COLLECTION)
+      .findOne({ email: userData.email });
+
+    if (admin) {
+      if (!isActiveAccount(admin)) {
+        return { status: false };
+      }
+      const adminOk = await bcrypt.compare(userData.password, admin.password);
+      if (adminOk) {
+        admin.role = "admin";
+        response.user = admin;
+        response.status = true;
+        return response;
+      }
+      return { status: false };
+    }
+
     const teacher = await db
       .get()
       .collection(collections.TEACHER_COLLECTION)
@@ -32,6 +53,9 @@ module.exports = {
     
       const teacherOk = await bcrypt.compare(userData.password, teacher.password);
       if (teacherOk) {
+        if (!isActiveAccount(teacher)) {
+          return { status: false };
+        }
         console.log("correct")
         teacher.role = "teacher";
         response.user = teacher;
@@ -50,6 +74,9 @@ module.exports = {
     }
     let status = await bcrypt.compare(userData.password, user.password);
     if (status) {
+      if (!isActiveAccount(user)) {
+        return { status: false };
+      }
       response.user = user;
       response.user.role = "student";
       response.status = true;

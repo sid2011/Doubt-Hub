@@ -18,12 +18,12 @@ function answers() {
   return db.get().collection(collections.ANSWER_COLLECTION);
 }
 
+function teachers() {
+  return db.get().collection(collections.TEACHER_COLLECTION);
+}
+
 function isStudentAnswer(answer) {
-  return Boolean(
-    answer &&
-      answer.role !== "ai" &&
-      answer.studentId
-  );
+  return Boolean(answer && answer.role !== "ai" && answer.studentId);
 }
 
 async function attachDoubtAndStudent(answer) {
@@ -47,15 +47,67 @@ async function attachDoubtAndStudent(answer) {
   return answer;
 }
 
+function pendingForSubjectPipeline(subject) {
+  return [
+    { $match: pendingStudentAnswerFilter },
+    {
+      $lookup: {
+        from: collections.DOUBT_COLLECTION,
+        localField: "doubtId",
+        foreignField: "_id",
+        as: "doubt",
+      },
+    },
+    { $unwind: "$doubt" },
+    { $match: { "doubt.subject": subject } },
+  ];
+}
+
+async function doubtMatchesSubject(answer, subject) {
+  if (!isStudentAnswer(answer) || !subject) {
+    return false;
+  }
+
+  const doubt = await db
+    .get()
+    .collection(collections.DOUBT_COLLECTION)
+    .findOne({ _id: new ObjectId(answer.doubtId) });
+
+  return Boolean(doubt && doubt.subject === subject);
+}
+
 module.exports = {
-  countPendingAnswers: async () => {
-    return answers().countDocuments(pendingStudentAnswerFilter);
+  getTeacherById: async (teacherId) => {
+    if (!ObjectId.isValid(teacherId)) {
+      return null;
+    }
+
+    return teachers().findOne(
+      { _id: new ObjectId(teacherId) },
+      { projection: { password: 0 } }
+    );
   },
 
-  listRecentPending: async (limit = 8) => {
-    const items = await answers()
+  countPendingAnswers: async (subject) => {
+    if (!subject) {
+      return 0;
+    }
+
+    const result = await answers()
+      .aggregate([...pendingForSubjectPipeline(subject), { $count: "n" }])
+      .toArray();
+
+    return result[0] ? result[0].n : 0;
+  },
+
+  listRecentPending: async (subject, limit = 8) => {
+    if (!subject) {
+      return [];
+    }
+
+    return answers()
       .aggregate([
-        { $match: pendingStudentAnswerFilter },
+        ...pendingForSubjectPipeline(subject),
         { $sort: { createdAt: -1 } },
         { $limit: limit },
         {
@@ -67,30 +119,37 @@ module.exports = {
           },
         },
         { $unwind: { path: "$student", preserveNullAndEmptyArrays: true } },
+      ])
+      .toArray();
+  },
+
+  getNextPending: async (subject) => {
+    if (!subject) {
+      return null;
+    }
+
+    const items = await answers()
+      .aggregate([
+        ...pendingForSubjectPipeline(subject),
+        { $sort: { createdAt: 1 } },
+        { $limit: 1 },
         {
           $lookup: {
-            from: collections.DOUBT_COLLECTION,
-            localField: "doubtId",
+            from: collections.STUDENT_COLLECTION,
+            localField: "studentId",
             foreignField: "_id",
-            as: "doubt",
+            as: "student",
           },
         },
-        { $unwind: { path: "$doubt", preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: "$student", preserveNullAndEmptyArrays: true } },
       ])
       .toArray();
 
-    return items;
+    return items[0] || null;
   },
 
-  getNextPending: async () => {
-    const answer = await answers().findOne(pendingStudentAnswerFilter, {
-      sort: { createdAt: 1 },
-    });
-    return attachDoubtAndStudent(answer);
-  },
-
-  getPendingById: async (answerId) => {
-    if (!ObjectId.isValid(answerId)) {
+  getPendingById: async (answerId, subject) => {
+    if (!ObjectId.isValid(answerId) || !subject) {
       return null;
     }
 
@@ -99,16 +158,21 @@ module.exports = {
       ...pendingStudentAnswerFilter,
     });
 
-    return attachDoubtAndStudent(answer);
+    const item = await attachDoubtAndStudent(answer);
+    if (!item || !item.doubt || item.doubt.subject !== subject) {
+      return null;
+    }
+
+    return item;
   },
 
-  verifyAnswer: async (answerId, teacherId) => {
+  verifyAnswer: async (answerId, teacherId, subject) => {
     if (!ObjectId.isValid(answerId)) {
       return { ok: false };
     }
 
     const answer = await answers().findOne({ _id: new ObjectId(answerId) });
-    if (!isStudentAnswer(answer)) {
+    if (!(await doubtMatchesSubject(answer, subject))) {
       return { ok: false };
     }
 
@@ -135,13 +199,13 @@ module.exports = {
     return { ok: true };
   },
 
-  rejectAnswer: async (answerId, teacherId) => {
+  rejectAnswer: async (answerId, teacherId, subject) => {
     if (!ObjectId.isValid(answerId)) {
       return { ok: false };
     }
 
     const answer = await answers().findOne({ _id: new ObjectId(answerId) });
-    if (!isStudentAnswer(answer)) {
+    if (!(await doubtMatchesSubject(answer, subject))) {
       return { ok: false };
     }
 

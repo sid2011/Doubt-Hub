@@ -1,0 +1,82 @@
+{{> admin-shell-start}}
+
+<h1 class="h4 mb-4">Teachers</h1>
+
+<div class="card admin-card mb-4">
+  <div class="card-body">
+    <h2 class="h6 mb-3">Add teacher</h2>
+    <form action="/admin/teachers" method="POST" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label" for="teacher-name">Name</label>
+        <input class="form-control" id="teacher-name" name="name" value="{{form.name}}" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="teacher-email">Email</label>
+        <input class="form-control" id="teacher-email" type="email" name="email" value="{{form.email}}" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="teacher-password">Password</label>
+        <input class="form-control" id="teacher-password" type="password" name="password" minlength="6" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="teacher-subject">Subject</label>
+        <select class="form-select" id="teacher-subject" name="subject" required>
+          <option value="">Select subject…</option>
+          {{#each subjects}}
+            <option value="{{this}}" {{#if (eq ../form.subject this)}}selected{{/if}}>{{this}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Add teacher</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card admin-card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Subject</th>
+          <th>Created</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if teachers.length}}
+          {{#each teachers}}
+            <tr>
+              <td>{{name}}</td>
+              <td>{{email}}</td>
+              <td>{{#if subject}}{{subject}}{{else}}—{{/if}}</td>
+              <td>{{createdAtLabel}}</td>
+              <td>{{statusLabel}}</td>
+              <td class="text-end">
+                {{#if isActive}}
+                  <form class="d-inline js-confirm" data-message="Deactivate this teacher?" data-confirm="Deactivate" action="/admin/teachers/{{_id}}/deactivate" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Deactivate</button>
+                  </form>
+                {{else}}
+                  <form class="d-inline" action="/admin/teachers/{{_id}}/activate" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Activate</button>
+                  </form>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        {{else}}
+          <tr>
+            <td colspan="6" class="text-secondary py-4">No teachers yet.</td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{{> admin-shell-end}}

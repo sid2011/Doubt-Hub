@@ -6,6 +6,7 @@
 
   <main>
     <h1 class="h3 mb-2">Hello, {{teacherName}}</h1>
+    <p class="text-secondary mb-1">{{#if teacherSubject}}{{teacherSubject}}{{else}}No subject assigned{{/if}}</p>
     <p class="text-secondary mb-4" aria-live="polite">
       {{#if pendingCount}}
         {{pendingCount}} {{#if (eq pendingCount 1)}}answer needs{{else}}answers need{{/if}} review.
