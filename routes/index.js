@@ -23,7 +23,17 @@ const verify = (req, res, next) => {
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
-
+router.get('/signup',(req,res)=>{
+  res.render('user/user_auth/signup_page')
+})
+  router.post('/signup', (req, res) => {
+  userHelper.doSignup(req.body).then((response) => {
+    res.redirect('/login');
+  });
+});
+router.get("/about", (req, res) => {
+  res.render("user/about-page");
+});
 router.get("/login", (req, res) => {
   res.render("user/user_auth/login_page");
 });

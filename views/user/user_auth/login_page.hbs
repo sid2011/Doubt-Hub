@@ -30,15 +30,17 @@
           onclick="switchTab('login')"
           type="button"
         >Log in</button>
-        <button
-          class="dh-tab"
-          id="tab-signup"
-          role="tab"
-          aria-selected="false"
-          aria-controls="panel-signup"
-          onclick="switchTab('signup')"
-          type="button"
-        >Sign up</button>
+        <button 
+  class="dh-tab dh-tab--active" 
+  id="tab-login" 
+  role="tab" 
+  aria-selected="true" 
+  aria-controls="panel-login" 
+  onclick="window.location.href='/signup'" 
+  type="button"
+>
+  Signup
+</button>
         {{! Animated underline pill — moves via JS }}
         <div class="dh-tab__indicator" id="tab-indicator" aria-hidden="true"></div>
       </div>
