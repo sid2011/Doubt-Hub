@@ -46,3 +46,15 @@ fetch("/verification-notification")
   .catch(err => {
     console.error("Verification notification error:", err);
   });
+  function openModal(modalId) {
+    // Bootstrap 5 selector works directly with the ID string (e.g., '#askDoubtModal')
+    const myModalElement = document.querySelector(modalId);
+    
+    if (myModalElement) {
+        // Initialize and show the Bootstrap modal
+        const modalInstance = new bootstrap.Modal(myModalElement);
+        modalInstance.show();
+    } else {
+        console.error("Modal element not found:", modalId);
+    }
+}
