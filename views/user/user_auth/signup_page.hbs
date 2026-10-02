@@ -14,50 +14,113 @@
 
     <form action="/signup" method="POST">
 
+        {{#if error}}
+        <div class="alert alert-danger py-2 px-3 mb-3" style="border-radius: 8px; font-size: 0.88rem;">
+            {{error}}
+        </div>
+        {{/if}}
+
         <input
             type="text"
             name="name"
             placeholder="Full Name"
+            value="{{formData.name}}"
             required>
 
         <input
             type="email"
             name="email"
             placeholder="Email Address"
+            value="{{formData.email}}"
             required>
+
+        <!-- Phone Number and OTP Verification Section -->
+        <div class="phone-block mb-3">
+            <div class="input-group">
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Mobile Number (10-digit)"
+                    value="{{formData.phone}}"
+                    maxlength="14"
+                    required
+                    style="height: 52px; border-radius: 8px 0 0 8px;"
+                >
+                <button
+                    type="button"
+                    id="btnSendOtp"
+                    class="btn btn-primary"
+                    style="height: 52px; padding: 0 1.25rem; font-weight: 600; border-radius: 0 8px 8px 0;"
+                >Get OTP</button>
+            </div>
+
+            <!-- Dev OTP Notice (Development Mode Only) -->
+            <div id="devOtpBox" class="alert alert-warning py-2 px-3 mt-2 mb-0" style="display: none; font-size: 0.85rem; border-radius: 8px;">
+                <strong>Development Mode:</strong> Your OTP is <span id="devOtpCode" class="fw-bold text-dark"></span>
+            </div>
+
+            <!-- OTP Input Section -->
+            <div id="otpSection" class="mt-2" style="display: none;">
+                <div class="input-group">
+                    <input
+                        type="text"
+                        id="otp"
+                        name="otp"
+                        placeholder="Enter 6-digit OTP"
+                        maxlength="6"
+                        style="height: 52px; border-radius: 8px 0 0 8px;"
+                    >
+                    <button
+                        type="button"
+                        id="btnVerifyOtp"
+                        class="btn btn-success"
+                        style="height: 52px; padding: 0 1.25rem; font-weight: 600; border-radius: 0 8px 8px 0;"
+                    >Verify OTP</button>
+                </div>
+                <div id="otpFeedback" class="form-text mt-1 text-danger" style="display: none; font-size: 0.8rem;"></div>
+            </div>
+
+            <!-- Verified Badge -->
+            <div id="phoneVerifiedBadge" class="alert alert-success py-2 px-3 mt-2 mb-0" style="display: none; font-size: 0.85rem; border-radius: 8px;">
+                <i class="bi bi-check-circle-fill me-1"></i> Mobile number verified successfully!
+            </div>
+        </div>
 
         <input
             type="password"
             name="password"
             placeholder="Create a secure Password"
             required>
-            <div class="mb-3">
-    <label for="class" class="form-label">Class</label>
-    <select class="form-select" id="class" name="class" required>
-        <option value="" selected disabled>Select Class</option>
-        <option value="5">5th Standard</option>
-        <option value="6">6th Standard</option>
-        <option value="7">7th Standard</option>
-        <option value="8">8th Standard</option>
-        <option value="9">9th Standard</option>
-        <option value="10">10th Standard</option>
-    </select>
-</div>
-<div class="mb-3">
-    <label for="division" class="form-label">Division</label>
-    <select class="form-select" id="division" name="division" required>
-        <option value="" selected disabled>Select Division</option>
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="E">E</option>
-        <option value="F">F</option>
-        <option value="G">G</option>
-    </select>
-</div>
 
-        <button>Create Account</button>
+        <div class="mb-3">
+            <label for="class" class="form-label">Class</label>
+            <select class="form-select" id="class" name="class" required>
+                <option value="" selected disabled>Select Class</option>
+                <option value="5">5th Standard</option>
+                <option value="6">6th Standard</option>
+                <option value="7">7th Standard</option>
+                <option value="8">8th Standard</option>
+                <option value="9">9th Standard</option>
+                <option value="10">10th Standard</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="division" class="form-label">Division</label>
+            <select class="form-select" id="division" name="division" required>
+                <option value="" selected disabled>Select Division</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+            </select>
+        </div>
+
+        <button id="btnCreateAccount" type="submit">Create Account</button>
 
     </form>
 
@@ -67,3 +130,158 @@
     </p>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const phoneInput = document.getElementById("phone");
+    const btnSendOtp = document.getElementById("btnSendOtp");
+    const otpSection = document.getElementById("otpSection");
+    const otpInput = document.getElementById("otp");
+    const btnVerifyOtp = document.getElementById("btnVerifyOtp");
+    const otpFeedback = document.getElementById("otpFeedback");
+    const devOtpBox = document.getElementById("devOtpBox");
+    const devOtpCode = document.getElementById("devOtpCode");
+    const verifiedBadge = document.getElementById("phoneVerifiedBadge");
+    const btnCreateAccount = document.getElementById("btnCreateAccount");
+    const signupForm = document.querySelector("form[action='/signup']");
+
+    let isPhoneVerified = false;
+    let cooldownTimer = null;
+
+    function startCooldown(seconds) {
+        let remaining = seconds;
+        btnSendOtp.disabled = true;
+        btnSendOtp.textContent = `Resend (${remaining}s)`;
+
+        if (cooldownTimer) clearInterval(cooldownTimer);
+        cooldownTimer = setInterval(() => {
+            remaining--;
+            if (remaining <= 0) {
+                clearInterval(cooldownTimer);
+                cooldownTimer = null;
+                if (!isPhoneVerified) {
+                    btnSendOtp.disabled = false;
+                    btnSendOtp.textContent = "Resend OTP";
+                }
+            } else {
+                btnSendOtp.textContent = `Resend (${remaining}s)`;
+            }
+        }, 1000);
+    }
+
+    btnSendOtp.addEventListener("click", async () => {
+        const phone = phoneInput.value.trim();
+        if (!phone) {
+            Swal.fire({ icon: "warning", title: "Phone Required", text: "Please enter your 10-digit mobile number." });
+            phoneInput.focus();
+            return;
+        }
+
+        btnSendOtp.disabled = true;
+        btnSendOtp.textContent = "Sending...";
+
+        try {
+            const res = await fetch("/signup/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phone })
+            });
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                btnSendOtp.disabled = false;
+                btnSendOtp.textContent = "Get OTP";
+                if (data.error === "RESEND_COOLDOWN" && data.waitSeconds) {
+                    startCooldown(data.waitSeconds);
+                }
+                Swal.fire({ icon: "error", title: "Error", text: data.message || "Failed to send OTP." });
+                return;
+            }
+
+            // Success
+            otpSection.style.display = "block";
+            otpFeedback.style.display = "none";
+            startCooldown(data.cooldownSeconds || 60);
+
+            if (data.isDev && data.devOtp) {
+                devOtpCode.textContent = data.devOtp;
+                devOtpBox.style.display = "block";
+            }
+
+            Swal.fire({ icon: "success", title: "OTP Sent", text: data.message, timer: 2000, showConfirmButton: false });
+            otpInput.focus();
+        } catch (err) {
+            btnSendOtp.disabled = false;
+            btnSendOtp.textContent = "Get OTP";
+            Swal.fire({ icon: "error", title: "Network Error", text: "Could not send OTP. Please check your connection." });
+        }
+    });
+
+    btnVerifyOtp.addEventListener("click", async () => {
+        const phone = phoneInput.value.trim();
+        const otp = otpInput.value.trim();
+
+        if (!otp) {
+            otpFeedback.textContent = "Please enter the 6-digit OTP.";
+            otpFeedback.style.display = "block";
+            otpInput.focus();
+            return;
+        }
+
+        btnVerifyOtp.disabled = true;
+        btnVerifyOtp.textContent = "Verifying...";
+
+        try {
+            const res = await fetch("/signup/verify-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ phone, otp })
+            });
+            const data = await res.json();
+
+            if (!res.ok || !data.success) {
+                btnVerifyOtp.disabled = false;
+                btnVerifyOtp.textContent = "Verify OTP";
+                otpFeedback.textContent = data.message || "Invalid OTP.";
+                otpFeedback.style.display = "block";
+                return;
+            }
+
+            // Verification succeeded
+            isPhoneVerified = true;
+            if (cooldownTimer) clearInterval(cooldownTimer);
+
+            phoneInput.readOnly = true;
+            btnSendOtp.disabled = true;
+            btnSendOtp.textContent = "Verified ✓";
+            btnSendOtp.className = "btn btn-outline-success";
+
+            otpSection.style.display = "none";
+            devOtpBox.style.display = "none";
+            verifiedBadge.style.display = "block";
+
+            btnCreateAccount.disabled = false;
+            btnCreateAccount.style.opacity = "1";
+            btnCreateAccount.style.cursor = "pointer";
+
+            Swal.fire({ icon: "success", title: "Verified!", text: "Mobile number verified successfully.", timer: 1800, showConfirmButton: false });
+        } catch (err) {
+            btnVerifyOtp.disabled = false;
+            btnVerifyOtp.textContent = "Verify OTP";
+            otpFeedback.textContent = "Could not verify OTP. Please try again.";
+            otpFeedback.style.display = "block";
+        }
+    });
+
+    signupForm.addEventListener("submit", (e) => {
+        if (!isPhoneVerified) {
+            e.preventDefault();
+            Swal.fire({
+                icon: "warning",
+                title: "Phone Verification Required",
+                text: "Please verify your mobile number via OTP before creating your account."
+            });
+        }
+    });
+});
+</script>

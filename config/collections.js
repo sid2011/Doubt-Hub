@@ -5,5 +5,6 @@ module.exports={
     ADMIN_COLLECTION:'admin',
     ANSWER_COLLECTION:'answer',
     RATING_COLLECTION:'rating',
-    ANSWER_RATING_COLLECTION:'answer_ratings'
+    ANSWER_RATING_COLLECTION:'answer_ratings',
+    OTP_COLLECTION:'otps'
 }

@@ -28,6 +28,19 @@ module.exports = {
       .get()
       .collection(collections.STUDENT_COLLECTION)
       .insertOne(userData);
+    return response;
+  },
+  findStudentByPhone: async (phone) => {
+    return await db
+      .get()
+      .collection(collections.STUDENT_COLLECTION)
+      .findOne({ phone });
+  },
+  findStudentByEmail: async (email) => {
+    return await db
+      .get()
+      .collection(collections.STUDENT_COLLECTION)
+      .findOne({ email });
   },
   doLogIn: async (userData) => {
     const hash = await bcrypt.hash("123", 10);

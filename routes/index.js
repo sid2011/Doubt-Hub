@@ -11,6 +11,7 @@ const rewardHelper = require("../helpers/reward-helper");
 dayjs.extend(relativeTime);
 const xp = require("../config/xp-points");
 const aiService = require("../services/aiService");
+const otpHelper = require("../helpers/otp-helper");
 /* GET home page. */
 const verify = (req, res, next) => {
   if (req.session && req.session.user) {
@@ -23,13 +24,256 @@ const verify = (req, res, next) => {
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
-router.get('/signup',(req,res)=>{
-  res.render('user/user_auth/signup_page')
-})
-  router.post('/signup', (req, res) => {
-  userHelper.doSignup(req.body).then((response) => {
-    res.redirect('/login');
-  });
+
+router.get("/signup", (req, res) => {
+  res.render("user/user_auth/signup_page");
+});
+
+router.post("/signup/request-otp", async (req, res) => {
+  try {
+    const rawPhone = req.body.phone;
+    const normalizedPhone = otpHelper.normalizePhoneNumber(rawPhone);
+
+    if (!normalizedPhone) {
+      return res.status(400).json({
+        success: false,
+        error: "INVALID_PHONE",
+        message: "Please enter a valid 10-digit Indian mobile number.",
+      });
+    }
+
+    // Check duplicate phone in students collection
+    const existingStudent = await userHelper.findStudentByPhone(normalizedPhone);
+    if (existingStudent) {
+      return res.status(400).json({
+        success: false,
+        error: "DUPLICATE_PHONE",
+        message: "A student account with this mobile number already exists.",
+      });
+    }
+
+    const otpResult = await otpHelper.createAndStoreOtp({
+      phone: normalizedPhone,
+      purpose: "signup",
+    });
+
+    if (!otpResult.ok) {
+      if (otpResult.error === "RESEND_COOLDOWN") {
+        return res.status(429).json({
+          success: false,
+          error: "RESEND_COOLDOWN",
+          waitSeconds: otpResult.waitSeconds,
+          message: otpResult.message,
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        error: otpResult.error || "OTP_REQUEST_FAILED",
+        message: otpResult.message || "Failed to generate OTP. Please try again.",
+      });
+    }
+
+    // Clear any previous verification in session since a new OTP was requested
+    delete req.session.pendingSignupVerification;
+
+    const responseData = {
+      success: true,
+      message: "OTP sent successfully to your mobile number.",
+      phone: normalizedPhone,
+      cooldownSeconds: 60,
+    };
+
+    // Development-only testing flow (no SMS provider connected yet)
+    if (process.env.NODE_ENV !== "production") {
+      responseData.devOtp = otpResult.otp;
+      responseData.isDev = true;
+    }
+
+    return res.json(responseData);
+  } catch (error) {
+    console.error("Error requesting signup OTP:", error.message);
+    return res.status(500).json({
+      success: false,
+      error: "SERVER_ERROR",
+      message: "An unexpected error occurred while requesting OTP. Please try again.",
+    });
+  }
+});
+
+router.post("/signup/verify-otp", async (req, res) => {
+  try {
+    const rawPhone = req.body.phone;
+    const rawOtp = req.body.otp;
+
+    const normalizedPhone = otpHelper.normalizePhoneNumber(rawPhone);
+    if (!normalizedPhone) {
+      return res.status(400).json({
+        success: false,
+        error: "INVALID_PHONE",
+        message: "Please enter a valid 10-digit Indian mobile number.",
+      });
+    }
+
+    if (!rawOtp) {
+      return res.status(400).json({
+        success: false,
+        error: "INVALID_OTP",
+        message: "Please enter the 6-digit OTP.",
+      });
+    }
+
+    const verifyResult = await otpHelper.verifyOtp({
+      phone: normalizedPhone,
+      otp: rawOtp,
+      purpose: "signup",
+    });
+
+    if (!verifyResult.ok) {
+      const statusCode = verifyResult.error === "MAX_ATTEMPTS_EXCEEDED" ? 429 : 400;
+      return res.status(statusCode).json({
+        success: false,
+        error: verifyResult.error,
+        attemptsRemaining: verifyResult.attemptsRemaining,
+        message: verifyResult.message,
+      });
+    }
+
+    // Set server-side temporary verification state in session
+    req.session.pendingSignupVerification = {
+      phone: normalizedPhone,
+      verified: true,
+      verifiedAt: new Date(),
+    };
+
+    return res.json({
+      success: true,
+      message: "Phone number verified successfully!",
+      phone: normalizedPhone,
+    });
+  } catch (error) {
+    console.error("Error verifying signup OTP:", error.message);
+    return res.status(500).json({
+      success: false,
+      error: "SERVER_ERROR",
+      message: "An unexpected error occurred while verifying OTP. Please try again.",
+    });
+  }
+});
+
+router.post("/signup", async (req, res) => {
+  const isJson =
+    req.xhr ||
+    (req.headers.accept && req.headers.accept.includes("application/json")) ||
+    req.is("json");
+
+  const sendError = (status, errorMessage) => {
+    if (isJson) {
+      return res.status(status).json({ success: false, error: errorMessage });
+    }
+    return res.status(status).render("user/user_auth/signup_page", {
+      error: errorMessage,
+      formData: {
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        class: req.body.class,
+        division: req.body.division,
+      },
+    });
+  };
+
+  try {
+    const { name, email, password, phone } = req.body;
+    const studentClass = req.body.class;
+    const division = req.body.division;
+
+    const trimmedName = (name || "").trim();
+    const trimmedEmail = (email || "").trim().toLowerCase();
+    const trimmedPassword = password || "";
+    const normalizedPhone = otpHelper.normalizePhoneNumber(phone);
+
+    if (!trimmedName) {
+      return sendError(400, "Full Name is required.");
+    }
+
+    if (!trimmedEmail || !trimmedEmail.includes("@")) {
+      return sendError(400, "A valid email address is required.");
+    }
+
+    if (!trimmedPassword || trimmedPassword.length < 6) {
+      return sendError(400, "Password must be at least 6 characters long.");
+    }
+
+    const validClasses = ["5", "6", "7", "8", "9", "10"];
+    if (!validClasses.includes(studentClass)) {
+      return sendError(400, "Please select a valid class (5th to 10th Standard).");
+    }
+
+    const validDivisions = ["A", "B", "C", "D", "E", "F", "G"];
+    if (!validDivisions.includes(division)) {
+      return sendError(400, "Please select a valid division (A to G).");
+    }
+
+    if (!normalizedPhone) {
+      return sendError(400, "Please enter a valid 10-digit Indian mobile number.");
+    }
+
+    // SERVER-SIDE SECURITY CHECK:
+    // Verify that the session has an active, successful verification for THIS exact phone number
+    const pendingVerification = req.session.pendingSignupVerification;
+    if (
+      !pendingVerification ||
+      pendingVerification.verified !== true ||
+      pendingVerification.phone !== normalizedPhone
+    ) {
+      return sendError(
+        400,
+        "Phone number has not been verified. Please verify your mobile number with OTP before completing signup."
+      );
+    }
+
+    // Check duplicate phone in database
+    const existingPhone = await userHelper.findStudentByPhone(normalizedPhone);
+    if (existingPhone) {
+      return sendError(400, "A student account with this mobile number already exists.");
+    }
+
+    // Check duplicate email in database
+    const existingEmail = await userHelper.findStudentByEmail(trimmedEmail);
+    if (existingEmail) {
+      return sendError(400, "A student account with this email address already exists.");
+    }
+
+    // Create student account
+    const studentRecord = {
+      name: trimmedName,
+      email: trimmedEmail,
+      password: trimmedPassword,
+      class: studentClass,
+      division: division,
+      phone: normalizedPhone,
+      phoneVerified: true,
+      phoneVerifiedAt: new Date(),
+      active: true,
+      xp: 0,
+      level: 1,
+      createdAt: new Date(),
+    };
+
+    await userHelper.doSignup(studentRecord);
+
+    // Clear temporary verification state
+    delete req.session.pendingSignupVerification;
+
+    if (isJson) {
+      return res.json({ success: true, redirect: "/login" });
+    }
+
+    return res.redirect("/login");
+  } catch (error) {
+    console.error("Signup error:", error.message);
+    return sendError(500, "An error occurred while creating your account. Please try again.");
+  }
 });
 router.get("/about", (req, res) => {
   res.render("user/about-page");
