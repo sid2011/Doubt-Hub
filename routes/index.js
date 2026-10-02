@@ -283,6 +283,8 @@ router.get("/answer-doubt/:id", verify, async (req, res) => {
   console.log("Rating document:", ratingDoc);
   console.log("User rating:", userRating);
 
+  await userHelper.attachAnswerRatings(answers, userId);
+
   res.render("user/answer-doubt", {
     doubt,
     answers,
@@ -396,5 +398,35 @@ router.post('/doubt/:doubtId/rating', verify, async (req, res) => {
         success: true,
         message: "Rating submitted successfully"
     });
+});
+router.post("/answer/:answerId/rating", verify, async (req, res) => {
+  try {
+    const result = await userHelper.submitAnswerRating({
+      answerId: req.params.answerId,
+      userId: req.session.user._id,
+      rating: req.body.rating,
+    });
+
+    if (!result.ok) {
+      return res.status(result.status).json({
+        success: false,
+        message: result.message,
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: result.message,
+      averageRating: result.averageRating,
+      ratingCount: result.ratingCount,
+      userRating: result.userRating,
+    });
+  } catch (error) {
+    console.error("Answer rating error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong. Please try again.",
+    });
+  }
 });
 module.exports = router;

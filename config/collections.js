@@ -4,5 +4,6 @@ module.exports={
     TEACHER_COLLECTION:'teacher',
     ADMIN_COLLECTION:'admin',
     ANSWER_COLLECTION:'answer',
-    RATING_COLLECTION:'rating'
+    RATING_COLLECTION:'rating',
+    ANSWER_RATING_COLLECTION:'answer_ratings'
 }

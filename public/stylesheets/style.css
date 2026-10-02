@@ -109,7 +109,87 @@
 
 .doubt-rating.no-rating i {
     font-size: 13px;
-}.dc-body {
+}
+.answer-rating {
+    margin-top: 0.7rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #eef1f6;
+}
+.answer-rating__avg {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #b77900;
+}
+.answer-rating__avg-star {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+.answer-rating__avg-count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    opacity: 0.75;
+}
+.answer-rating__prompt {
+    margin: 0.2rem 0 0.05rem;
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 500;
+}
+.answer-rating__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+}
+.answer-rating__star {
+    height: auto !important;
+    min-height: 0 !important;
+    width: auto !important;
+    padding: 0 3px !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #d1d5db !important;
+    font-size: 1.2rem !important;
+    line-height: 1.2 !important;
+    font-weight: 400 !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.answer-rating__star:hover,
+.answer-rating__star:focus,
+.answer-rating__star:active {
+    background: transparent !important;
+    color: #fbbf24 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+.answer-rating__star.is-filled {
+    color: #fbbf24 !important;
+}
+.answer-rating--locked .answer-rating__star {
+    cursor: default;
+}
+.answer-rating--locked .answer-rating__star:hover,
+.answer-rating--locked .answer-rating__star:focus {
+    color: #d1d5db !important;
+    cursor: default;
+}
+.answer-rating--locked .answer-rating__star.is-filled,
+.answer-rating--locked .answer-rating__star.is-filled:hover,
+.answer-rating--locked .answer-rating__star.is-filled:focus {
+    color: #fbbf24 !important;
+    cursor: default;
+}
+.answer-rating__you {
+    margin: 0.1rem 0 0;
+    font-size: 0.74rem;
+    color: #64748b;
+}
+.dc-body {
     display: flex;
     flex-direction: column;
 }

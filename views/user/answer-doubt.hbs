@@ -245,6 +245,36 @@
 
           {{/if}}
 
+          <div
+            class="answer-rating{{#if this.userRating}} answer-rating--locked{{/if}}"
+            data-answer-id="{{this._id}}"
+            data-user-rating="{{this.userRating}}"
+            data-rated="{{#if this.userRating}}true{{else}}false{{/if}}"
+          >
+            <div class="answer-rating__avg">
+              {{#if this.averageRating}}
+                <span class="answer-rating__avg-star">★</span>
+                <span class="answer-rating__avg-value">{{this.averageRating}}</span>
+                <span class="answer-rating__avg-count">({{this.ratingCount}})</span>
+              {{else}}
+                <span class="answer-rating__avg-star">★</span>
+                <span class="answer-rating__avg-value">—</span>
+                <span class="answer-rating__avg-count">(0)</span>
+              {{/if}}
+            </div>
+            <p class="answer-rating__prompt">How helpful was this answer?</p>
+            <div class="answer-rating__stars" role="group" aria-label="Rate this answer">
+              <button type="button" class="answer-rating__star" data-rating="1" aria-label="1 star">☆</button>
+              <button type="button" class="answer-rating__star" data-rating="2" aria-label="2 stars">☆</button>
+              <button type="button" class="answer-rating__star" data-rating="3" aria-label="3 stars">☆</button>
+              <button type="button" class="answer-rating__star" data-rating="4" aria-label="4 stars">☆</button>
+              <button type="button" class="answer-rating__star" data-rating="5" aria-label="5 stars">☆</button>
+            </div>
+            <p class="answer-rating__you" {{#unless this.userRating}}hidden{{/unless}}>
+              {{#if this.userRating}}You rated: {{this.userRating}}{{/if}}
+            </p>
+          </div>
+
 
         </div>
 
