@@ -1,60 +1,124 @@
+// Small helper: fetch + JSON with proper error handling
+async function fetchJSON(url, options = {}) {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+}
+
+function openModal(modalId) {
+    const modalElement = document.querySelector(modalId);
+    if (!modalElement) {
+        console.error("Modal element not found:", modalId);
+        return;
+    }
+    // Reuses the existing instance instead of creating a new one each time
+    bootstrap.Modal.getOrCreateInstance(modalElement).show();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.querySelectorAll(".like-btn").forEach(button => {
+    /* ---------- Like buttons ---------- */
+    document.querySelectorAll(".like-btn").forEach(likeBtn => {
+        likeBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            if (likeBtn.disabled) return;
+            likeBtn.disabled = true; // prevent double-click spam
 
-        button.addEventListener("click",async () => {
-        const icon = button.querySelector("i");
-            const doubtId = button.dataset.doubtId;
+            const icon = likeBtn.querySelector("i");
+            const likeCount = likeBtn.querySelector(".like-count");
+            const doubtId = likeBtn.dataset.doubtId;
 
-            
-            const response=await fetch(`/doubts/${doubtId}/like`,{method:"POST"})
-            const result=await response.json();
-            if(result.liked){
-                icon.classList.remove("bi-heart");
-                icon.classList.add("bi-heart-fill");
-                
-            }else{
-                icon.classList.remove("bi-heart-fill");
-                icon.classList.add("bi-heart");
+            try {
+                const result = await fetchJSON(`/doubts/${doubtId}/like`, { method: "POST" });
+
+                icon.classList.toggle("bi-heart-fill", result.liked);
+                icon.classList.toggle("bi-heart", !result.liked);
+
+                if (likeCount) likeCount.textContent = result.likeCount;
+            } catch (err) {
+                console.error("Like error:", err);
+            } finally {
+                likeBtn.disabled = false;
             }
-            
-            const likeCount=button.querySelector(".like-count");
-            likeCount.textContent=result.likeCount
         });
-
     });
-});
-fetch("/verification-notification")
-  .then(res => res.json())
-  .then(data => {
 
-    if (data.show) {
+    /* ---------- Verification notification ---------- */
+    fetchJSON("/verification-notification")
+        .then(data => {
+            if (!data.show) return;
 
-      Swal.fire({
-        icon: "success",
-        title: "🎉 Congratulations!",
-        text: data.count === 1
-          ? "Your answer has been verified by a teacher!"
-          : `${data.count} of your answers have been verified by a teacher!`,
-        html: `<b>⭐ You earned ${data.count * data.xp} XP</b>`,
-        confirmButtonText: "Awesome! ⭐"
-      });
+            const message = data.count === 1
+                ? "Your answer has been verified by a teacher!"
+                : `${data.count} of your answers have been verified by a teacher!`;
 
+            Swal.fire({
+                icon: "success",
+                title: "🎉 Congratulations!",
+                // text is ignored when html is set, so combine them
+                html: `${message}<br><b>⭐ You earned ${data.count * data.xp} XP</b>`,
+                confirmButtonText: "Awesome! ⭐"
+            });
+        })
+        .catch(err => console.error("Verification notification error:", err));
+
+    /* ---------- Rating submit ---------- */
+    const submitButton = document.querySelector(".submit-button");
+    if (submitButton) {
+        submitButton.addEventListener("click", async () => {
+            const selectedRating = document.querySelector('input[name="rating"]:checked');
+            const doubtIdInput = document.querySelector('input[name="doubtId"]');
+
+            if (!selectedRating || !doubtIdInput) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Please select a rating",
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return;
+            }
+
+            try {
+                const data = await fetchJSON(`/doubt/${doubtIdInput.value}/rating`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ rating: selectedRating.value })
+                });
+
+                if (data.success) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Thank you!",
+                        text: "Thanks for your feedback.",
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            } catch (err) {
+                console.error("Rating submit error:", err);
+            }
+        });
     }
+ });
+    const ratingBox = document.querySelector(".rating-box");
 
-  })
-  .catch(err => {
-    console.error("Verification notification error:", err);
-  });
-  function openModal(modalId) {
-    // Bootstrap 5 selector works directly with the ID string (e.g., '#askDoubtModal')
-    const myModalElement = document.querySelector(modalId);
-    
-    if (myModalElement) {
-        // Initialize and show the Bootstrap modal
-        const modalInstance = new bootstrap.Modal(myModalElement);
-        modalInstance.show();
-    } else {
-        console.error("Modal element not found:", modalId);
+if (ratingBox) {
+    const rating = ratingBox.dataset.userRating;
+
+    if (rating) {
+        const star = ratingBox.querySelector(
+            `input[name="rating"][value="${rating}"]`
+        );
+
+        if (star) {
+            star.checked = true;
+        }
     }
 }

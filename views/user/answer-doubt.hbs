@@ -30,6 +30,35 @@
       <div class="d-flex flex-wrap gap-3 mb-2">
         <span class="stat-pill"><i class="bi bi-chat-dots-fill text-success"></i> {{answers.length}} Answers</span>
       </div>
+      <h6>How clear was this doubt?</h6>
+
+<div class="rating" aria-label="Rate this doubt">
+
+    <input type="radio" id="star5" name="rating" value="5"
+        {{#if (eq userRating 5)}}checked{{/if}}>
+    <label for="star5">★</label>
+
+    <input type="radio" id="star4" name="rating" value="4"
+        {{#if (eq userRating 4)}}checked{{/if}}>
+    <label for="star4">★</label>
+
+    <input type="radio" id="star3" name="rating" value="3"
+        {{#if (eq userRating 3)}}checked{{/if}}>
+    <label for="star3">★</label>
+
+    <input type="radio" id="star2" name="rating" value="2"
+        {{#if (eq userRating 2)}}checked{{/if}}>
+    <label for="star2">★</label>
+
+    <input type="radio" id="star1" name="rating" value="1"
+        {{#if (eq userRating 1)}}checked{{/if}}>
+    <label for="star1">★</label>
+
+</div>
+<button class="submit-button">
+  <div><span>Submit</span></div>
+</button>
+
       <hr class="mt-3 mb-0">
     </div>
   </div>

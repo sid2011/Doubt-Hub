@@ -9,8 +9,6 @@ dayjs.extend(relativeTime);
 
 module.exports = {
   doSignup: async (userData) => {
-    const avatar = `https://api.dicebear.com/10.x/fun-emoji/svg?seed=${userData.name}`;
-    userData.avatar = avatar;
     userData.password = await bcrypt.hash(userData.password, 10);
     let response = await db
       .get()
@@ -90,54 +88,103 @@ module.exports = {
   },
   showDoubt: async (userData, subject) => {
     let query = {
-      class: userData.class,
+        class: userData.class,
     };
 
     if (subject) {
-      query.subject = subject;
+        query.subject = subject;
     }
 
-   let doubts = await db.get().collection(collections.DOUBT_COLLECTION)
-    .aggregate([
-        {
-            $match: query
-        },
-        {
-            $sort: {
-                createdAt: -1
-            }
-        },
-        {
-            $lookup: {
-                from: collections.STUDENT_COLLECTION,
-                localField: "studentId",
-                foreignField: "_id",
-                as: "student"
-            }
-        },
-        {
-            $unwind: "$student"
-        }
-    ])
-    .toArray();
-const studentId = userData._id;
+    let doubts = await db.get()
+        .collection(collections.DOUBT_COLLECTION)
+        .aggregate([
+            {
+                $match: query
+            },
+            {
+                $sort: {
+                    createdAt: -1
+                }
+            },
+            {
+                $lookup: {
+                    from: collections.STUDENT_COLLECTION,
+                    localField: "studentId",
+                    foreignField: "_id",
+                    as: "student"
+                }
+            },
+            {
+                $unwind: "$student"
+            },
 
-doubts.forEach(doubt => {
-    doubt.isLiked = doubt.likes
-        ? doubt.likes.includes(studentId)
-        : false;
+            // Get ratings for this doubt
+            {
+                $lookup: {
+                    from: collections.RATING_COLLECTION,
+                    let: {
+                        doubtIdString: {
+                            $toString: "$_id"
+                        }
+                    },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $eq: ["$doubtId", "$$doubtIdString"]
+                                }
+                            }
+                        }
+                    ],
+                    as: "ratings"
+                }
+            },
 
-});
-    doubts.forEach((doubt) => {
-    doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
+            // Calculate average and count
+            {
+                $addFields: {
+                    averageRating: {
+                        $cond: [
+                            { $gt: [{ $size: "$ratings" }, 0] },
+                            { $round: [{ $avg: "$ratings.rating" }, 1] },
+                            null
+                        ]
+                    },
+
+                    ratingCount: {
+                        $size: "$ratings"
+                    }
+                }
+            },
+
+            // Don't send all individual ratings to the frontend
+            {
+                $project: {
+                    ratings: 0
+                }
+            }
+        ])
+        .toArray();
+
+    const studentId = userData._id;
+
+    doubts.forEach(doubt => {
+        doubt.isLiked = doubt.likes
+            ? doubt.likes.includes(studentId)
+            : false;
     });
-      doubts.forEach(doubt => {
+
+    doubts.forEach(doubt => {
+        doubt.timeAgo = dayjs(doubt.createdAt).fromNow();
+    });
+
+    doubts.forEach(doubt => {
         doubt.isOwner =
             doubt.studentId.toString() === userData._id.toString();
     });
 
     return doubts;
-  },
+},
   getDoubt: async (doubtId) => {
     let doubt = await db
       .get()

@@ -3,5 +3,6 @@ module.exports={
     DOUBT_COLLECTION:'doubts',
     TEACHER_COLLECTION:'teacher',
     ADMIN_COLLECTION:'admin',
-    ANSWER_COLLECTION:'answer'
+    ANSWER_COLLECTION:'answer',
+    RATING_COLLECTION:'rating'
 }

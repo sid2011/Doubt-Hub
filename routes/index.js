@@ -258,12 +258,37 @@ router.post('/doubts/:id/like', verify, async (req, res) => {
 });
 router.get("/answer-doubt/:id", verify, async (req, res) => {
   const doubtId = new ObjectId(req.params.id);
-  const [doubt, answers] = await Promise.all([
+
+  const userId = req.session.user._id;
+
+  // Rating collection stores doubtId and userId as strings
+  const ratingDoubtId = req.params.id;
+  const ratingUserId = userId.toString();
+
+  const [doubt, answers, ratingDoc] = await Promise.all([
     userHelper.getDoubt(doubtId),
     userHelper.getAnswers(doubtId),
+
+    db
+      .get()
+      .collection(collections.RATING_COLLECTION)
+      .findOne({
+        doubtId: ratingDoubtId,
+        userId: ratingUserId
+      })
   ]);
 
-  res.render("user/answer-doubt", { doubt, answers, doubtId });
+  const userRating = ratingDoc ? ratingDoc.rating : null;
+
+  console.log("Rating document:", ratingDoc);
+  console.log("User rating:", userRating);
+
+  res.render("user/answer-doubt", {
+    doubt,
+    answers,
+    doubtId,
+    userRating
+  });
 });
 router.post("/answer-doubt", verify, async (req, res) => {
   const answer = {
@@ -331,5 +356,45 @@ router.post("/answer-doubt", verify, async (req, res) => {
     xp: xp.ACCEPTED_ANSWER
   });
 
+});
+router.post('/doubt/:doubtId/rating', verify, async (req, res) => {
+
+    const doubtId = req.params.doubtId;
+    const userId = req.session.user._id;
+    const rating = Number(req.body.rating);
+
+    if (Number.isNaN(rating) || rating < 1 || rating > 5) {
+        return res.status(400).json({
+            success: false,
+            message: "The rating must be a number between 1 and 5"
+        });
+    }
+
+    const result = await db.get()
+        .collection(collections.RATING_COLLECTION)
+        .findOne({
+            doubtId: doubtId,
+            userId: userId
+        });
+
+    if (result) {
+        return res.status(400).json({
+            success: false,
+            message: "You have already rated this doubt"
+        });
+    }
+    await db.get()
+        .collection(collections.RATING_COLLECTION)
+        .insertOne({
+            doubtId: doubtId,
+            userId: userId,
+            rating: rating,
+            createdAt: new Date()
+        });
+        console.log("saved",doubtId,userId,rating)
+    return res.status(201).json({
+        success: true,
+        message: "Rating submitted successfully"
+    });
 });
 module.exports = router;

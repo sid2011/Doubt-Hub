@@ -25,3 +25,91 @@
 .prof-dd.open {
     transform: translateX(-50%) translateY(0);
 }
+.rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 3px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 28px;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.rating label:hover {
+  transform: scale(1.1);
+}
+
+/* Fill selected star and all stars before it */
+.rating input:checked ~ label {
+  color: #fbbf24;
+}
+
+/* Preview stars while hovering */
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #fbbf24;
+}
+/* From Uiverse.io by augustin_4687 */ 
+.submit-button {
+  font-size: 0.75rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 7px;
+  padding: 0.4rem 0.7rem;
+  font-family: "Rubik", sans-serif;
+  font-weight: 600;
+  background: #facc15;
+  color: #292524;
+  transition: transform 0.15s ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+.doubt-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #fff8e1;
+    color: #b77900;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.doubt-rating i {
+    font-size: 13px;
+}
+
+.doubt-rating small {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.75;
+}
+
+.doubt-rating.no-rating {
+    background: #f5f5f5;
+    color: #777;
+    font-weight: 600;
+}
+
+.doubt-rating.no-rating i {
+    font-size: 13px;
+}.dc-body {
+    display: flex;
+    flex-direction: column;
+}
